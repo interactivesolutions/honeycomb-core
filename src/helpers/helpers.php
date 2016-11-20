@@ -30,3 +30,21 @@ if( ! function_exists('get_content_name') ) {
         return $name;
     }
 }
+
+if( ! function_exists('uuid4') ) {
+    /**
+     * Generates uuid4 id
+     *
+     * @param bool $toString
+     * @return \Ramsey\Uuid\UuidInterface|string
+     */
+    function uuid4($toString = false)
+    {
+        $uuid4 = Ramsey\Uuid\Uuid::uuid4();
+
+        if( $toString )
+            $uuid4 = $uuid4->toString();
+
+        return $uuid4;
+    }
+}

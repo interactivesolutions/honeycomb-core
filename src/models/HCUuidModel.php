@@ -3,7 +3,6 @@
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Ramsey\Uuid\Uuid;
 
 class HCUuidModel extends Model
 {
@@ -73,7 +72,7 @@ class HCUuidModel extends Model
             return $this->attributes['id'];
         }
 
-        return Uuid::uuid4();
+        return uuid4();
     }
 
     /**
