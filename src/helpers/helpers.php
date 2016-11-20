@@ -48,3 +48,33 @@ if( ! function_exists('uuid4') ) {
         return $uuid4;
     }
 }
+
+if( ! function_exists('pluralizeLT') ) {
+    /**
+     * Returns the correct lithuanian word form for given count.
+     *
+     * @param array $words [žodis, žodžiai, žodžių]
+     * @param int $n
+     *
+     * @throws \InvalidArgumentException
+     * @return string
+     */
+    function pluralizeLT($words, $n)
+    {
+        if( count($words) != 3 ) {
+            throw new \InvalidArgumentException("Words array must contain 3 values!");
+        }
+
+        if( ! is_int($n) ) {
+            throw new \InvalidArgumentException("n must be an integer!");
+        }
+
+        if( $n % 10 == 0 || floor($n / 10) == 1 ) {
+            return $words[2];
+        } elseif( $n % 10 == 1 ) {
+            return $words[0];
+        } else {
+            return $words[1];
+        }
+    }
+}
