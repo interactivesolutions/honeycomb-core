@@ -1,6 +1,6 @@
 <?php
 
-if( ! function_exists('get_content_name') ) {
+if( ! function_exists('get_translation_name') ) {
     /**
      * Get translation name from
      *
