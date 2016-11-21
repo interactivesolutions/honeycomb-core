@@ -1,4 +1,4 @@
-<?php namespace interaktyvussprendimai\ocv3core\models;
+<?php namespace interactivesolutions\honeycombcore\models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model;

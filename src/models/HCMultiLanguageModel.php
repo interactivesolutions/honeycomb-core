@@ -1,15 +1,15 @@
 <?php
 
-namespace interaktyvussprendimai\ocv3core\models;
+namespace interactivesolutions\honeycombcore\models;
 
 class HCMultiLanguageModel extends HCUuidModel
 {
     /**
-     * Default content class namespace
+     * Default translation class namespace
      *
      * @var
      */
-    protected $hcTranslationsClass;
+    protected $translationsClass;
 
     /**
      * Translations
@@ -18,10 +18,10 @@ class HCMultiLanguageModel extends HCUuidModel
      */
     public function translations()
     {
-        if( is_null($this->hcTranslationsClass) )
-            $this->hcTranslationsClass = get_class($this) . 'Translations';
+        if( is_null($this->translationsClass) )
+            $this->translationsClass = get_class($this) . 'Translations';
 
-        return $this->hasMany($this->hcTranslationsClass, 'record_id', 'id');
+        return $this->hasMany($this->translationsClass, 'record_id', 'id');
     }
 
     /**
@@ -30,7 +30,7 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param array $data
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function updateTranslations(array $data)
+    public function updateTranslation(array $data)
     {
         $translations = $this->translations()->where([
             'record_id'     => $this->id,
@@ -47,14 +47,14 @@ class HCMultiLanguageModel extends HCUuidModel
     }
 
     /**
-     * Update multi language content
+     * Update multiple translations at once
      *
      * @param array $data
      */
-    public function updateMultipleContent(array $data)
+    public function updateTranslations(array $data)
     {
-        foreach ($data as $contentData) {
-            $this->updateTranslations($contentData);
+        foreach ($data as $translationsData) {
+            $this->updateTranslation($translationsData);
         }
     }
 
@@ -76,10 +76,16 @@ class HCMultiLanguageModel extends HCUuidModel
         });
     }
 
-    public function getContentName($nameKey = 'name')
+    /**
+     * Getting translation value
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function getTranslationValue($key = 'name')
     {
         return get_translation_name(
-            $nameKey, app()->getLocale(), $this->translations
+            $key, app()->getLocale(), $this->translations
         );
     }
 }
