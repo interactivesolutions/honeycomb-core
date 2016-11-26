@@ -32,8 +32,8 @@ class HCCoreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'core');
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'core');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'HCCore');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'HCCore');
 
         if( ! $this->app->routesAreCached() ) {
             \Route::group([
