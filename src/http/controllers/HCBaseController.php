@@ -30,7 +30,7 @@ abstract class HCBaseController extends BaseController
      */
     protected function unknownAction($action)
     {
-        return HCLog::info('CORE-000', trans('core::core.unknown_action' . $action), 501);
+        return HCLog::info('CORE-0001', trans('core::core.unknown_action' . $action), 501);
     }
 
     /**
@@ -103,7 +103,7 @@ abstract class HCBaseController extends BaseController
         } catch (\Exception $e) {
             DB::rollback();
 
-            return OCLog::error('CORE-000' . $e->getCode(), $e->getMessage());
+            return OCLog::error('CORE-0002' . $e->getCode(), $e->getMessage());
         }
 
         DB::commit();
@@ -143,7 +143,7 @@ abstract class HCBaseController extends BaseController
         } catch (\Exception $e) {
             DB::rollback();
 
-            return OCLog::error('CORE-000' . $e->getCode(), $e->getMessage());
+            return OCLog::error('CORE-0003' . $e->getCode(), $e->getMessage());
         }
 
         DB::commit();
@@ -208,7 +208,7 @@ abstract class HCBaseController extends BaseController
             $toDelete = request()->input('list');
 
         if (sizeOf($toDelete) <= 0)
-            return OCLog::info('CORE-000', trans('core::core.nothing_to_delete'));
+            return OCLog::info('CORE-0004', trans('core::core.nothing_to_delete'));
 
         DB::beginTransaction();
 
@@ -217,7 +217,7 @@ abstract class HCBaseController extends BaseController
         } catch (\Exception $e) {
             DB::rollback();
 
-            return OCLog::error('CORE-000' . $e->getCode(), $e->getMessage());
+            return OCLog::error('CORE-0005' . $e->getCode(), $e->getMessage());
         }
 
         DB::commit();
@@ -270,7 +270,7 @@ abstract class HCBaseController extends BaseController
         $toRestore = request()->input('list');
 
         if( sizeOf($toRestore) <= 0 ) {
-            return OCLog::info('CORE-000', trans('core::core.nothing_to_restore'));
+            return OCLog::info('CORE-0006', trans('core::core.nothing_to_restore'));
         }
 
         $response = $this->__restore($toRestore);
@@ -304,7 +304,7 @@ abstract class HCBaseController extends BaseController
         try {
             return $this->merge();
         } catch ( \Exception $e ) {
-            return OCLog::error('CORE-0005-' . $e->getCode(), $e->getMessage());
+            return OCLog::error('CORE-0007' . $e->getCode(), $e->getMessage());
         }
     }
 
@@ -340,7 +340,7 @@ abstract class HCBaseController extends BaseController
         try {
             return $this->duplicate($id);
         } catch ( \Exception $e ) {
-            return OCLog::error('CORE-0005-' . $e->getCode(), $e->getMessage());
+            return OCLog::error('CORE-0008' . $e->getCode(), $e->getMessage());
         }
     }
 }
