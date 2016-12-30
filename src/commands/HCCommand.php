@@ -12,7 +12,7 @@ class HCCommand extends Command
      *
      * @var \Illuminate\Filesystem\Filesystem
      */
-    protected $files;
+    protected $file;
 
     /**
      * Create a new controller creator command instance.
@@ -22,7 +22,7 @@ class HCCommand extends Command
     public function __construct(Filesystem $files)
     {
         parent::__construct();
-        $this->files = $files;
+        $this->file = $files;
     }
 
     /**
@@ -43,7 +43,7 @@ class HCCommand extends Command
 
             if (!file_exists($finalDirectory))
             {
-                print_r($finalDirectory . ' created');
+                $this->comment($finalDirectory . ' created');
                 mkdir($finalDirectory);
             }
 
@@ -95,10 +95,46 @@ class HCCommand extends Command
 
         $destination = str_replace('\\', '/', $destination);
 
-        $template = $this->files->get($templateDestination);
-        $template = replaceBrackets($template, $configuration['content']);
+        $template = $this->file->get($templateDestination);
 
-        $this->files->put($destination, $template);
+        if (isset($configuration['content']))
+            $template = replaceBrackets($template, $configuration['content']);
 
+        $this->file->put($destination, $template);
+
+        $this->comment($destination . ' file created');
+    }
+
+    /**
+     * Get lower string
+     *
+     * @param $string
+     * @return string
+     */
+    protected function stringToLower($string)
+    {
+        return strtolower(trim($string, '/'));
+    }
+
+    /**
+     * Make string in dot from slashes
+     *
+     * @param $string
+     * @return mixed
+     */
+    protected function stringWithDots($string)
+    {
+        return str_replace('/', '.', $string);
+    }
+
+    /**
+     * Get string in underscore
+     *
+     * @param $string
+     * @return mixed
+     */
+    protected function stringWithUnderscore($string)
+    {
+        return str_replace(['.', '/', ' ', '-'], '_', trim($string, '/'));
     }
 }
