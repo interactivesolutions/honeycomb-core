@@ -352,6 +352,7 @@ abstract class HCBaseController extends BaseController
      * @param $availableFields - Model available fields to select
      * @return mixed
      */
+    protected function getRequestParameters($availableFields)
     {
         $except = ['page', 'q', 'orderby', 'order'];
 
