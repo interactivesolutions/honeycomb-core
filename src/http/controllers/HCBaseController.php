@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use DB;
 use OCLog;
-use Request;
 
 abstract class HCBaseController extends BaseController
 {
@@ -38,7 +37,7 @@ abstract class HCBaseController extends BaseController
      */
     protected function getInputData()
     {
-        return Request::all();
+        return request()->all();
     }
 
     /**
@@ -262,20 +261,20 @@ abstract class HCBaseController extends BaseController
      * Function which will be overridden by class which will use this one,
      * Recovers items from database by given id's
      * Just need to set wanted Model name with list parameter
-     * 
+     *
      * @return mixed
      */
     public function restore()
     {
         $toRestore = request()->input('list');
 
-        if( sizeOf($toRestore) <= 0 ) {
+        if (sizeOf($toRestore) <= 0) {
             return OCLog::info('CORE-0006', trans('core::core.nothing_to_restore'));
         }
 
         $response = $this->__restore($toRestore);
 
-        if( isset($response) ) {
+        if (isset($response)) {
             return $response;
         }
 
@@ -303,7 +302,7 @@ abstract class HCBaseController extends BaseController
     {
         try {
             return $this->merge();
-        } catch ( \Exception $e ) {
+        } catch (\Exception $e) {
             return OCLog::error('CORE-0007' . $e->getCode(), $e->getMessage());
         }
     }
@@ -320,6 +319,7 @@ abstract class HCBaseController extends BaseController
 
     //******************************************** MERGE END **********************************************************/
 
+    //****************************************** DUPLICATE START ******************************************************/
     /**
      * Duplicate function
      *
@@ -339,8 +339,29 @@ abstract class HCBaseController extends BaseController
     {
         try {
             return $this->duplicate($id);
-        } catch ( \Exception $e ) {
+        } catch (\Exception $e) {
             return OCLog::error('CORE-0008' . $e->getCode(), $e->getMessage());
         }
+    }
+
+    //****************************************** DUPLICATE END ********************************************************/
+
+    /**
+     * Get only valid request params for records filtering
+     *
+     * @param $availableFields - Model available fields to select
+     * @return mixed
+     */
+    {
+        $except = ['page', 'q', 'orderby', 'order'];
+
+        $givenFields = request()->except($except);
+
+        foreach ($givenFields as $fieldName => $value) {
+            if (!in_array($fieldName, $availableFields))
+                array_forget($givenFields, $fieldName);
+        }
+
+        return $givenFields;
     }
 }
