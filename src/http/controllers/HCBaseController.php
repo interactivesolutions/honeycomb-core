@@ -15,11 +15,23 @@ abstract class HCBaseController extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
+     * Current user
+     *
+     * @var \Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    protected $user;
+
+    /**
      * Default records per page
      *
      * @var int
      */
     protected $recordsPerPage = 50;
+
+    public function __construct()
+    {
+        $this->user = auth()->user();
+    }
 
     /**
      * Single function for unknown action error generation
