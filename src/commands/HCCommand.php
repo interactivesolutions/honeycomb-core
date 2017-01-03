@@ -70,7 +70,10 @@ class HCCommand extends Command
             $withFiles = ' ';
 
         if (file_exists($path))
+        {
             shell_exec('rm' . $withFiles . $path);
+            $this->info($path . ' directory deleted');
+        }
         else
             $this->info($path . ' directory does not exists');
     }
@@ -140,12 +143,21 @@ class HCCommand extends Command
 
     /**
      * Aborting the command sequence
-     * 
+     *
      * @param $message
      */
     protected function abort($message)
     {
         $this->error($message);
+        $this->executeAfterAbort();
         dd();
+    }
+
+    /**
+     * Function can be overridden by subclass to restore initial data
+     */
+    protected function executeAfterAbort()
+    {
+
     }
 }
