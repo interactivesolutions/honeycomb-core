@@ -143,6 +143,17 @@ class HCCommand extends Command
     }
 
     /**
+     * Get string in dash
+     *
+     * @param $string
+     * @return mixed
+     */
+    protected function stringWithDash($string)
+    {
+        return str_replace(['.', '/', ' ', '_'], '-', trim($string, '/'));
+    }
+
+    /**
      * Aborting the command sequence
      *
      * @param $message
