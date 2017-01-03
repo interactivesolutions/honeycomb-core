@@ -35,11 +35,13 @@ class HCCoreServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'HCCore');
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'HCCore');
 
-        if( ! $this->app->routesAreCached() ) {
+        if (!$this->app->routesAreCached())
+        {
             \Route::group([
                 'middleware' => 'web',
                 'namespace'  => $this->namespace,
-            ], function ($router) {
+            ], function ($router)
+            {
                 require __DIR__ . '/../http/routes/routes.logs.php';
             });
         }
@@ -59,7 +61,8 @@ class HCCoreServiceProvider extends ServiceProvider
 
         $this->registerProviders();
 
-        $this->app->bind('hclog', function () {
+        $this->app->bind('hclog', function ()
+        {
             return new HCLog;
         });
 
@@ -76,7 +79,8 @@ class HCCoreServiceProvider extends ServiceProvider
     {
         $filePath = __DIR__ . '/../helpers/helpers.php';
 
-        if( File::isFile($filePath) ) {
+        if (File::isFile($filePath))
+        {
             require_once $filePath;
         }
     }
@@ -87,11 +91,11 @@ class HCCoreServiceProvider extends ServiceProvider
     protected function registerProviders()
     {
         // register rollbar service provider
-        if( class_exists(HCRollbarServiceProvider::class) )
+        if (class_exists(HCRollbarServiceProvider::class))
             $this->app->register(HCRollbarServiceProvider::class);
 
         // register LogViewer service provider
-        if( class_exists(LaravelLogViewerServiceProvider::class) )
+        if (class_exists(LaravelLogViewerServiceProvider::class))
             $this->app->register(LaravelLogViewerServiceProvider::class);
     }
 }
