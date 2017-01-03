@@ -137,4 +137,15 @@ class HCCommand extends Command
     {
         return str_replace(['.', '/', ' ', '-'], '_', trim($string, '/'));
     }
+
+    /**
+     * Aborting the command sequence
+     * 
+     * @param $message
+     */
+    protected function abort($message)
+    {
+        $this->error($message);
+        dd();
+    }
 }
