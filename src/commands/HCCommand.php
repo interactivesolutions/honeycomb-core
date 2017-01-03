@@ -37,7 +37,7 @@ class HCCommand extends Command
 
         $finalDirectory = '';
 
-        foreach($path as $directory)
+        foreach ($path as $directory)
         {
             $finalDirectory .= $directory;
 
@@ -59,8 +59,10 @@ class HCCommand extends Command
      */
     public function deleteDirectory($path, $withFiles = false)
     {
-        if ($path == '*') {
+        if ($path == '*')
+        {
             $this->info('Can not delete "*", please specify directory');
+
             return;
         }
 
@@ -73,8 +75,7 @@ class HCCommand extends Command
         {
             shell_exec('rm' . $withFiles . $path);
             $this->info($path . ' directory deleted');
-        }
-        else
+        } else
             $this->info($path . ' directory does not exists');
     }
 
@@ -127,7 +128,7 @@ class HCCommand extends Command
      */
     protected function stringWithDots($string)
     {
-        return str_replace('/', '.', $string);
+        return str_replace(['_', '/', ' ', '-'], '.', $string);
     }
 
     /**
