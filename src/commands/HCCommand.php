@@ -154,6 +154,17 @@ class HCCommand extends Command
     }
 
     /**
+     * Remove all items from string
+     *
+     * @param $string
+     * @return mixed
+     */
+    protected function stringOnly($string)
+    {
+        return str_replace(['.', ' ', '_', '-'], '', trim($string, '/'));
+    }
+
+    /**
      * Aborting the command sequence
      *
      * @param $message
