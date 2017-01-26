@@ -43,8 +43,8 @@ class HCCommand extends Command
 
             if (!file_exists($finalDirectory))
             {
-                $this->comment($finalDirectory . ' created');
                 mkdir($finalDirectory);
+                $this->info('Created: ' . $finalDirectory);
             }
 
             $finalDirectory .= '/';
@@ -104,9 +104,14 @@ class HCCommand extends Command
         if (isset($configuration['content']))
             $template = replaceBrackets($template, $configuration['content']);
 
+        $directory = array_filter(explode('/', $destination));
+        array_pop($directory);
+        $directory = implode('/', $directory);
+
+        $this->createDirectory($directory);
         $this->file->put($destination, $template);
 
-        $this->comment($destination . ' file created');
+        $this->info('Created: ' . $destination);
     }
 
     /**
