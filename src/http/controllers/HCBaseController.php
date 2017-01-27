@@ -109,9 +109,11 @@ abstract class HCBaseController extends BaseController
     {
         DB::beginTransaction();
 
-        try {
+        try
+        {
             $record = $this->create($data);
-        } catch (\Exception $e) {
+        } catch (\Exception $e)
+        {
             DB::rollback();
 
             return OCLog::error('CORE-0002' . $e->getCode(), $e->getMessage());
@@ -149,9 +151,11 @@ abstract class HCBaseController extends BaseController
     {
         DB::beginTransaction();
 
-        try {
+        try
+        {
             $record = $this->__update($id);
-        } catch (\Exception $e) {
+        } catch (\Exception $e)
+        {
             DB::rollback();
 
             return OCLog::error('CORE-0003' . $e->getCode(), $e->getMessage());
@@ -223,9 +227,11 @@ abstract class HCBaseController extends BaseController
 
         DB::beginTransaction();
 
-        try {
+        try
+        {
             $response = $callback($list);
-        } catch (\Exception $e) {
+        } catch (\Exception $e)
+        {
             DB::rollback();
 
             return OCLog::error('CORE-0005' . $e->getCode(), $e->getMessage());
@@ -310,9 +316,11 @@ abstract class HCBaseController extends BaseController
 
     protected function __merge()
     {
-        try {
+        try
+        {
             return $this->merge();
-        } catch (\Exception $e) {
+        } catch (\Exception $e)
+        {
             return OCLog::error('CORE-0007' . $e->getCode(), $e->getMessage());
         }
     }
@@ -347,9 +355,11 @@ abstract class HCBaseController extends BaseController
      */
     protected function __duplicate($id)
     {
-        try {
+        try
+        {
             return $this->duplicate($id);
-        } catch (\Exception $e) {
+        } catch (\Exception $e)
+        {
             return OCLog::error('CORE-0008' . $e->getCode(), $e->getMessage());
         }
     }
@@ -364,15 +374,28 @@ abstract class HCBaseController extends BaseController
      */
     protected function getRequestParameters($availableFields)
     {
-        $except = ['page', 'q', 'orderby', 'order'];
+        $except = ['page', 'q', 'd', 'orderby', 'order'];
 
         $givenFields = request()->except($except);
 
-        foreach ($givenFields as $fieldName => $value) {
+        foreach ($givenFields as $fieldName => $value)
             if (!in_array($fieldName, $availableFields))
                 array_forget($givenFields, $fieldName);
-        }
 
         return $givenFields;
+    }
+
+    /**
+     * Check for deleted records option
+     *
+     * @param $list
+     * @return mixed
+     */
+    protected function checkForDeleted($list)
+    {
+        if (request()->has('d') && request()->input('d') === '1')
+            $list = $list->onlyTrashed();
+
+        return $list;
     }
 }
