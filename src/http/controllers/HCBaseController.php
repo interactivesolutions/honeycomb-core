@@ -8,7 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use DB;
-use OCLog;
+use HCLog;
 
 abstract class HCBaseController extends BaseController
 {
@@ -116,7 +116,7 @@ abstract class HCBaseController extends BaseController
         {
             DB::rollback();
 
-            return OCLog::error('CORE-0002' . $e->getCode(), $e->getMessage());
+            return HCLog::error('CORE-0002' . $e->getCode(), $e->getMessage());
         }
 
         DB::commit();
@@ -158,7 +158,7 @@ abstract class HCBaseController extends BaseController
         {
             DB::rollback();
 
-            return OCLog::error('CORE-0003' . $e->getCode(), $e->getMessage());
+            return HCLog::error('CORE-0003' . $e->getCode(), $e->getMessage());
         }
 
         DB::commit();
@@ -223,7 +223,7 @@ abstract class HCBaseController extends BaseController
             $list = request()->input('list');
 
         if (sizeOf($list) <= 0)
-            return OCLog::info('CORE-0004', trans('core::core.nothing_to_delete'));
+            return HCLog::info('CORE-0004', trans('core::core.nothing_to_delete'));
 
         DB::beginTransaction();
 
@@ -234,7 +234,7 @@ abstract class HCBaseController extends BaseController
         {
             DB::rollback();
 
-            return OCLog::error('CORE-0005' . $e->getCode(), $e->getMessage());
+            return HCLog::error('CORE-0005' . $e->getCode(), $e->getMessage());
         }
 
         DB::commit();
@@ -287,7 +287,7 @@ abstract class HCBaseController extends BaseController
         $toRestore = request()->input('list');
 
         if (sizeOf($toRestore) <= 0)
-            return OCLog::info('CORE-0006', trans('core::core.nothing_to_restore'));
+            return HCLog::info('CORE-0006', trans('core::core.nothing_to_restore'));
 
         $response = $this->__restore($toRestore);
 
@@ -321,7 +321,7 @@ abstract class HCBaseController extends BaseController
             return $this->merge();
         } catch (\Exception $e)
         {
-            return OCLog::error('CORE-0007' . $e->getCode(), $e->getMessage());
+            return HCLog::error('CORE-0007' . $e->getCode(), $e->getMessage());
         }
     }
 
@@ -360,7 +360,7 @@ abstract class HCBaseController extends BaseController
             return $this->duplicate($id);
         } catch (\Exception $e)
         {
-            return OCLog::error('CORE-0008' . $e->getCode(), $e->getMessage());
+            return HCLog::error('CORE-0008' . $e->getCode(), $e->getMessage());
         }
     }
 
