@@ -69,7 +69,7 @@ abstract class HCBaseController extends BaseController
      */
     public function listData()
     {
-        return $this->unknownAction('');
+        return $this->unknownAction('listData');
     }
 
     /**
@@ -80,9 +80,9 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function single($id)
+    public function getSingleRecord($id)
     {
-        return $this->unknownAction('Single');
+        return $this->unknownAction('single');
     }
 
     /**
@@ -94,7 +94,7 @@ abstract class HCBaseController extends BaseController
      */
     public function search()
     {
-        return $this->unknownAction('Search');
+        return $this->unknownAction('search');
     }
 
     //***************************************************** CREATE START **********************************************/
@@ -145,7 +145,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    private function update($id)
+    public function update($id)
     {
         DB::beginTransaction();
 
@@ -169,7 +169,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function __update($id)
+    protected function __update($id)
     {
         return $this->unknownAction('Update');
     }
@@ -184,10 +184,10 @@ abstract class HCBaseController extends BaseController
      * Just need to set wanted Model name with list parameter
      * Also force deletes if it's set to true
      *
-     * @param $toDelete
+     * @param array $list
      * @return mixed
      */
-    protected function __delete($toDelete)
+    protected function __delete(array $list)
     {
         return $this->unknownAction('delete');
     }
@@ -214,17 +214,17 @@ abstract class HCBaseController extends BaseController
     private function initializeDelete($id, $callback)
     {
         if ($id)
-            $toDelete = [$id];
+            $list = [$id];
         else
-            $toDelete = request()->input('list');
+            $list = request()->input('list');
 
-        if (sizeOf($toDelete) <= 0)
+        if (sizeOf($list) <= 0)
             return OCLog::info('CORE-0004', trans('core::core.nothing_to_delete'));
 
         DB::beginTransaction();
 
         try {
-            $response = $callback($toDelete);
+            $response = $callback($list);
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -247,10 +247,10 @@ abstract class HCBaseController extends BaseController
      * Just need to set wanted Model name with list parameter
      * Also force deletes if it's set to true
      *
-     * @param $toForceDelete
+     * @param array $list
      * @return mixed
      */
-    protected function __forceDelete($toForceDelete)
+    protected function __forceDelete(array $list)
     {
         return $this->unknownAction('delete');
     }
@@ -280,15 +280,13 @@ abstract class HCBaseController extends BaseController
     {
         $toRestore = request()->input('list');
 
-        if (sizeOf($toRestore) <= 0) {
+        if (sizeOf($toRestore) <= 0)
             return OCLog::info('CORE-0006', trans('core::core.nothing_to_restore'));
-        }
 
         $response = $this->__restore($toRestore);
 
-        if (isset($response)) {
+        if (isset($response))
             return $response;
-        }
 
         return ["success" => true];
     }
@@ -298,10 +296,10 @@ abstract class HCBaseController extends BaseController
      * this method will be used from list view to restore multiple records at a time
      * This function will be called only if header as updateType:restore
      *
-     * @param $toRestore
+     * @param array $list
      * @return mixed
      */
-    protected function __restore($toRestore)
+    protected function __restore(array $list)
     {
         return $this->unknownAction('restore');
     }
