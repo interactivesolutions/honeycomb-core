@@ -188,4 +188,17 @@ class HCCommand extends Command
     {
 
     }
+
+    /**
+     * Scan folders for honeycomb configuration files
+     *
+     * @return array
+     */
+    protected function getConfigFiles()
+    {
+        $projectFiles = $this->file->glob(app_path('honeycomb/config.json'));
+        $packageFiles = $this->file->glob(__DIR__ . '/../../../../*/*/*/*/honeycomb/config.json');
+        
+        return array_merge($packageFiles, $projectFiles);
+    }
 }
