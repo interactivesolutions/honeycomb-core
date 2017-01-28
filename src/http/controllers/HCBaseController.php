@@ -374,7 +374,7 @@ abstract class HCBaseController extends BaseController
      */
     protected function getRequestParameters($availableFields)
     {
-        $except = ['page', 'q', 'd', 'orderby', 'order'];
+        $except = ['page', 'q', 'd', '_order'];
 
         $givenFields = request()->except($except);
 
