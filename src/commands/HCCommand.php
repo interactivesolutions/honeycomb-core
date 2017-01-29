@@ -32,23 +32,7 @@ class HCCommand extends Command
      */
     public function createDirectory($path)
     {
-        $path = str_replace('\\', '/', $path);
-        $path = explode('/', $path);
-
-        $finalDirectory = '';
-
-        foreach ($path as $directory)
-        {
-            $finalDirectory .= $directory;
-
-            if (!file_exists($finalDirectory))
-            {
-                mkdir($finalDirectory);
-                $this->info('Created: ' . $finalDirectory);
-            }
-
-            $finalDirectory .= '/';
-        }
+        mkdir($path, 0755, true);
     }
 
     /**
@@ -59,6 +43,7 @@ class HCCommand extends Command
      */
     public function deleteDirectory($path, $withFiles = false)
     {
+        //TODO: Get rid of exec command here by using rmdir construct.
         if ($path == '*')
         {
             $this->info('Can not delete "*", please specify directory');
