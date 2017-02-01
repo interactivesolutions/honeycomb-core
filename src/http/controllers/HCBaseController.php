@@ -111,7 +111,7 @@ abstract class HCBaseController extends BaseController
 
         try
         {
-            $record = $this->create($data);
+            $record = $this->__create($data);
         } catch (\Exception $e)
         {
             DB::rollback();
