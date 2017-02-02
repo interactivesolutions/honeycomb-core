@@ -32,7 +32,8 @@ class HCCommand extends Command
      */
     public function createDirectory($path)
     {
-        mkdir($path, 0755, true);
+        if(!$this->file->exists($path))
+            mkdir($path, 0755, true);
     }
 
     /**
