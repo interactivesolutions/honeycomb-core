@@ -15,22 +15,15 @@ abstract class HCBaseController extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * Current user
-     *
-     * @var \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    protected $user;
-
-    /**
      * Default records per page
      *
      * @var int
      */
     protected $recordsPerPage = 50;
 
-    public function __construct()
+    public function user()
     {
-        $this->user = auth()->user();
+        return auth()->user();
     }
 
     /**
@@ -111,7 +104,7 @@ abstract class HCBaseController extends BaseController
 
         try
         {
-            $record = $this->create($data);
+            $record = $this->__create($data);
         } catch (\Exception $e)
         {
             DB::rollback();
