@@ -16,6 +16,8 @@
   ],
   "require": {
     "php": ">=5.6.4",
+    "laravel\/framework": "5.3.*",
+    "ramsey\/uuid": "^3.5",
     "jenssegers/rollbar": "*",
     "rap2hpoutre/laravel-log-viewer": "*",
     "spatie/laravel-cookie-consent": "1.*"

@@ -26,42 +26,36 @@ class HCCommand extends Command
     }
 
     /**
-     * Creating directory if not exists
+     * Create folder recursively if not exists.
      *
      * @param $path
+     * @return bool
      */
     public function createDirectory($path)
     {
-        mkdir($path, 0755, true);
+        if (!is_dir($path)) {
+            return mkdir($path, 0755, true);
+        }
     }
 
     /**
-     * Deleting existing directory
+     * Deleting existing folder
      *
      * @param $path
      * @param bool $withFiles
      */
     public function deleteDirectory($path, $withFiles = false)
     {
-        //TODO: Get rid of exec command here by using rmdir construct.
-        if ($path == '*')
-        {
-            $this->info('Can not delete "*", please specify directory');
-
-            return;
+        if ($path == '*') {
+            $this->abort('Can not delete "*", please specify folder or file.');
         }
 
-        if ($withFiles)
-            $withFiles = ' -R ';
-        else
-            $withFiles = ' ';
-
-        if (file_exists($path))
-        {
-            shell_exec('rm' . $withFiles . $path);
-            $this->info($path . ' directory deleted');
-        } else
-            $this->info($path . ' directory does not exists');
+        $files = glob($path . '/*');
+        foreach ($files as $file) {
+            if (is_file($file) && !$withFiles) return;
+            is_dir($file) ? $this->deleteDirectory($file, $withFiles) : unlink($file);
+        }
+        if (is_dir($path)) rmdir($path);
     }
 
     /**
@@ -183,7 +177,7 @@ class HCCommand extends Command
     {
         $projectFiles = $this->file->glob(app_path('honeycomb/config.json'));
         $packageFiles = $this->file->glob(__DIR__ . '/../../../../*/*/*/*/honeycomb/config.json');
-        
+
         return array_merge($packageFiles, $projectFiles);
     }
 }

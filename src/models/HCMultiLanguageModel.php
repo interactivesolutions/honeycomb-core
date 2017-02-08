@@ -16,12 +16,12 @@ class HCMultiLanguageModel extends HCUuidModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function translations()
+    public function translations ()
     {
-        if( is_null($this->translationsClass) )
-            $this->translationsClass = get_class($this) . 'Translations';
+        if (is_null ($this->translationsClass))
+            $this->translationsClass = get_class ($this) . 'Translations';
 
-        return $this->hasMany($this->translationsClass, 'record_id', 'id');
+        return $this->hasMany ($this->translationsClass, 'record_id', 'id');
     }
 
     /**
@@ -30,17 +30,17 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param array $data
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function updateTranslation(array $data)
+    public function updateTranslation (array $data)
     {
-        $translations = $this->translations()->where([
+        $translations = $this->translations ()->where ([
             'record_id'     => $this->id,
-            'language_code' => array_get($data, 'language_code'),
-        ])->first();
+            'language_code' => array_get ($data, 'language_code'),
+        ])->first ();
 
-        if( is_null($translations) ) {
-            $translations = $this->translations()->create($data);
+        if (is_null ($translations)) {
+            $translations = $this->translations ()->create ($data);
         } else {
-            $translations->update($data);
+            $translations->update ($data);
         }
 
         return $translations;
@@ -51,10 +51,10 @@ class HCMultiLanguageModel extends HCUuidModel
      *
      * @param array $data
      */
-    public function updateTranslations(array $data)
+    public function updateTranslations (array $data)
     {
         foreach ($data as $translationsData) {
-            $this->updateTranslation($translationsData);
+            $this->updateTranslation ($translationsData);
         }
     }
 
@@ -64,13 +64,13 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param string $nameKey
      * @return mixed
      */
-    public static function translatedList($nameKey = 'name')
+    public static function translatedList ($nameKey = 'name')
     {
-        return (new static())->with('translations')->get()->map(function ($item, $key) use ($nameKey) {
+        return (new static())->with ('translations')->get ()->map (function ($item, $key) use ($nameKey) {
             return [
                 'id'    => $item->id,
-                'label' => get_translation_name(
-                    $nameKey, app()->getLocale(), array_get($item, 'translations')
+                'label' => get_translation_name (
+                    $nameKey, app ()->getLocale (), array_get ($item, 'translations')
                 ),
             ];
         });
@@ -82,10 +82,10 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param string $key
      * @return mixed
      */
-    public function getTranslationValue($key = 'name')
+    public function getTranslationValue ($key = 'name')
     {
-        return get_translation_name(
-            $key, app()->getLocale(), $this->translations
+        return get_translation_name (
+            $key, app ()->getLocale (), $this->translations
         );
     }
 }
