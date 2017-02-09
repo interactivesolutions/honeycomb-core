@@ -46,11 +46,11 @@ class HCCommand extends Command
      */
     public function deleteDirectory($path, $withFiles = false)
     {
-        if ($path == '*') {
+        if ($path == '*')
             $this->abort('Can not delete "*", please specify folder or file.');
-        }
 
         $files = glob($path . '/*');
+        
         foreach ($files as $file) {
             if (is_file($file) && !$withFiles) return;
             is_dir($file) ? $this->deleteDirectory($file, $withFiles) : unlink($file);
