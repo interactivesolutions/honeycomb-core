@@ -5,7 +5,7 @@ namespace interactivesolutions\honeycombcore\providers;
 use File;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use interactivesolutions\honeycombcore\errors\facades\HCLog;
+use interactivesolutions\honeycombcore\errors\HCLog;
 use Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider;
 
 class HCCoreServiceProvider extends ServiceProvider
@@ -48,7 +48,7 @@ class HCCoreServiceProvider extends ServiceProvider
         }
 
         // register oc log class facade
-        AliasLoader::getInstance()->alias('HCLog', HCLog::class);
+        AliasLoader::getInstance()->alias('HCLog', \interactivesolutions\honeycombcore\errors\facades\HCLog::class);
     }
 
     /**
