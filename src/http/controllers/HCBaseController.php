@@ -39,7 +39,7 @@ abstract class HCBaseController extends BaseController
      */
     protected function unknownAction($action)
     {
-        return HCLog::info('CORE-0001', trans('core::core.unknown_action' . $action), 501);
+        return HCLog::info('CORE-0001', trans('HCTranslations::core.unknown_action' . $action), 501);
     }
 
     /**
@@ -220,7 +220,7 @@ abstract class HCBaseController extends BaseController
             $list = request()->input('list');
 
         if (sizeOf($list) <= 0)
-            return HCLog::info('CORE-0004', trans('core::core.nothing_to_delete'));
+            return HCLog::info('CORE-0004', trans('HCTranslations::core.nothing_to_delete'));
 
         DB::beginTransaction();
 
@@ -284,7 +284,7 @@ abstract class HCBaseController extends BaseController
         $toRestore = request()->input('list');
 
         if (sizeOf($toRestore) <= 0)
-            return HCLog::info('CORE-0006', trans('core::core.nothing_to_restore'));
+            return HCLog::info('CORE-0006', trans('HCTranslations::core.nothing_to_restore'));
 
         $response = $this->__restore($toRestore);
 
