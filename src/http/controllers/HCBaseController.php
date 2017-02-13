@@ -21,6 +21,11 @@ abstract class HCBaseController extends BaseController
      */
     protected $recordsPerPage = 50;
 
+    /**
+     *  Get the currently authenticated user.
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     */
     public function user()
     {
         return auth()->user();
@@ -46,7 +51,7 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
-     * Returning admin view
+     * adminView
      *
      * @return mixed
      */
@@ -79,8 +84,7 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
-     * Function which will be overridden by class which will use this one,
-     * here the database will be searched and JSON objects will be returned,
+     * Function which will search JSON objects in the database and returns it,
      * mostly for search tag input field
      *
      * @return mixed
@@ -134,8 +138,7 @@ abstract class HCBaseController extends BaseController
     //***************************************************** UPDATE START **********************************************/
 
     /**
-     * Function which will be overridden by class which will use this one,
-     * to create new record
+     * Function which will update record
      *
      * @param $id
      * @return mixed
@@ -190,6 +193,7 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
+     * Deletes items from database by given id's.
      *
      * @param $id
      * @return mixed
@@ -255,6 +259,7 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
+     * Force deletes items from database by given id's.
      *
      * @param $id
      * @return mixed
@@ -269,7 +274,6 @@ abstract class HCBaseController extends BaseController
     //****************************************** RESTORE START ********************************************************/
 
     /**
-     * Function which will be overridden by class which will use this one,
      * Recovers items from database by given id's
      * Just need to set wanted Model name with list parameter
      *
