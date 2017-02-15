@@ -366,20 +366,51 @@ abstract class HCBaseController extends BaseController
     /**
      * Get only valid request params for records filtering
      *
+     * @param $query
      * @param $availableFields - Model available fields to select
      * @return mixed
      */
-    protected function getRequestParameters($availableFields)
+    protected function getRequestParameters ($query, $availableFields)
     {
-        $except = ['page', 'q', '_d', '_order'];
+        $except = ['page', 'q', 'deleted', 'sort_by', 'sort_order'];
 
-        $givenFields = request()->except($except);
+        $givenFields = request ()->except ($except);
 
-        foreach ($givenFields as $fieldName => $value)
-            if (!in_array($fieldName, $availableFields))
-                array_forget($givenFields, $fieldName);
+        foreach ($givenFields as $fieldName => $value) {
 
-        return $givenFields;
+            $from = substr ($fieldName, 0, -5);
+            $to = substr($fieldName, 0, -3);
+
+            if (in_array($from, $availableFields))
+                $query->where($from, '>=', $value);
+
+            if (in_array($to, $availableFields))
+                $query->where($to, '<=', $value);
+
+            if (in_array ($fieldName, $availableFields))
+                $query->where ($fieldName, '=', $value);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Ordering content
+     *
+     * @param $list
+     * @param $availableFields
+     * @return mixed
+     */
+    protected function orderData($list, $availableFields)
+    {
+        $sortBy = request()->input('sort_by');
+        $sortOrder = request()->input('sort_order');
+
+        if (in_array($sortBy, $availableFields))
+            if (in_array(strtolower($sortOrder), ['asc', 'desc']))
+                $list = $list->orderBy($sortBy, $sortOrder);
+
+        return $list;
     }
 
     /**
@@ -390,7 +421,7 @@ abstract class HCBaseController extends BaseController
      */
     protected function checkForDeleted($list)
     {
-        if (request()->has('_d') && request()->input('_d') === '1')
+        if (request()->has('deleted') && request()->input('deleted') === '1')
             $list = $list->onlyTrashed();
 
         return $list;
