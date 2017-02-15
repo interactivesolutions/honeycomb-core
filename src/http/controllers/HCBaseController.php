@@ -371,7 +371,7 @@ abstract class HCBaseController extends BaseController
      */
     protected function getRequestParameters($availableFields)
     {
-        $except = ['page', 'q', 'd', '_order'];
+        $except = ['page', 'q', '_d', '_order'];
 
         $givenFields = request()->except($except);
 
@@ -390,7 +390,7 @@ abstract class HCBaseController extends BaseController
      */
     protected function checkForDeleted($list)
     {
-        if (request()->has('d') && request()->input('d') === '1')
+        if (request()->has('_d') && request()->input('_d') === '1')
             $list = $list->onlyTrashed();
 
         return $list;
