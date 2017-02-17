@@ -381,14 +381,17 @@ abstract class HCBaseController extends BaseController
             $from = substr ($fieldName, 0, -5);
             $to = substr($fieldName, 0, -3);
 
-            if (in_array($from, $availableFields))
-                $query->where($from, '>=', $value);
+            if (in_array ($from, $availableFields) && $value != '')
+                $query->where ($from, '>=', $value);
 
-            if (in_array($to, $availableFields))
-                $query->where($to, '<=', $value);
+            if (in_array ($to, $availableFields) && $value != '')
+                $query->where ($to, '<=', $value);
 
             if (in_array ($fieldName, $availableFields))
-                $query->where ($fieldName, '=', $value);
+                if (is_array ($value))
+                    $query->whereIn ($fieldName, $value);
+                else
+                    $query->where ($fieldName, '=', $value);
         }
 
         return $query;
