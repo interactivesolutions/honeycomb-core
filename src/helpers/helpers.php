@@ -79,26 +79,55 @@ if (!function_exists ('pluralizeLT')) {
     }
 }
 
-if( ! function_exists('isPackageEnabled') ) {
+if (!function_exists ('isPackageEnabled')) {
     /**
      * Check if package is registered at config/app.php file
      *
      * @param $provider
      * @return bool
      */
-    function isPackageEnabled($provider)
+    function isPackageEnabled ($provider)
     {
-        $registeredProvidersArray = array_keys(app()->getLoadedProviders());
+        $registeredProvidersArray = array_keys (app ()->getLoadedProviders ());
 
-        return in_array($provider, $registeredProvidersArray);
+        return in_array ($provider, $registeredProvidersArray);
     }
 }
 
-if (!function_exists('settings'))
-{
+if (!function_exists ('settings')) {
     //TODO create settings service
-    function settings($key)
+    function settings ($key)
     {
         return $key;
+    }
+}
+
+if (!function_exists ('formManagerYesNo')) {
+
+    function formManagerYesNo ($id, $trans, $required = 0, $requiredVisible = 0)
+    {
+        return [
+            "type"            => "dropDownList",
+            "fieldID"         => $id,
+            "label"           => $trans,
+            "required"        => $required,
+            "requiredVisible" => $requiredVisible,
+            "options"         => [['id' => '1', 'label' => 'Yes'], ['id' => '0', 'label' => 'No']]
+        ];
+    }
+}
+
+if (!function_exists ('formManagerCheckBox')) {
+
+    function formManagerCheckBox ($id, $trans, $required = 0, $requiredVisible = 0)
+    {
+        return [
+            "type"            => "checkBoxList",
+            "fieldID"         => $id,
+            "label"           => $trans,
+            "required"        => $required,
+            "requiredVisible" => $requiredVisible,
+            "options"         => [['id' => '1', 'label' => 'Yes']]
+        ];
     }
 }
