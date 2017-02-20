@@ -200,7 +200,7 @@ abstract class HCBaseController extends BaseController
      */
     public function delete($id = null)
     {
-        return $this->initializeDelete($id, $this->__delete);
+        return $this->initializeDelete($id, true);
     }
 
     //***************************************************** DELETE END ************************************************/
@@ -209,11 +209,14 @@ abstract class HCBaseController extends BaseController
      * Function which will actually call deletion function
      *
      * @param $id
-     * @param $callback
+     * @param $soft
      * @return array
+     * @internal param $callback
      */
-    private function initializeDelete($id, $callback)
+    private function initializeDelete($id, $soft)
     {
+
+
         if ($id)
             $list = [$id];
         else
@@ -226,7 +229,10 @@ abstract class HCBaseController extends BaseController
 
         try
         {
-            $response = $callback($list);
+            if ($soft)
+                $response = $this->__delete($list);
+            else
+                $response = $this->__forceDelete($list);
         } catch (\Exception $e)
         {
             DB::rollback();
@@ -266,7 +272,7 @@ abstract class HCBaseController extends BaseController
      */
     public function forceDelete($id = null)
     {
-        return $this->initializeDelete($id, $this->__forceDelete);
+        return $this->initializeDelete($id, false);
     }
 
     //********************************************** FORCE DELETE END *************************************************/
