@@ -102,6 +102,38 @@ if (!function_exists ('settings')) {
     }
 }
 
+if (!function_exists ('sanitizeString')) {
+
+    /**
+     * Returns a sanitized string, typically for URLs.
+     * http://stackoverflow.com/questions/2668854/sanitizing-strings-to-make-them-url-and-filename-safe
+     *
+     * @param $string - The string to sanitize.
+     * @param bool $forceLowerCase - Force the string to lowercase?
+     * @param bool $onlyLetter - If set to *true*, will remove all non-alphanumeric characters.
+     *
+     * @return mixed|string
+     */
+    function sanitizeString ($string, $forceLowerCase = false, $onlyLetter = false)
+    {
+        $strip = [
+            "~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "=", "+", "[", "{", "]",
+            "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;",
+            "â€”", "â€“", ",", "<", ".", ">", "/", "?",
+        ];
+
+        $clean = trim (str_replace ($strip, "", strip_tags ($string)));
+        $clean = preg_replace ('/\s+/', "-", $clean);
+        $clean = ($onlyLetter) ? preg_replace ("/[^a-zA-Z0-9]/", "", $clean) : $clean;
+
+        return ($forceLowerCase) ?
+            (function_exists ('mb_strtolower')) ?
+                mb_strtolower ($clean, 'UTF-8') :
+                strtolower ($clean) :
+            $clean;
+    }
+}
+
 if (!function_exists ('formManagerYesNo')) {
 
     function formManagerYesNo ($id, $trans, $required = 0, $requiredVisible = 0)
