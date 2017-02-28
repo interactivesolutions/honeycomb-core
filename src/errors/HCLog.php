@@ -192,4 +192,15 @@ class HCLog
 
         return response()->json($response, $status);
     }
+
+    /**
+     * Log the message and stop
+     *
+     * @param $message
+     */
+    public function stop($message)
+    {
+        Log::info($message);
+        exit();
+    }
 }
