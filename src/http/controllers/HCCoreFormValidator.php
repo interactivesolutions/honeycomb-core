@@ -79,7 +79,7 @@ abstract class HCCoreFormValidator
      * @param $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(string $id)
     {
         $this->id = $id;
 
@@ -92,8 +92,15 @@ abstract class HCCoreFormValidator
      * @param $errors
      * @return mixed
      */
-    protected function formatErrors($errors)
+    protected function formatErrors(string $errors)
     {
-        return $errors;
+        $errors = json_decode($errors);
+        $output = '';
+
+        foreach ($errors as $error)
+            foreach ($error as $message)
+                $output .= $message . "\r\n";
+
+        return $output;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace interactivesolutions\honeycombcore\http\controllers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -78,7 +79,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function getSingleRecord($id)
+    public function getSingleRecord(string $id)
     {
         return $this->unknownAction('single');
     }
@@ -102,7 +103,7 @@ abstract class HCBaseController extends BaseController
      * @param null $data
      * @return mixed
      */
-    public function create($data = null)
+    public function create(array $data = null)
     {
         DB::beginTransaction();
 
@@ -128,7 +129,7 @@ abstract class HCBaseController extends BaseController
      * @param null $data
      * @return mixed
      */
-    protected function __create($data = null)
+    protected function __create(array $data = null)
     {
         return $this->unknownAction('__create');
     }
@@ -143,7 +144,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function update($id)
+    public function update(string $id)
     {
         DB::beginTransaction();
 
@@ -169,7 +170,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    protected function __update($id)
+    protected function __update(string $id)
     {
         return $this->unknownAction('Update');
     }
@@ -198,7 +199,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function delete($id = null)
+    public function delete(string $id = null)
     {
         return $this->initializeDelete($id, true);
     }
@@ -213,10 +214,8 @@ abstract class HCBaseController extends BaseController
      * @return array
      * @internal param $callback
      */
-    private function initializeDelete($id, $soft)
+    private function initializeDelete(string $id = null, bool $soft)
     {
-
-
         if ($id)
             $list = [$id];
         else
@@ -270,7 +269,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function forceDelete($id = null)
+    public function forceDelete(string $id = null)
     {
         return $this->initializeDelete($id, false);
     }
@@ -347,7 +346,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function duplicate($id)
+    public function duplicate(string $id)
     {
         return $this->unknownAction('');
     }
@@ -356,7 +355,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    protected function __duplicate($id)
+    protected function __duplicate(string $id)
     {
         try
         {
@@ -376,7 +375,7 @@ abstract class HCBaseController extends BaseController
      * @param $availableFields - Model available fields to select
      * @return mixed
      */
-    protected function getRequestParameters ($query, $availableFields)
+    protected function getRequestParameters (Builder $query,  array $availableFields)
     {
         $except = ['page', 'q', 'deleted', 'sort_by', 'sort_order'];
 
@@ -406,33 +405,33 @@ abstract class HCBaseController extends BaseController
     /**
      * Ordering content
      *
-     * @param $list
+     * @param $query
      * @param $availableFields
      * @return mixed
      */
-    protected function orderData($list, $availableFields)
+    protected function orderData(Builder $query, array $availableFields)
     {
         $sortBy = request()->input('sort_by');
         $sortOrder = request()->input('sort_order');
 
         if (in_array($sortBy, $availableFields))
             if (in_array(strtolower($sortOrder), ['asc', 'desc']))
-                $list = $list->orderBy($sortBy, $sortOrder);
+                $query = $query->orderBy($sortBy, $sortOrder);
 
-        return $list;
+        return $query;
     }
 
     /**
      * Check for deleted records option
      *
-     * @param $list
+     * @param $query
      * @return mixed
      */
-    protected function checkForDeleted($list)
+    protected function checkForDeleted(Builder $query)
     {
         if (request()->has('deleted') && request()->input('deleted') === '1')
-            $list = $list->onlyTrashed();
+            $query = $query->onlyTrashed();
 
-        return $list;
+        return $query;
     }
 }

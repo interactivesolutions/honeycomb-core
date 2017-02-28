@@ -15,7 +15,7 @@ class HCFormManagerController extends Controller
      * @param null $key
      * @return mixed
      */
-    public function getFormStructure($key)
+    public function getFormStructure(string $key)
     {
         return $this->getForm($key);
     }
@@ -26,7 +26,7 @@ class HCFormManagerController extends Controller
      * @param null $key
      * @return mixed
      */
-    public function getFormStructureString($key)
+    public function getFormStructureString(string $key)
     {
         return json_encode($this->getForm($key));
     }
@@ -37,7 +37,7 @@ class HCFormManagerController extends Controller
      * @param $key
      * @return mixed
      */
-    private function getForm($key)
+    private function getForm(string $key)
     {
         if (!Cache::has('hc-forms'))
             Artisan::call('hc:forms');
