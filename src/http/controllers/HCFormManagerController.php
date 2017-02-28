@@ -12,7 +12,7 @@ class HCFormManagerController extends Controller
     /**
      * Get form structure as json object
      *
-     * @param null $key
+     * @param string $key
      * @return mixed
      */
     public function getFormStructure(string $key)
@@ -23,7 +23,7 @@ class HCFormManagerController extends Controller
     /**
      * Get form structure as a json string
      *
-     * @param null $key
+     * @param string $key
      * @return mixed
      */
     public function getFormStructureString(string $key)
@@ -34,7 +34,7 @@ class HCFormManagerController extends Controller
     /**
      * Get form from cache or get it from class and than store it to cache
      *
-     * @param $key
+     * @param string $key
      * @return mixed
      */
     private function getForm(string $key)
@@ -44,17 +44,15 @@ class HCFormManagerController extends Controller
 
         $list = Cache::get('hc-forms');
 
-        $new = substr ($key, 0, -4);
+        $new = substr($key, 0, -4);
         $edit = substr($key, 0, -5);
 
-        if (isset($list[$new]))
-        {
+        if (isset($list[$new])) {
             $form = new $list[$new]();
             return $form->createForm();
         }
 
-        if (isset($list[$edit]))
-        {
+        if (isset($list[$edit])) {
             $form = new $list[$edit]();
             return $form->createForm(true);
         }

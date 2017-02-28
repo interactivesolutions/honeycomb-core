@@ -36,13 +36,11 @@ class HCCoreServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'HCCore');
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'HCCore');
 
-        if (!$this->app->routesAreCached())
-        {
+        if (!$this->app->routesAreCached()) {
             \Route::group([
                 'middleware' => 'web',
                 'namespace'  => $this->namespace,
-            ], function ($router)
-            {
+            ], function ($router) {
                 require __DIR__ . '/../http/routes/routes.form-manager.php';
                 require __DIR__ . '/../http/routes/routes.logs.php';
             });
@@ -63,8 +61,7 @@ class HCCoreServiceProvider extends ServiceProvider
 
         $this->registerProviders();
 
-        $this->app->bind('hclog', function ()
-        {
+        $this->app->bind('hclog', function () {
             return new HCLog;
         });
 
@@ -81,8 +78,7 @@ class HCCoreServiceProvider extends ServiceProvider
     {
         $filePath = __DIR__ . '/../helpers/helpers.php';
 
-        if (File::isFile($filePath))
-        {
+        if (File::isFile($filePath)) {
             require_once $filePath;
         }
     }

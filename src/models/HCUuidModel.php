@@ -40,7 +40,7 @@ class HCUuidModel extends HCModel
      */
     public function generateNewId()
     {
-        if( isset($this->attributes['id']) ) {
+        if (isset($this->attributes['id'])) {
             return $this->attributes['id'];
         }
 

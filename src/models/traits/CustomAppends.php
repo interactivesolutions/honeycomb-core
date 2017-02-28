@@ -18,14 +18,14 @@ trait CustomAppends
      */
     protected function getArrayAbleAppends()
     {
-        if( property_exists($this, 'customAppends') ) {
+        if (property_exists($this, 'customAppends')) {
 
             // you can set custom appends array
-            if( is_array(self::$customAppends) && count(self::$customAppends) )
+            if (is_array(self::$customAppends) && count(self::$customAppends))
                 return self::$customAppends;
 
             // or if you want to disable custom appends just write false i.e. Model::$customAppends = false;
-            elseif( is_bool(self::$customAppends) && ! self::$customAppends )
+            elseif (is_bool(self::$customAppends) && !self::$customAppends)
                 return [];
         }
 
