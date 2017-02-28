@@ -100,7 +100,7 @@ abstract class HCBaseController extends BaseController
     /**
      * Function which will create new record
      *
-     * @param null $data
+     * @param array|null $data
      * @return mixed
      */
     public function create(array $data = null)
@@ -124,7 +124,7 @@ abstract class HCBaseController extends BaseController
      * Function which will be overridden by class which will use this one,
      * to create new record
      *
-     * @param null $data
+     * @param array|null $data
      * @return mixed
      */
     protected function __create(array $data = null)
@@ -169,6 +169,45 @@ abstract class HCBaseController extends BaseController
     protected function __update(string $id)
     {
         return $this->unknownAction('Update');
+    }
+
+    //***************************************************** UPDATE END ************************************************/
+
+    //***************************************************** UPDATE STRICT START ***************************************/
+
+    /**
+     * Function which will update specific values of the record
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function updateStrict(string $id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $record = $this->__updateStrict($id);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return HCLog::error('CORE-0003' . $e->getCode(), $e->getMessage());
+        }
+
+        DB::commit();
+
+        return $record;
+    }
+
+    /**
+     * Function which will be overridden by class which will use this one,
+     * to update specific values of the record
+     *
+     * @param $id
+     * @return mixed
+     */
+    protected function __updateStrict(string $id)
+    {
+        return $this->unknownAction('UpdateStrict');
     }
 
     //***************************************************** UPDATE END ************************************************/
