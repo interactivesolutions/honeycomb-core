@@ -107,11 +107,9 @@ abstract class HCBaseController extends BaseController
     {
         DB::beginTransaction();
 
-        try
-        {
+        try {
             $record = $this->__create($data);
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             DB::rollback();
 
             return HCLog::error('CORE-0002' . $e->getCode(), $e->getMessage());
@@ -148,11 +146,9 @@ abstract class HCBaseController extends BaseController
     {
         DB::beginTransaction();
 
-        try
-        {
+        try {
             $record = $this->__update($id);
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             DB::rollback();
 
             return HCLog::error('CORE-0003' . $e->getCode(), $e->getMessage());
@@ -209,8 +205,8 @@ abstract class HCBaseController extends BaseController
     /**
      * Function which will actually call deletion function
      *
-     * @param $id
-     * @param $soft
+     * @param string $id
+     * @param bool $soft
      * @return array
      * @internal param $callback
      */
@@ -226,14 +222,12 @@ abstract class HCBaseController extends BaseController
 
         DB::beginTransaction();
 
-        try
-        {
+        try {
             if ($soft)
                 $response = $this->__delete($list);
             else
                 $response = $this->__forceDelete($list);
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             DB::rollback();
 
             return HCLog::error('CORE-0005' . $e->getCode(), $e->getMessage());
@@ -266,7 +260,7 @@ abstract class HCBaseController extends BaseController
     /**
      * Force deletes items from database by given id's.
      *
-     * @param $id
+     * @param string $id
      * @return mixed
      */
     public function forceDelete(string $id = null)
@@ -318,11 +312,9 @@ abstract class HCBaseController extends BaseController
 
     protected function __merge()
     {
-        try
-        {
+        try {
             return $this->merge();
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return HCLog::error('CORE-0007' . $e->getCode(), $e->getMessage());
         }
     }
@@ -343,7 +335,7 @@ abstract class HCBaseController extends BaseController
     /**
      * Duplicate function
      *
-     * @param $id
+     * @param string $id
      * @return mixed
      */
     public function duplicate(string $id)
@@ -352,16 +344,14 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param string $id
      * @return mixed
      */
     protected function __duplicate(string $id)
     {
-        try
-        {
+        try {
             return $this->duplicate($id);
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return HCLog::error('CORE-0008' . $e->getCode(), $e->getMessage());
         }
     }
@@ -371,32 +361,32 @@ abstract class HCBaseController extends BaseController
     /**
      * Get only valid request params for records filtering
      *
-     * @param $query
-     * @param $availableFields - Model available fields to select
+     * @param Builder $query
+     * @param array $availableFields - Model available fields to select
      * @return mixed
      */
-    protected function getRequestParameters (Builder $query,  array $availableFields)
+    protected function getRequestParameters(Builder $query, array $availableFields)
     {
         $except = ['page', 'q', 'deleted', 'sort_by', 'sort_order'];
 
-        $givenFields = request ()->except ($except);
+        $givenFields = request()->except($except);
 
         foreach ($givenFields as $fieldName => $value) {
 
-            $from = substr ($fieldName, 0, -5);
+            $from = substr($fieldName, 0, -5);
             $to = substr($fieldName, 0, -3);
 
-            if (in_array ($from, $availableFields) && $value != '')
-                $query->where ($from, '>=', $value);
+            if (in_array($from, $availableFields) && $value != '')
+                $query->where($from, '>=', $value);
 
-            if (in_array ($to, $availableFields) && $value != '')
-                $query->where ($to, '<=', $value);
+            if (in_array($to, $availableFields) && $value != '')
+                $query->where($to, '<=', $value);
 
-            if (in_array ($fieldName, $availableFields))
-                if (is_array ($value))
-                    $query->whereIn ($fieldName, $value);
+            if (in_array($fieldName, $availableFields))
+                if (is_array($value))
+                    $query->whereIn($fieldName, $value);
                 else
-                    $query->where ($fieldName, '=', $value);
+                    $query->where($fieldName, '=', $value);
         }
 
         return $query;
@@ -405,8 +395,8 @@ abstract class HCBaseController extends BaseController
     /**
      * Ordering content
      *
-     * @param $query
-     * @param $availableFields
+     * @param Builder $query
+     * @param array $availableFields
      * @return mixed
      */
     protected function orderData(Builder $query, array $availableFields)
@@ -424,7 +414,7 @@ abstract class HCBaseController extends BaseController
     /**
      * Check for deleted records option
      *
-     * @param $query
+     * @param Builder $query
      * @return mixed
      */
     protected function checkForDeleted(Builder $query)

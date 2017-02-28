@@ -9,12 +9,12 @@ class HCLog
     /**
      * Create emergency response
      *
-     * @param $id
-     * @param $message
+     * @param string $id
+     * @param string $message
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function emergency($id, $message, $status = 200)
+    public function emergency(string $id, string $message, int $status = 200)
     {
         $response = [
             'success' => false,
@@ -30,12 +30,12 @@ class HCLog
     /**
      * Create alert response
      *
-     * @param $id
-     * @param $message
+     * @param string $id
+     * @param string $message
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function alert($id, $message, $status = 200)
+    public function alert(string $id, string $message, int $status = 200)
     {
         $response = [
             'success' => false,
@@ -51,12 +51,12 @@ class HCLog
     /**
      * Create critical error response
      *
-     * @param $id
-     * @param $message
+     * @param string $id
+     * @param string $message
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function critical($id, $message, $status = 200)
+    public function critical(string $id, string $message, int $status = 200)
     {
         $response = [
             'success' => false,
@@ -72,12 +72,12 @@ class HCLog
     /**
      * Create error response
      *
-     * @param $id
-     * @param $message
+     * @param string $id
+     * @param string $message
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function error($id, $message, $status = 200)
+    public function error(string $id, string $message, int $status = 200)
     {
         $response = [
             'success' => false,
@@ -93,12 +93,12 @@ class HCLog
     /**
      * Create warning response
      *
-     * @param $id
-     * @param $message
+     * @param string $id
+     * @param string $message
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function warning($id, $message, $status = 200)
+    public function warning(string $id, string $message, int $status = 200)
     {
         $response = [
             'success' => false,
@@ -114,12 +114,12 @@ class HCLog
     /**
      * Create notice response
      *
-     * @param $id
-     * @param $message
+     * @param string $id
+     * @param string $message
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function notice($id, $message, $status = 200)
+    public function notice(string $id, string $message, int $status = 200)
     {
         $response = [
             'success' => false,
@@ -135,12 +135,12 @@ class HCLog
     /**
      * Create info response
      *
-     * @param $id
-     * @param $message
+     * @param string $id
+     * @param string $message
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function info($id, $message, $status = 200)
+    public function info(string $id, string $message, int $status = 200)
     {
         $response = [
             'success' => false,
@@ -154,12 +154,12 @@ class HCLog
     /**
      * Create debug response
      *
-     * @param $id
-     * @param $message
+     * @param string $id
+     * @param string $message
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function debug($id, $message, $status = 200)
+    public function debug(string $id, string $message, int $status = 200)
     {
         $response = [
             'success' => false,
@@ -175,12 +175,12 @@ class HCLog
     /**
      * Create success response
      *
-     * @param $id
-     * @param $message
+     * @param string $id
+     * @param string $message
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function success($id, $message, $status = 200)
+    public function success(string $id, string $message, int $status = 200)
     {
         $response = [
             'success' => true,

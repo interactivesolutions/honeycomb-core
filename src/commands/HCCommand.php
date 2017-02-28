@@ -28,10 +28,10 @@ class HCCommand extends Command
     /**
      * Create folder recursively if not exists.
      *
-     * @param $path
+     * @param string $path
      * @return bool
      */
-    public function createDirectory($path)
+    public function createDirectory(string $path)
     {
         if (!is_dir($path)) {
             return mkdir($path, 0755, true);
@@ -41,16 +41,16 @@ class HCCommand extends Command
     /**
      * Deleting existing folder
      *
-     * @param $path
+     * @param string $path
      * @param bool $withFiles
      */
-    public function deleteDirectory($path, $withFiles = false)
+    public function deleteDirectory(string $path, bool $withFiles = false)
     {
         if ($path == '*')
             $this->abort('Can not delete "*", please specify folder or file.');
 
         $files = glob($path . '/*');
-        
+
         foreach ($files as $file) {
             if (is_file($file) && !$withFiles) return;
             is_dir($file) ? $this->deleteDirectory($file, $withFiles) : unlink($file);
@@ -65,7 +65,7 @@ class HCCommand extends Command
      * @internal param $templateDestination
      * @internal param array $content
      */
-    public function createFileFromTemplate($configuration)
+    public function createFileFromTemplate(array $configuration)
     {
         $destination = $configuration['destination'];
         $templateDestination = $configuration['templateDestination'];
@@ -99,7 +99,7 @@ class HCCommand extends Command
      * @param $string
      * @return string
      */
-    protected function stringToLower($string)
+    protected function stringToLower(string $string)
     {
         return strtolower(trim($string, '/'));
     }
@@ -107,10 +107,10 @@ class HCCommand extends Command
     /**
      * Make string in dot from slashes
      *
-     * @param $string
+     * @param string $string
      * @return mixed
      */
-    protected function stringWithDots($string)
+    protected function stringWithDots(string $string)
     {
         return str_replace(['_', '/', ' ', '-'], '.', $string);
     }
@@ -118,10 +118,10 @@ class HCCommand extends Command
     /**
      * Get string in underscore
      *
-     * @param $string
+     * @param string $string
      * @return mixed
      */
-    protected function stringWithUnderscore($string)
+    protected function stringWithUnderscore(string $string)
     {
         return str_replace(['.', '/', ' ', '-'], '_', trim($string, '/'));
     }
@@ -129,10 +129,10 @@ class HCCommand extends Command
     /**
      * Get string in dash
      *
-     * @param $string
+     * @param string $string
      * @return mixed
      */
-    protected function stringWithDash($string)
+    protected function stringWithDash(string $string)
     {
         return str_replace(['.', '/', ' ', '_'], '-', trim($string, '/'));
     }
@@ -140,10 +140,10 @@ class HCCommand extends Command
     /**
      * Remove all items from string
      *
-     * @param $string
+     * @param string $string
      * @return mixed
      */
-    protected function stringOnly($string)
+    protected function stringOnly(string $string)
     {
         return str_replace(['.', ' ', '_', '-'], '', trim($string, '/'));
     }
@@ -151,9 +151,9 @@ class HCCommand extends Command
     /**
      * Aborting the command sequence
      *
-     * @param $message
+     * @param string $message
      */
-    protected function abort($message)
+    protected function abort(string $message)
     {
         $this->error($message);
         $this->executeAfterAbort();

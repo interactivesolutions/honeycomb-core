@@ -35,12 +35,12 @@ class HCModel extends Model
     /**
      * Get table enum field list with translations or not
      *
-     * @param $field
-     * @param $translationCode
-     * @param null $labelKey
+     * @param string $field
+     * @param null|string $labelKey
+     * @param string $translationCode
      * @return array
      */
-    public static function getTableEnumList($field, $labelKey = null, $translationCode = null)
+    public static function getTableEnumList(string $field, string $labelKey = null, string $translationCode = null)
     {
         $type = DB::select(
             DB::raw('SHOW COLUMNS FROM ' . self::getTableName() . ' WHERE Field = "' . $field . '"')
@@ -50,10 +50,10 @@ class HCModel extends Model
 
         $values = [];
 
-        foreach ( explode(',', $matches[1]) as $value ) {
+        foreach (explode(',', $matches[1]) as $value) {
             $value = trim($value, "'");
 
-            if( is_null($labelKey) ) {
+            if (is_null($labelKey)) {
                 $values[] = $value;
             } else {
                 $values[] = [

@@ -14,13 +14,13 @@ trait Encryptable
     /**
      * Encrypt field value before inserting into database
      *
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param string $value
      * @return mixed
      */
-    public function setAttribute($key, $value)
+    public function setAttribute(string $key, string $value)
     {
-        if( $this->valid($key, $value) ) {
+        if ($this->valid($key, $value)) {
             $value = encrypt($value);
         }
 
@@ -30,14 +30,14 @@ trait Encryptable
     /**
      * Get decrypted field values after getting from database
      *
-     * @param $key
+     * @param string $key
      * @return mixed
      */
-    public function getAttribute($key)
+    public function getAttribute(string $key)
     {
         $value = parent::getAttribute($key);
 
-        if( $this->valid($key, $value) ) {
+        if ($this->valid($key, $value)) {
             return decrypt($value);
         }
 
@@ -53,8 +53,8 @@ trait Encryptable
     {
         $attributes = parent::attributesToArray();
 
-        foreach ( $attributes as $key => $value ) {
-            if( $this->valid($key, $value) ) {
+        foreach ($attributes as $key => $value) {
+            if ($this->valid($key, $value)) {
                 $attributes[$key] = decrypt($value);
             }
         }
@@ -65,13 +65,13 @@ trait Encryptable
     /**
      * Check if key and value is valid and able to crypt or decrypt
      *
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param string $value
      * @return bool
      */
-    protected function valid($key, $value)
+    protected function valid(string $key, string $value)
     {
-        return in_array($key, $this->encryptable) && ! is_null($value) && ! empty($value);
+        return in_array($key, $this->encryptable) && !is_null($value) && !empty($value);
     }
 
 }
