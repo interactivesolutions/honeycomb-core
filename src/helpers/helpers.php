@@ -177,3 +177,18 @@ if (!function_exists('formManagerCheckBox')) {
         ];
     }
 }
+
+if (!function_exists('createTranslationKey')) {
+    //TODO move to Translations package
+    //TODO improve removal of ,/'?[][\ and etc...
+    /**
+     * From given string creates a translations string
+     *
+     * @param string $string
+     * @return mixed
+     */
+    function createTranslationKey(string $string)
+    {
+        return str_replace(' ', '_', strtolower($string));
+    }
+}
