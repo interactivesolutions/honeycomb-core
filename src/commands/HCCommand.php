@@ -8,6 +8,13 @@ use Illuminate\Filesystem\Filesystem;
 class HCCommand extends Command
 {
     /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'hc:command';
+
+    /**
      * The filesystem instance.
      *
      * @var \Illuminate\Filesystem\Filesystem
