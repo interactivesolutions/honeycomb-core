@@ -11,5 +11,5 @@ This is part of HoneyComb CMS package.
 
 It will not work alone.
 
-You cna find it in:
+You can find it in:
 https://github.com/interactivesolutions/honeycomb-cms
