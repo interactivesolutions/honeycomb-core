@@ -26,6 +26,5 @@
     "psr-4": {
       "interactivesolutions\\honeycombcore\\": "src/"
     }
-  },
-  "minimum-stability": "dev"
+  }
 }
