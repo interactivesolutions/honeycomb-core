@@ -2,6 +2,7 @@
 
 namespace interactivesolutions\honeycombcore\http\controllers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -15,22 +16,20 @@ abstract class HCBaseController extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * Current user
-     *
-     * @var \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    protected $user;
-
-    /**
      * Default records per page
      *
      * @var int
      */
     protected $recordsPerPage = 50;
 
-    public function __construct()
+    /**
+     *  Get the currently authenticated user.
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    public function user()
     {
-        $this->user = auth()->user();
+        return auth()->user();
     }
 
     /**
@@ -41,7 +40,7 @@ abstract class HCBaseController extends BaseController
      */
     protected function unknownAction($action)
     {
-        return HCLog::info('CORE-0001', trans('core::core.unknown_action' . $action), 501);
+        return HCLog::info('CORE-0001', trans('HCTranslations::core.unknown_action' . $action), 501);
     }
 
     /**
@@ -53,7 +52,7 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
-     * Returning admin view
+     * adminView
      *
      * @return mixed
      */
@@ -80,14 +79,13 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function getSingleRecord($id)
+    public function getSingleRecord(string $id)
     {
         return $this->unknownAction('single');
     }
 
     /**
-     * Function which will be overridden by class which will use this one,
-     * here the database will be searched and JSON objects will be returned,
+     * Function which will search JSON objects in the database and returns it,
      * mostly for search tag input field
      *
      * @return mixed
@@ -102,18 +100,16 @@ abstract class HCBaseController extends BaseController
     /**
      * Function which will create new record
      *
-     * @param null $data
+     * @param array|null $data
      * @return mixed
      */
-    public function create($data = null)
+    public function create(array $data = null)
     {
         DB::beginTransaction();
 
-        try
-        {
-            $record = $this->create($data);
-        } catch (\Exception $e)
-        {
+        try {
+            $record = $this->__create($data);
+        } catch (\Exception $e) {
             DB::rollback();
 
             return HCLog::error('CORE-0002' . $e->getCode(), $e->getMessage());
@@ -128,10 +124,10 @@ abstract class HCBaseController extends BaseController
      * Function which will be overridden by class which will use this one,
      * to create new record
      *
-     * @param null $data
+     * @param array|null $data
      * @return mixed
      */
-    protected function __create($data = null)
+    protected function __create(array $data = null)
     {
         return $this->unknownAction('__create');
     }
@@ -141,21 +137,18 @@ abstract class HCBaseController extends BaseController
     //***************************************************** UPDATE START **********************************************/
 
     /**
-     * Function which will be overridden by class which will use this one,
-     * to create new record
+     * Function which will update record
      *
      * @param $id
      * @return mixed
      */
-    public function update($id)
+    public function update(string $id)
     {
         DB::beginTransaction();
 
-        try
-        {
+        try {
             $record = $this->__update($id);
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             DB::rollback();
 
             return HCLog::error('CORE-0003' . $e->getCode(), $e->getMessage());
@@ -173,9 +166,48 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    protected function __update($id)
+    protected function __update(string $id)
     {
         return $this->unknownAction('Update');
+    }
+
+    //***************************************************** UPDATE END ************************************************/
+
+    //***************************************************** UPDATE STRICT START ***************************************/
+
+    /**
+     * Function which will update specific values of the record
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function updateStrict(string $id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $record = $this->__updateStrict($id);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return HCLog::error('CORE-0003' . $e->getCode(), $e->getMessage());
+        }
+
+        DB::commit();
+
+        return $record;
+    }
+
+    /**
+     * Function which will be overridden by class which will use this one,
+     * to update specific values of the record
+     *
+     * @param $id
+     * @return mixed
+     */
+    protected function __updateStrict(string $id)
+    {
+        return $this->unknownAction('UpdateStrict');
     }
 
     //***************************************************** UPDATE END ************************************************/
@@ -197,13 +229,14 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
+     * Deletes items from database by given id's.
      *
      * @param $id
      * @return mixed
      */
-    public function delete($id = null)
+    public function delete(string $id = null)
     {
-        return $this->initializeDelete($id, $this->__delete);
+        return $this->initializeDelete($id, true);
     }
 
     //***************************************************** DELETE END ************************************************/
@@ -211,11 +244,12 @@ abstract class HCBaseController extends BaseController
     /**
      * Function which will actually call deletion function
      *
-     * @param $id
-     * @param $callback
+     * @param string $id
+     * @param bool $soft
      * @return array
+     * @internal param $callback
      */
-    private function initializeDelete($id, $callback)
+    private function initializeDelete(string $id = null, bool $soft)
     {
         if ($id)
             $list = [$id];
@@ -223,15 +257,16 @@ abstract class HCBaseController extends BaseController
             $list = request()->input('list');
 
         if (sizeOf($list) <= 0)
-            return HCLog::info('CORE-0004', trans('core::core.nothing_to_delete'));
+            return HCLog::info('CORE-0004', trans('HCTranslations::core.nothing_to_delete'));
 
         DB::beginTransaction();
 
-        try
-        {
-            $response = $callback($list);
-        } catch (\Exception $e)
-        {
+        try {
+            if ($soft)
+                $response = $this->__delete($list);
+            else
+                $response = $this->__forceDelete($list);
+        } catch (\Exception $e) {
             DB::rollback();
 
             return HCLog::error('CORE-0005' . $e->getCode(), $e->getMessage());
@@ -262,13 +297,14 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
+     * Force deletes items from database by given id's.
      *
-     * @param $id
+     * @param string $id
      * @return mixed
      */
-    public function forceDelete($id = null)
+    public function forceDelete(string $id = null)
     {
-        return $this->initializeDelete($id, $this->__forceDelete);
+        return $this->initializeDelete($id, false);
     }
 
     //********************************************** FORCE DELETE END *************************************************/
@@ -276,7 +312,6 @@ abstract class HCBaseController extends BaseController
     //****************************************** RESTORE START ********************************************************/
 
     /**
-     * Function which will be overridden by class which will use this one,
      * Recovers items from database by given id's
      * Just need to set wanted Model name with list parameter
      *
@@ -287,7 +322,7 @@ abstract class HCBaseController extends BaseController
         $toRestore = request()->input('list');
 
         if (sizeOf($toRestore) <= 0)
-            return HCLog::info('CORE-0006', trans('core::core.nothing_to_restore'));
+            return HCLog::info('CORE-0006', trans('HCTranslations::core.nothing_to_restore'));
 
         $response = $this->__restore($toRestore);
 
@@ -316,11 +351,9 @@ abstract class HCBaseController extends BaseController
 
     protected function __merge()
     {
-        try
-        {
+        try {
             return $this->merge();
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return HCLog::error('CORE-0007' . $e->getCode(), $e->getMessage());
         }
     }
@@ -341,25 +374,23 @@ abstract class HCBaseController extends BaseController
     /**
      * Duplicate function
      *
-     * @param $id
+     * @param string $id
      * @return mixed
      */
-    public function duplicate($id)
+    public function duplicate(string $id)
     {
         return $this->unknownAction('');
     }
 
     /**
-     * @param $id
+     * @param string $id
      * @return mixed
      */
-    protected function __duplicate($id)
+    protected function __duplicate(string $id)
     {
-        try
-        {
+        try {
             return $this->duplicate($id);
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return HCLog::error('CORE-0008' . $e->getCode(), $e->getMessage());
         }
     }
@@ -369,33 +400,67 @@ abstract class HCBaseController extends BaseController
     /**
      * Get only valid request params for records filtering
      *
-     * @param $availableFields - Model available fields to select
+     * @param Builder $query
+     * @param array $availableFields - Model available fields to select
      * @return mixed
      */
-    protected function getRequestParameters($availableFields)
+    protected function getRequestParameters(Builder $query, array $availableFields)
     {
-        $except = ['page', 'q', 'd', 'orderby', 'order'];
+        $except = ['page', 'q', 'deleted', 'sort_by', 'sort_order'];
 
         $givenFields = request()->except($except);
 
-        foreach ($givenFields as $fieldName => $value)
-            if (!in_array($fieldName, $availableFields))
-                array_forget($givenFields, $fieldName);
+        foreach ($givenFields as $fieldName => $value) {
 
-        return $givenFields;
+            $from = substr($fieldName, 0, -5);
+            $to = substr($fieldName, 0, -3);
+
+            if (in_array($from, $availableFields) && $value != '')
+                $query->where($from, '>=', $value);
+
+            if (in_array($to, $availableFields) && $value != '')
+                $query->where($to, '<=', $value);
+
+            if (in_array($fieldName, $availableFields))
+                if (is_array($value))
+                    $query->whereIn($fieldName, $value);
+                else
+                    $query->where($fieldName, '=', $value);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Ordering content
+     *
+     * @param Builder $query
+     * @param array $availableFields
+     * @return mixed
+     */
+    protected function orderData(Builder $query, array $availableFields)
+    {
+        $sortBy = request()->input('sort_by');
+        $sortOrder = request()->input('sort_order');
+
+        if (in_array($sortBy, $availableFields))
+            if (in_array(strtolower($sortOrder), ['asc', 'desc']))
+                $query = $query->orderBy($sortBy, $sortOrder);
+
+        return $query;
     }
 
     /**
      * Check for deleted records option
      *
-     * @param $list
+     * @param Builder $query
      * @return mixed
      */
-    protected function checkForDeleted($list)
+    protected function checkForDeleted(Builder $query)
     {
-        if (request()->has('d') && request()->input('d') === '1')
-            $list = $list->onlyTrashed();
+        if (request()->has('deleted') && request()->input('deleted') === '1')
+            $query = $query->onlyTrashed();
 
-        return $list;
+        return $query;
     }
 }

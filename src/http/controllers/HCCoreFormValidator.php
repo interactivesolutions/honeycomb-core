@@ -28,7 +28,7 @@ abstract class HCCoreFormValidator
      */
     public function __construct(Request $request = null)
     {
-        $this->request = $request ? : request();
+        $this->request = $request ?: request();
     }
 
     /**
@@ -76,10 +76,10 @@ abstract class HCCoreFormValidator
     /**
      * Set editable record id
      *
-     * @param $id
+     * @param string $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(string $id)
     {
         $this->id = $id;
 
@@ -89,11 +89,18 @@ abstract class HCCoreFormValidator
     /**
      * Must return string!!
      *
-     * @param $errors
+     * @param string $errors
      * @return mixed
      */
-    protected function formatErrors($errors)
+    protected function formatErrors(string $errors)
     {
-        return $errors;
+        $errors = json_decode($errors);
+        $output = '';
+
+        foreach ($errors as $error)
+            foreach ($error as $message)
+                $output .= $message . "\r\n";
+
+        return $output;
     }
 }

@@ -13,7 +13,7 @@ class HCLogViewerController extends LogViewerController
      */
     public function index()
     {
-        if( auth()->check() && auth()->user()->isSuperAdmin() ) {
+        if (auth()->check() && auth()->user()->isSuperAdmin()) {
             return parent::index();
         }
 

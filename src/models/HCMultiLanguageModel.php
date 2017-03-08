@@ -18,7 +18,7 @@ class HCMultiLanguageModel extends HCUuidModel
      */
     public function translations()
     {
-        if( is_null($this->translationsClass) )
+        if (is_null($this->translationsClass))
             $this->translationsClass = get_class($this) . 'Translations';
 
         return $this->hasMany($this->translationsClass, 'record_id', 'id');
@@ -37,7 +37,7 @@ class HCMultiLanguageModel extends HCUuidModel
             'language_code' => array_get($data, 'language_code'),
         ])->first();
 
-        if( is_null($translations) ) {
+        if (is_null($translations)) {
             $translations = $this->translations()->create($data);
         } else {
             $translations->update($data);
@@ -64,7 +64,7 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param string $nameKey
      * @return mixed
      */
-    public static function translatedList($nameKey = 'name')
+    public static function translatedList(string $nameKey = 'name')
     {
         return (new static())->with('translations')->get()->map(function ($item, $key) use ($nameKey) {
             return [
@@ -82,7 +82,7 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param string $key
      * @return mixed
      */
-    public function getTranslationValue($key = 'name')
+    public function getTranslationValue(string $key = 'name')
     {
         return get_translation_name(
             $key, app()->getLocale(), $this->translations

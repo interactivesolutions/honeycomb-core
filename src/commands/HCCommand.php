@@ -8,6 +8,13 @@ use Illuminate\Filesystem\Filesystem;
 class HCCommand extends Command
 {
     /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'hc:command';
+
+    /**
      * The filesystem instance.
      *
      * @var \Illuminate\Filesystem\Filesystem
@@ -26,57 +33,36 @@ class HCCommand extends Command
     }
 
     /**
-     * Creating directory if not exists
+     * Create folder recursively if not exists.
      *
-     * @param $path
+     * @param string $path
+     * @return bool
      */
-    public function createDirectory($path)
+    public function createDirectory(string $path)
     {
-        $path = str_replace('\\', '/', $path);
-        $path = explode('/', $path);
-
-        $finalDirectory = '';
-
-        foreach ($path as $directory)
-        {
-            $finalDirectory .= $directory;
-
-            if (!file_exists($finalDirectory))
-            {
-                mkdir($finalDirectory);
-                $this->info('Created: ' . $finalDirectory);
-            }
-
-            $finalDirectory .= '/';
+        if (!is_dir($path)) {
+            return mkdir($path, 0755, true);
         }
     }
 
     /**
-     * Deleting existing directory
+     * Deleting existing folder
      *
-     * @param $path
+     * @param string $path
      * @param bool $withFiles
      */
-    public function deleteDirectory($path, $withFiles = false)
+    public function deleteDirectory(string $path, bool $withFiles = false)
     {
         if ($path == '*')
-        {
-            $this->info('Can not delete "*", please specify directory');
+            $this->abort('Can not delete "*", please specify folder or file.');
 
-            return;
+        $files = glob($path . '/*');
+
+        foreach ($files as $file) {
+            if (is_file($file) && !$withFiles) return;
+            is_dir($file) ? $this->deleteDirectory($file, $withFiles) : unlink($file);
         }
-
-        if ($withFiles)
-            $withFiles = ' -R ';
-        else
-            $withFiles = ' ';
-
-        if (file_exists($path))
-        {
-            shell_exec('rm' . $withFiles . $path);
-            $this->info($path . ' directory deleted');
-        } else
-            $this->info($path . ' directory does not exists');
+        if (is_dir($path)) rmdir($path);
     }
 
     /**
@@ -86,7 +72,7 @@ class HCCommand extends Command
      * @internal param $templateDestination
      * @internal param array $content
      */
-    public function createFileFromTemplate($configuration)
+    public function createFileFromTemplate(array $configuration)
     {
         $destination = $configuration['destination'];
         $templateDestination = $configuration['templateDestination'];
@@ -120,7 +106,7 @@ class HCCommand extends Command
      * @param $string
      * @return string
      */
-    protected function stringToLower($string)
+    protected function stringToLower(string $string)
     {
         return strtolower(trim($string, '/'));
     }
@@ -128,10 +114,10 @@ class HCCommand extends Command
     /**
      * Make string in dot from slashes
      *
-     * @param $string
+     * @param string $string
      * @return mixed
      */
-    protected function stringWithDots($string)
+    protected function stringWithDots(string $string)
     {
         return str_replace(['_', '/', ' ', '-'], '.', $string);
     }
@@ -139,10 +125,10 @@ class HCCommand extends Command
     /**
      * Get string in underscore
      *
-     * @param $string
+     * @param string $string
      * @return mixed
      */
-    protected function stringWithUnderscore($string)
+    protected function stringWithUnderscore(string $string)
     {
         return str_replace(['.', '/', ' ', '-'], '_', trim($string, '/'));
     }
@@ -150,10 +136,10 @@ class HCCommand extends Command
     /**
      * Get string in dash
      *
-     * @param $string
+     * @param string $string
      * @return mixed
      */
-    protected function stringWithDash($string)
+    protected function stringWithDash(string $string)
     {
         return str_replace(['.', '/', ' ', '_'], '-', trim($string, '/'));
     }
@@ -161,10 +147,10 @@ class HCCommand extends Command
     /**
      * Remove all items from string
      *
-     * @param $string
+     * @param string $string
      * @return mixed
      */
-    protected function stringOnly($string)
+    protected function stringOnly(string $string)
     {
         return str_replace(['.', ' ', '_', '-'], '', trim($string, '/'));
     }
@@ -172,9 +158,9 @@ class HCCommand extends Command
     /**
      * Aborting the command sequence
      *
-     * @param $message
+     * @param string $message
      */
-    protected function abort($message)
+    protected function abort(string $message)
     {
         $this->error($message);
         $this->executeAfterAbort();
@@ -187,5 +173,18 @@ class HCCommand extends Command
     protected function executeAfterAbort()
     {
 
+    }
+
+    /**
+     * Scan folders for honeycomb configuration files
+     *
+     * @return array
+     */
+    protected function getConfigFiles()
+    {
+        $projectFiles = $this->file->glob(app_path('honeycomb/config.json'));
+        $packageFiles = $this->file->glob(__DIR__ . '/../../../../*/*/*/*/honeycomb/config.json');
+
+        return array_merge($packageFiles, $projectFiles);
     }
 }
