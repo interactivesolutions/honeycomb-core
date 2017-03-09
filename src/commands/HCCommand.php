@@ -62,7 +62,14 @@ class HCCommand extends Command
             if (is_file($file) && !$withFiles) return;
             is_dir($file) ? $this->deleteDirectory($file, $withFiles) : unlink($file);
         }
-        if (is_dir($path)) rmdir($path);
+        if (is_dir($path))
+            try{
+                rmdir($path);
+                $this->info ('Deleting folder: ' . $path);
+            } catch (\Exception $e)
+            {
+                $this->comment('Can not delete ' . $path . ', it might contain hidden files, such as .gitignore');
+            }
     }
 
     /**
