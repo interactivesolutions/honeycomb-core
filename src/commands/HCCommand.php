@@ -40,9 +40,8 @@ class HCCommand extends Command
      */
     public function createDirectory(string $path)
     {
-        if (!is_dir($path)) {
+        if (!is_dir($path))
             return mkdir($path, 0755, true);
-        }
     }
 
     /**
@@ -84,6 +83,11 @@ class HCCommand extends Command
         $destination = $configuration['destination'];
         $templateDestination = $configuration['templateDestination'];
 
+        if ($destination[0] == '/')
+            $preserveSlash = '/';
+        else
+            $preserveSlash = '';
+
         if (!isset($destination))
             $this->error('File creation failed, destination not set');
 
@@ -99,7 +103,7 @@ class HCCommand extends Command
 
         $directory = array_filter(explode('/', $destination));
         array_pop($directory);
-        $directory = implode('/', $directory);
+        $directory = $preserveSlash . implode('/', $directory);
 
         $this->createDirectory($directory);
         $this->file->put($destination, $template);
