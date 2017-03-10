@@ -87,10 +87,9 @@ abstract class HCBaseController extends BaseController
     /**
      * Function which will be overridden by class which will use this one,
      *
-     * @param array $select
      * @return mixed
      */
-    public function createQuery (array $select = null)
+    public function createQuery ()
     {
         return $this->unknownAction('createQuery');
     }
