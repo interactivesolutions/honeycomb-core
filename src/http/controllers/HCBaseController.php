@@ -85,14 +85,14 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
-     * Function which will search JSON objects in the database and returns it,
-     * mostly for search tag input field
+     * Function which will be overridden by class which will use this one,
      *
+     * @param array $select
      * @return mixed
      */
-    public function search()
+    public function createQuery (array $select = null)
     {
-        return $this->unknownAction('search');
+        return $this->unknownAction('createQuery');
     }
 
     //***************************************************** CREATE START **********************************************/
@@ -406,9 +406,7 @@ abstract class HCBaseController extends BaseController
      */
     protected function getRequestParameters(Builder $query, array $availableFields)
     {
-        $except = ['page', 'q', 'deleted', 'sort_by', 'sort_order'];
-
-        $givenFields = request()->except($except);
+        $givenFields = $this->getRequestParametersRaw();
 
         foreach ($givenFields as $fieldName => $value) {
 
@@ -429,6 +427,16 @@ abstract class HCBaseController extends BaseController
         }
 
         return $query;
+    }
+
+    /**
+     * Gathering all request parameters
+     *
+     * @return array
+     */
+    protected function getRequestParametersRaw()
+    {
+        return request()->except(['page', 'q', 'deleted', 'sort_by', 'sort_order']);
     }
 
     /**
@@ -462,5 +470,37 @@ abstract class HCBaseController extends BaseController
             $query = $query->onlyTrashed();
 
         return $query;
+    }
+
+    /**
+     * Creating data list
+     * @return mixed
+     */
+    public function pageData ()
+    {
+        return $this->createQuery ()->paginate ($this->recordsPerPage)->appends($this->getRequestParametersRaw());
+    }
+
+    /**
+     * Creating data list based on search
+     * @return mixed
+     */
+    public function search ()
+    {
+        if (!request ('q'))
+            return [];
+
+        //TODO set limit to start search
+
+        return $this->list ();
+    }
+
+    /**
+     * Creating data list
+     * @return mixed
+     */
+    public function list()
+    {
+        return $this->createQuery ()->get ();
     }
 }
