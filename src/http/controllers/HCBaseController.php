@@ -94,6 +94,16 @@ abstract class HCBaseController extends BaseController
         return $this->unknownAction('createQuery');
     }
 
+    /**
+     * Function which will be overridden by class which will use this one,
+     *
+     * @return mixed
+     */
+    public function listUpdate ()
+    {
+        return $this->unknownAction('listUpdate');
+    }
+
     //***************************************************** CREATE START **********************************************/
 
     /**
@@ -475,7 +485,7 @@ abstract class HCBaseController extends BaseController
      * Creating data list
      * @return mixed
      */
-    public function pageData ()
+    public function listPage ()
     {
         return $this->createQuery ()->paginate ($this->recordsPerPage)->appends($this->getRequestParametersRaw());
     }
