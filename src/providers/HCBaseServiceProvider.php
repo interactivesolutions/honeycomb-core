@@ -2,6 +2,7 @@
 
 namespace interactivesolutions\honeycombcore\providers;
 
+use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,9 +19,10 @@ class HCBaseServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application services.
+     * @param Gate $gate
      * @param Router $router
      */
-    public function boot(Router $router)
+    public function boot (Gate $gate, Router $router)
     {
         // register artisan commands
         $this->commands($this->commands);
@@ -43,8 +45,11 @@ class HCBaseServiceProvider extends ServiceProvider
         //register providers
         $this->registerProviders();
 
-        //registering middleware
-        $this->registerMiddleware($router);
+        //registering router items
+        $this->registerRouterItems($router);
+
+        //registering gate items
+        $this->registerGateItems($gate);
     }
 
     /**
@@ -101,10 +106,18 @@ class HCBaseServiceProvider extends ServiceProvider
     }
 
     /**
-     * Registering 3rd party providers which are required for this package to run
+     * Registering 3rd party providers which are requires router
      * @param Router $router
      */
-    protected function registerMiddleware (Router $router)
+    protected function registerRouterItems (Router $router)
+    {
+    }
+
+    /**
+     * Registering 3rd party providers which are requires gate
+     * @param Gate $gate
+     */
+    protected function registerGateItems (Gate $gate)
     {
     }
 }
