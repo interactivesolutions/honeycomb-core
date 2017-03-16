@@ -8,11 +8,8 @@ use Illuminate\Support\ServiceProvider;
 
 class HCBaseServiceProvider extends ServiceProvider
 {
-    /**
-     * Register commands
-     *
-     * @var array
-     */
+    protected $homeDirectory = __DIR__;
+
     protected $commands = [];
 
     protected $namespace = 'some\test\app\http\controllers';
@@ -25,41 +22,41 @@ class HCBaseServiceProvider extends ServiceProvider
     public function boot (Gate $gate, Router $router)
     {
         // register artisan commands
-        $this->commands($this->commands);
+        $this->commands ($this->commands);
 
         // loading views
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'Test');
+        $this->loadViewsFrom ($this->homeDirectory . '/../../resources/views', 'Test');
 
         // loading translations
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'Test');
+        $this->loadTranslationsFrom ($this->homeDirectory . '/../../resources/lang', 'Test');
 
         // registering elements to publish
-        $this->registerPublishElements();
+        $this->registerPublishElements ();
 
         // registering helpers
-        $this->registerHelpers();
+        $this->registerHelpers ();
 
         // registering routes
-        $this->registerRoutes();
+        $this->registerRoutes ();
 
         //register providers
-        $this->registerProviders();
+        $this->registerProviders ();
 
         //registering router items
-        $this->registerRouterItems($router);
+        $this->registerRouterItems ($router);
 
         //registering gate items
-        $this->registerGateItems($gate);
+        $this->registerGateItems ($gate);
     }
 
     /**
      * Register helper function
      */
-    protected function registerHelpers()
+    protected function registerHelpers ()
     {
-        $filePath = __DIR__ . '/../http/helpers.php';
+        $filePath = $this->homeDirectory . '/../http/helpers.php';
 
-        if (file_exists($filePath))
+        if (file_exists ($filePath))
             require_once $filePath;
     }
 
@@ -68,31 +65,31 @@ class HCBaseServiceProvider extends ServiceProvider
      */
     protected function registerPublishElements ()
     {
-        $directory = __DIR__ . '/../../database/migrations/';
+        $directory = $this->homeDirectory . '/../../database/migrations/';
 
         // Publish your migrations
         if (file_exists ($directory))
             $this->publishes ([
-                __DIR__ . '/../../database/migrations/' => database_path ('/migrations'),
+                $this->homeDirectory . '/../../database/migrations/' => database_path ('/migrations'),
             ], 'migrations');
 
-        $directory = __DIR__ . '/../public';
+        $directory = $this->homeDirectory . '/../public';
 
         // Publishing assets
         if (file_exists ($directory))
             $this->publishes ([
-                __DIR__ . '/../public' => public_path ('honeycomb'),
+                $this->homeDirectory . '/../public' => public_path ('honeycomb'),
             ], 'public');
     }
 
     /**
      * Registering routes
      */
-    protected function registerRoutes()
+    protected function registerRoutes ()
     {
-        $filePath = __DIR__ . '/../../app/honeycomb/routes.php';
+        $filePath = $this->homeDirectory . '/../../app/honeycomb/routes.php';
 
-        if (file_exists($filePath))
+        if (file_exists ($filePath))
             \Route::group (['namespace' => $this->namespace], function ($router) use ($filePath) {
                 require $filePath;
             });
@@ -101,7 +98,7 @@ class HCBaseServiceProvider extends ServiceProvider
     /**
      * Registering 3rd party providers which are required for this package to run
      */
-    protected function registerProviders()
+    protected function registerProviders ()
     {
     }
 
