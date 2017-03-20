@@ -14,22 +14,9 @@ class HCCommand extends Command
      */
     protected $signature = 'hc:command';
 
-    /**
-     * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    protected $file;
-
-    /**
-     * Create a new controller creator command instance.
-     *
-     * @param \Illuminate\Filesystem\Filesystem|Filesystem $files
-     */
-    public function __construct(Filesystem $files)
+    public function __construct()
     {
-        parent::__construct();
-        $this->file = $files;
+        parent::__construct ();
     }
 
     /**
@@ -96,7 +83,7 @@ class HCCommand extends Command
 
         $destination = str_replace('\\', '/', $destination);
 
-        $template = $this->file->get($templateDestination);
+        $template = file_get_contents($templateDestination);
 
         if (isset($configuration['content']))
             $template = replaceBrackets($template, $configuration['content']);
@@ -106,7 +93,7 @@ class HCCommand extends Command
         $directory = $preserveSlash . implode('/', $directory);
 
         $this->createDirectory($directory);
-        $this->file->put($destination, $template);
+        file_put_contents($destination, $template);
 
         $this->info('Created: ' . $destination);
     }
@@ -193,8 +180,10 @@ class HCCommand extends Command
      */
     protected function getConfigFiles()
     {
-        $projectFiles = $this->file->glob(app_path('honeycomb/config.json'));
-        $packageFiles = $this->file->glob(__DIR__ . '/../../../../*/*/*/*/honeycomb/config.json');
+        $file = new Filesystem();
+
+        $projectFiles = $file->glob(app_path('honeycomb/config.json'));
+        $packageFiles = $file->glob(__DIR__ . '/../../../../*/*/*/*/honeycomb/config.json');
 
         return array_merge($packageFiles, $projectFiles);
     }
