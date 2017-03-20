@@ -14,6 +14,8 @@ class HCBaseServiceProvider extends ServiceProvider
 
     protected $namespace = 'some\test\app\http\controllers';
 
+    protected $serviceProviderNameSpace = '';
+
     /**
      * Bootstrap the application services.
      * @param Gate $gate
@@ -25,10 +27,10 @@ class HCBaseServiceProvider extends ServiceProvider
         $this->commands ($this->commands);
 
         // loading views
-        $this->loadViewsFrom ($this->homeDirectory . '/../../resources/views', 'Test');
+        $this->loadViewsFrom ($this->homeDirectory . '/../../resources/views', $this->serviceProviderNameSpace);
 
         // loading translations
-        $this->loadTranslationsFrom ($this->homeDirectory . '/../../resources/lang', 'Test');
+        $this->loadTranslationsFrom ($this->homeDirectory . '/../../resources/lang', $this->serviceProviderNameSpace);
 
         // registering elements to publish
         $this->registerPublishElements ();
