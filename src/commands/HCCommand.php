@@ -14,6 +14,8 @@ class HCCommand extends Command
      */
     protected $signature = 'hc:command';
 
+    protected $toReplace = ['.', '_', '/', ' ', '-', ':'];
+
     public function __construct()
     {
         parent::__construct ();
@@ -117,7 +119,7 @@ class HCCommand extends Command
      */
     protected function stringWithDots(string $string)
     {
-        return str_replace(['_', '/', ' ', '-'], '.', $string);
+        return str_replace($this->toReplace, '.', $string);
     }
 
     /**
@@ -128,7 +130,7 @@ class HCCommand extends Command
      */
     protected function stringWithUnderscore(string $string)
     {
-        return str_replace(['.', '/', ' ', '-'], '_', trim($string, '/'));
+        return str_replace($this->toReplace, '_', trim($string, '/'));
     }
 
     /**
@@ -139,7 +141,7 @@ class HCCommand extends Command
      */
     protected function stringWithDash(string $string)
     {
-        return str_replace(['.', '/', ' ', '_'], '-', trim($string, '/'));
+        return str_replace($this->toReplace, '-', trim($string, '/'));
     }
 
     /**
@@ -150,7 +152,7 @@ class HCCommand extends Command
      */
     protected function stringOnly(string $string)
     {
-        return str_replace(['.', ' ', '_', '-'], '', trim($string, '/'));
+        return str_replace($this->toReplace, '', trim($string, '/'));
     }
 
     /**
