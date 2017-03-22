@@ -38,6 +38,9 @@ class HCBaseServiceProvider extends ServiceProvider
         // registering helpers
         $this->registerHelpers ();
 
+        //registering middleware
+        $this->registerMiddleWare();
+
         // registering routes
         $this->registerRoutes ();
 
@@ -117,6 +120,13 @@ class HCBaseServiceProvider extends ServiceProvider
      * @param Gate $gate
      */
     protected function registerGateItems (Gate $gate)
+    {
+    }
+
+    /**
+     * Registering middleware
+     */
+    protected function registerMiddleWare ()
     {
     }
 }
