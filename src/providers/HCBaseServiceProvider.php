@@ -39,7 +39,7 @@ class HCBaseServiceProvider extends ServiceProvider
         $this->registerHelpers ();
 
         //registering middleware
-        $this->registerMiddleWare();
+        $this->registerMiddleWare($router);
 
         // registering routes
         $this->registerRoutes ();
@@ -125,8 +125,9 @@ class HCBaseServiceProvider extends ServiceProvider
 
     /**
      * Registering middleware
+     * @param Router $router
      */
-    protected function registerMiddleWare ()
+    protected function registerMiddleWare (Router $router)
     {
     }
 }
