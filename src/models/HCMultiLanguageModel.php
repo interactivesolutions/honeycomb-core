@@ -25,6 +25,19 @@ class HCMultiLanguageModel extends HCUuidModel
     }
 
     /**
+     * Single translation only
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function translation()
+    {
+        if (is_null($this->translationsClass))
+            $this->translationsClass = get_class($this) . 'Translations';
+
+        return $this->hasOne($this->translationsClass, 'record_id', 'id');
+    }
+
+    /**
      * Update translations
      *
      * @param array $data
