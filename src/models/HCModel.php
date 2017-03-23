@@ -25,11 +25,18 @@ class HCModel extends Model
     /**
      * Function which gets fillable fields array
      *
+     * @param bool $join
      * @return array
      */
-    public static function getFillableFields()
+    public static function getFillableFields(bool $join = false)
     {
-        return with(new static)->getFillable();
+        $list = with(new static)->getFillable();
+
+        if ($join)
+            foreach ($list as &$value)
+                $value = self::getTableName() . '.' . $value;
+
+        return $list;
     }
 
     /**
