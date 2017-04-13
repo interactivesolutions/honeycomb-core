@@ -109,15 +109,14 @@ abstract class HCBaseController extends BaseController
     /**
      * Function which will create new record
      *
-     * @param array|null $data
      * @return mixed
      */
-    public function create(array $data = null)
+    public function create()
     {
         DB::beginTransaction();
 
         try {
-            $record = $this->__create($data);
+            $record = $this->__create();
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -133,10 +132,9 @@ abstract class HCBaseController extends BaseController
      * Function which will be overridden by class which will use this one,
      * to create new record
      *
-     * @param array|null $data
      * @return mixed
      */
-    protected function __create(array $data = null)
+    protected function __create()
     {
         return $this->unknownAction('__create');
     }
