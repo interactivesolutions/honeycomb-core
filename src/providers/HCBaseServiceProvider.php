@@ -12,7 +12,7 @@ class HCBaseServiceProvider extends ServiceProvider
 
     protected $commands = [];
 
-    protected $namespace = 'some\test\app\http\controllers';
+    protected $namespace = '';
 
     protected $serviceProviderNameSpace = '';
 

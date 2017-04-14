@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use DB;
 use HCLog;
+use interactivesolutions\honeycombacl\app\models\HCUsers;
 
 abstract class HCBaseController extends BaseController
 {
@@ -21,6 +22,10 @@ abstract class HCBaseController extends BaseController
      * @var int
      */
     protected $recordsPerPage = 50;
+
+    function __construct(HCUsers $users)
+    {
+    }
 
     /**
      *  Get the currently authenticated user.
@@ -38,7 +43,7 @@ abstract class HCBaseController extends BaseController
      * @param $action
      * @return mixed
      */
-    protected function unknownAction($action)
+    protected function unknownAction(string $action)
     {
         return HCLog::info('CORE-0001', trans('HCTranslations::core.unknown_action' . $action), 501);
     }
@@ -89,7 +94,7 @@ abstract class HCBaseController extends BaseController
      *
      * @return mixed
      */
-    public function createQuery ()
+    public function createQuery()
     {
         return $this->unknownAction('createQuery');
     }
@@ -99,7 +104,7 @@ abstract class HCBaseController extends BaseController
      *
      * @return mixed
      */
-    public function listUpdate ()
+    public function listUpdate()
     {
         return $this->unknownAction('listUpdate');
     }
@@ -485,23 +490,23 @@ abstract class HCBaseController extends BaseController
      * Creating data list
      * @return mixed
      */
-    public function listPage ()
+    public function listPage()
     {
-        return $this->createQuery ()->paginate ($this->recordsPerPage)->appends($this->getRequestParametersRaw());
+        return $this->createQuery()->paginate($this->recordsPerPage)->appends($this->getRequestParametersRaw());
     }
 
     /**
      * Creating data list based on search
      * @return mixed
      */
-    public function search ()
+    public function search()
     {
-        if (!request ('q'))
+        if (!request('q'))
             return [];
 
         //TODO set limit to start search
 
-        return $this->list ();
+        return $this->list();
     }
 
     /**
@@ -510,6 +515,6 @@ abstract class HCBaseController extends BaseController
      */
     public function list()
     {
-        return $this->createQuery ()->get ();
+        return $this->createQuery()->get();
     }
 }
