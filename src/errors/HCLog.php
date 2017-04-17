@@ -14,17 +14,11 @@ class HCLog
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function emergency(string $id, string $message, int $status = 200)
+    public function emergency(string $id, string $message, int $status = 400)
     {
-        $response = [
-            'success' => false,
-            'id'      => $id,
-            'message' => $message,
-        ];
-
         Log::error($id . ' : ' . $message);
 
-        return response()->json($response, $status);
+        return response ()->json (['success' => false, 'id' => $id, 'message' => $message], $status);
     }
 
     /**
@@ -35,17 +29,11 @@ class HCLog
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function alert(string $id, string $message, int $status = 200)
+    public function alert(string $id, string $message, int $status = 400)
     {
-        $response = [
-            'success' => false,
-            'id'      => $id,
-            'message' => $message,
-        ];
-
         Log::error($id . ' : ' . $message);
 
-        return response()->json($response, $status);
+        return response ()->json (['success' => false, 'id' => $id, 'message' => $message], $status);
     }
 
     /**
@@ -56,17 +44,11 @@ class HCLog
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function critical(string $id, string $message, int $status = 200)
+    public function critical(string $id, string $message, int $status = 400)
     {
-        $response = [
-            'success' => false,
-            'id'      => $id,
-            'message' => $message,
-        ];
-
         Log::critical($id . ' : ' . $message);
 
-        return response()->json($response, $status);
+        return response ()->json (['success' => false, 'id' => $id, 'message' => $message], $status);
     }
 
     /**
@@ -77,17 +59,11 @@ class HCLog
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function error(string $id, string $message, int $status = 200)
+    public function error(string $id, string $message, int $status = 400)
     {
-        $response = [
-            'success' => false,
-            'id'      => $id,
-            'message' => $message,
-        ];
-
         Log::error($id . ' : ' . $message);
 
-        return response()->json($response, $status);
+        return response ()->json (['success' => false, 'id' => $id, 'message' => $message], $status);
     }
 
     /**
@@ -98,17 +74,11 @@ class HCLog
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function warning(string $id, string $message, int $status = 200)
+    public function warning(string $id, string $message, int $status = 400)
     {
-        $response = [
-            'success' => false,
-            'id'      => $id,
-            'message' => $message,
-        ];
-
         Log::warning($id . ' : ' . $message);
 
-        return response()->json($response, $status);
+        return response ()->json (['success' => false, 'id' => $id, 'message' => $message], $status);
     }
 
     /**
@@ -119,17 +89,11 @@ class HCLog
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function notice(string $id, string $message, int $status = 200)
+    public function notice(string $id, string $message, int $status = 400)
     {
-        $response = [
-            'success' => false,
-            'id'      => $id,
-            'message' => $message,
-        ];
-
         Log::info($id . ' : ' . $message);
 
-        return response()->json($response, $status);
+        return response ()->json (['success' => false, 'id' => $id, 'message' => $message], $status);
     }
 
     /**
@@ -140,15 +104,9 @@ class HCLog
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function info(string $id, string $message, int $status = 200)
+    public function info(string $id, string $message, int $status = 400)
     {
-        $response = [
-            'success' => false,
-            'id'      => $id,
-            'message' => $message,
-        ];
-
-        return response()->json($response, $status);
+        return response ()->json (['success' => false, 'id' => $id, 'message' => $message], $status);
     }
 
     /**
@@ -159,17 +117,11 @@ class HCLog
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function debug(string $id, string $message, int $status = 200)
+    public function debug(string $id, string $message, int $status = 400)
     {
-        $response = [
-            'success' => false,
-            'id'      => $id,
-            'message' => $message,
-        ];
-
         Log::error($id . ' : ' . $message);
 
-        return response()->json($response, $status);
+        return response ()->json (['success' => false, 'id' => $id, 'message' => $message], $status);
     }
 
     /**
@@ -182,15 +134,9 @@ class HCLog
      */
     public function success(string $id, string $message, int $status = 200)
     {
-        $response = [
-            'success' => true,
-            'id'      => $id,
-            'message' => $message,
-        ];
-
         Log::info($id . ' : ' . $message);
 
-        return response()->json($response, $status);
+        return response ()->json (['success' => true, 'id' => $id, 'message' => $message], $status);
     }
 
     /**
