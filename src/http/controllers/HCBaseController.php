@@ -23,6 +23,13 @@ abstract class HCBaseController extends BaseController
     protected $recordsPerPage = 50;
 
     /**
+     * Keys which can be updated by strict method
+     *
+     * @var array
+     */
+    protected $strictUpdateKeys = [];
+
+    /**
      *  Get the currently authenticated user.
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
@@ -444,6 +451,22 @@ abstract class HCBaseController extends BaseController
     protected function getRequestParametersRaw()
     {
         return request()->except(['page', 'q', 'deleted', 'sort_by', 'sort_order']);
+    }
+
+    /**
+     * Gathering all allowed request parameters for strict update
+     *
+     * @return array
+     */
+    protected function getStrictRequestParameters()
+    {
+        $data = [];
+
+        foreach ($this->strictUpdateKeys as $value)
+            if (request()->has($value))
+                $data[$value] = request($value);
+
+        return $data;
     }
 
     /**
