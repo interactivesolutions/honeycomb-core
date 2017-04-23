@@ -20,30 +20,20 @@ class HCUuidModel extends HCModel
      *
      * @return void
      */
-    protected static function boot()
+    protected static function boot ()
     {
-        parent::boot();
+        parent::boot ();
 
         /**
          * Attach to the 'creating' Model Event to provide a UUID
          * for the `id` field (provided by $model->getKeyName())
          */
-        static::creating(function ($model) {
-            $model->{$model->getKeyName()} = (string)$model->generateNewId();
+        static::creating (function ($model)
+        {
+            if (!isset($model->attributes['id']))
+                $model->attributes['id'] = uuid4 ();
+
+            $model->{$model->getKeyName ()} = $model->attributes['id'];
         });
-    }
-
-    /**
-     * Get a new version 4 (random) UUID.
-     *
-     * @return \Ramsey\Uuid\UuidInterface
-     */
-    public function generateNewId()
-    {
-        if (isset($this->attributes['id'])) {
-            return $this->attributes['id'];
-        }
-
-        return uuid4();
     }
 }
