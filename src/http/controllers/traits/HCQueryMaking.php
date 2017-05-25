@@ -123,7 +123,7 @@ trait HCQueryMaking
         if (!$q || strlen($q) < $this->minimumSearchInputLength)
             return $query;
 
-        $query = $this->searchQuery($query);
+        $query = $this->searchQuery($query, $q);
 
         return $query;
     }
@@ -154,9 +154,10 @@ trait HCQueryMaking
      * Adding search query to request, this function should be overwritten by child class
      *
      * @param Builder $query
+     * @param string $phrase
      * @return Builder
      */
-    protected function searchQuery(Builder $query)
+    protected function searchQuery(Builder $query, string $phrase)
     {
         return $query;
     }
