@@ -123,9 +123,7 @@ trait HCQueryMaking
         if (!$q || strlen($q) < $this->minimumSearchInputLength)
             return $query;
 
-        $query = $this->searchQuery($query, $q);
-
-        return $query;
+        return $this->searchQuery($query, $q);
     }
 
     /**
