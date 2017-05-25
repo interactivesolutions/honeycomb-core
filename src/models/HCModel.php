@@ -33,8 +33,13 @@ class HCModel extends Model
         $list = with(new static)->getFillable();
 
         if ($join)
+        {
+            //to use default sort_by command
+            array_push($list, 'created_at');
             foreach ($list as &$value)
                 $value = self::getTableName() . '.' . $value;
+        }
+
 
         return $list;
     }
