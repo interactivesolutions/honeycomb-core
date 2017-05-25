@@ -43,6 +43,7 @@ class HCCoreServiceProvider extends ServiceProvider
             ], function ($router) {
                 require __DIR__ . '/../http/routes/routes.form-manager.php';
                 require __DIR__ . '/../http/routes/routes.logs.php';
+                require __DIR__ . '/../http/routes/routes.admin.php';
             });
         }
 
