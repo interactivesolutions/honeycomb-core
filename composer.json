@@ -20,8 +20,7 @@
     "ramsey\/uuid": "^3.5",
     "jenssegers/rollbar": "*",
     "rap2hpoutre/laravel-log-viewer": "*",
-    "spatie/laravel-cookie-consent": "1.*",
-    "interactivesolutions/honeycomb-scripts":"~0.2.0"
+    "spatie/laravel-cookie-consent": "1.*"
   },
   "autoload": {
     "psr-4": {
