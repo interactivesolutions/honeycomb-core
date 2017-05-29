@@ -42,7 +42,7 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
-     * adminView
+     * adminIndex
      *
      * @return mixed
      */
