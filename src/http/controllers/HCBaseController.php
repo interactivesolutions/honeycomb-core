@@ -114,7 +114,7 @@ abstract class HCBaseController extends BaseController
 
         DB::commit();
 
-        return response($record, 201);
+        return response($record);
     }
 
     /**
