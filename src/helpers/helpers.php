@@ -163,17 +163,19 @@ if (!function_exists ('formManagerCheckBox')) {
      * @param string $trans
      * @param int $required
      * @param int $requiredVisible
+     * @param string|null $tabID
      * @return array
      */
-    function formManagerCheckBox (string $id, string $trans, int $required = 0, int $requiredVisible = 0)
+    function formManagerCheckBox (string $id, string $trans, int $required = 0, int $requiredVisible = 0, string $tabID = null)
     {
         return [
             "type"            => "checkBoxList",
             "fieldID"         => $id,
-            "label"           => $trans,
+            "label"           => ' ',
+            "tabID"           => $tabID,
             "required"        => $required,
             "requiredVisible" => $requiredVisible,
-            "options"         => [['id' => '1', 'label' => 'Yes']]
+            "options"         => [['id' => '1', 'label' => $trans]]
         ];
     }
 }
