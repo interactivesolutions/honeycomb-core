@@ -67,7 +67,7 @@ class HCMultiLanguageModel extends HCUuidModel
      *
      * @param array $data
      */
-    public function updateTranslations(array $data)
+    public function updateTranslations(array $data = [])
     {
         foreach ($data as $translationsData) {
             $this->updateTranslation($translationsData);
@@ -80,7 +80,7 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param string $nameKey
      * @return mixed
      */
-    public static function translatedList(string $nameKey = 'name')
+    public static function translatedList(string $nameKey = "name")
     {
         return (new static())->with('translations')->get()->map(function ($item, $key) use ($nameKey) {
             return [
@@ -98,7 +98,7 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param string $key
      * @return mixed
      */
-    public function getTranslationValue(string $key = 'name')
+    public function getTranslationValue(string $key = "name")
     {
         return get_translation_name(
             $key, app()->getLocale(), $this->translations
