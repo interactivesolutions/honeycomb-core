@@ -144,7 +144,7 @@ if (!function_exists ('formManagerYesNo')) {
      * @param string $tabID
      * @return array
      */
-    function formManagerYesNo (string $id, string $trans, int $required = 0, int $requiredVisible = 0, string $tabID = nulls)
+    function formManagerYesNo (string $id, string $trans, int $required = 0, int $requiredVisible = 0, string $tabID = null)
     {
         return [
             "type"            => "dropDownList",
