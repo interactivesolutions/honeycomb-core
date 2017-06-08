@@ -141,9 +141,10 @@ if (!function_exists ('formManagerYesNo')) {
      * @param string $trans
      * @param int $required
      * @param int $requiredVisible
+     * @param string $tabID
      * @return array
      */
-    function formManagerYesNo (string $id, string $trans, int $required = 0, int $requiredVisible = 0)
+    function formManagerYesNo (string $id, string $trans, int $required = 0, int $requiredVisible = 0, string $tabID = nulls)
     {
         return [
             "type"            => "dropDownList",
@@ -151,7 +152,8 @@ if (!function_exists ('formManagerYesNo')) {
             "label"           => $trans,
             "required"        => $required,
             "requiredVisible" => $requiredVisible,
-            "options"         => [['id' => '1', 'label' => 'Yes'], ['id' => '0', 'label' => 'No']]
+            "tabID"           => $tabID,
+            "options"         => [['id' => '1', 'label' => 'Yes'], ['id' => '0', 'label' => 'No']],
         ];
     }
 }
@@ -175,7 +177,7 @@ if (!function_exists ('formManagerCheckBox')) {
             "tabID"           => $tabID,
             "required"        => $required,
             "requiredVisible" => $requiredVisible,
-            "options"         => [['id' => '1', 'label' => $trans]]
+            "options"         => [['id' => '1', 'label' => $trans]],
         ];
     }
 }
