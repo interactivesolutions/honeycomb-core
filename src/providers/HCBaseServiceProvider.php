@@ -8,12 +8,26 @@ use Illuminate\Support\ServiceProvider;
 
 class HCBaseServiceProvider extends ServiceProvider
 {
+    /**
+     * Home dir
+     *
+     * @var string
+     */
     protected $homeDirectory = __DIR__;
 
+    /**
+     * @var array
+     */
     protected $commands = [];
 
+    /**
+     * @var string
+     */
     protected $namespace = 'some\test\app\http\controllers';
 
+    /**
+     * @var string
+     */
     protected $serviceProviderNameSpace = '';
 
     /**
