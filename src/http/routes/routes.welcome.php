@@ -1,5 +1,5 @@
 <?php
 
 Route::get('/', function(){
-    return view('HCCoreUI::welcome');
+    return hcview('HCCoreUI::welcome');
 });
