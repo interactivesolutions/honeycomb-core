@@ -99,6 +99,14 @@ class HCBaseServiceProvider extends ServiceProvider
             $this->publishes ([
                 $this->homeDirectory . '/../public' => public_path ('honeycomb'),
             ], 'public');
+
+        $directory = $this->homeDirectory . '/../config';
+
+        // Publishing assets
+        if (file_exists ($directory))
+            $this->publishes ([
+                $this->homeDirectory . '/../config' => config_path('/'),
+            ], 'config');
     }
 
     /**
