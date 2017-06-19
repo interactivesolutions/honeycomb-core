@@ -249,3 +249,32 @@ if( ! function_exists('hcview') ) {
         return view(array_get(config('hc.views'), $view), $data, $mergeData);
     }
 }
+
+if( ! function_exists('checkActiveMenuItems') ) {
+
+    /**
+     * Check if menu item has active sub menu element
+     *
+     * @param array $item
+     * @param $path
+     * @return bool
+     */
+    function checkActiveMenuItems(array $item, $path)
+    {
+        if( $item['path'] == $path ) {
+            return true;
+        }
+
+        if( array_key_exists('children', $item) ) {
+            foreach ( $item['children'] as $child ) {
+                $found = checkActiveMenuItems($child, $path);
+
+                if( $found ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}
