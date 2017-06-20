@@ -256,18 +256,18 @@ if( ! function_exists('checkActiveMenuItems') ) {
      * Check if menu item has active sub menu element
      *
      * @param array $item
-     * @param $path
+     * @param $routeName
      * @return bool
      */
-    function checkActiveMenuItems(array $item, $path)
+    function checkActiveMenuItems(array $item, $routeName)
     {
-        if( $item['path'] == $path ) {
+        if( $item['route'] == $routeName ) {
             return true;
         }
 
         if( array_key_exists('children', $item) ) {
             foreach ( $item['children'] as $child ) {
-                $found = checkActiveMenuItems($child, $path);
+                $found = checkActiveMenuItems($child, $routeName);
 
                 if( $found ) {
                     return true;

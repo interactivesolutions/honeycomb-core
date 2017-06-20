@@ -2,8 +2,6 @@
 
 namespace interactivesolutions\honeycombcore\http\controllers;
 
-use DB;
-
 class HCAdminController extends HCBaseController
 {
     /**
