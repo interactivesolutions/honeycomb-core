@@ -45,18 +45,15 @@ class HCMultiLanguageModel extends HCUuidModel
      */
     public function updateTranslation(array $data)
     {
-        $data['record_id'] = $this->id;
-
         $translations = $this->translations()->where([
-            'record_id'     => array_get($data, 'record_id'),
+            'record_id'     => array_get($data, $this->id),
             'language_code' => array_get($data, 'language_code'),
         ])->first();
 
-        if (is_null($translations)) {
+        if (is_null($translations))
             $translations = $this->translations()->create($data);
-        } else {
+        else
             $translations->update($data);
-        }
 
         return $translations;
     }
