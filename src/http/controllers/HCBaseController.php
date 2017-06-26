@@ -3,7 +3,6 @@
 namespace interactivesolutions\honeycombcore\http\controllers;
 
 use DB;
-
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -11,7 +10,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use HCLog;
 use interactivesolutions\honeycombacl\app\models\HCUsers;
-use interactivesolutions\honeycombcore\errors\facades\HCLog;
 use interactivesolutions\honeycombcore\http\controllers\traits\HCQueryMaking;
 
 
