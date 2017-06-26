@@ -8,12 +8,26 @@ use Illuminate\Support\ServiceProvider;
 
 class HCBaseServiceProvider extends ServiceProvider
 {
+    /**
+     * Home dir
+     *
+     * @var string
+     */
     protected $homeDirectory = __DIR__;
 
+    /**
+     * @var array
+     */
     protected $commands = [];
 
-    protected $namespace = '';
+    /**
+     * @var string
+     */
+    protected $namespace = 'some\test\app\http\controllers';
 
+    /**
+     * @var string
+     */
     protected $serviceProviderNameSpace = '';
 
     /**
@@ -85,6 +99,14 @@ class HCBaseServiceProvider extends ServiceProvider
             $this->publishes ([
                 $this->homeDirectory . '/../public' => public_path ('honeycomb'),
             ], 'public');
+
+        $directory = $this->homeDirectory . '/../config';
+
+        // Publishing assets
+        if (file_exists ($directory))
+            $this->publishes ([
+                $this->homeDirectory . '/../config' => config_path('/'),
+            ], 'config');
     }
 
     /**

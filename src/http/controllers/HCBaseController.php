@@ -2,19 +2,22 @@
 
 namespace interactivesolutions\honeycombcore\http\controllers;
 
-use Illuminate\Database\Eloquent\Builder;
+use DB;
+
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-use DB;
 use HCLog;
 use interactivesolutions\honeycombacl\app\models\HCUsers;
+use interactivesolutions\honeycombcore\errors\facades\HCLog;
+use interactivesolutions\honeycombcore\http\controllers\traits\HCQueryMaking;
+
 
 abstract class HCBaseController extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, HCQueryMaking;
 
     /**
      * Default records per page
@@ -28,11 +31,9 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
-     *  Get the currently authenticated user.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     * @return \interactivesolutions\honeycombacl\app\models\HCUsers|null
      */
-    public function user()
+    protected function user ()
     {
         return auth()->user();
     }
@@ -49,21 +50,13 @@ abstract class HCBaseController extends BaseController
     }
 
     /**
-     * Returning Input data
-     */
-    protected function getInputData()
-    {
-        return request()->all();
-    }
-
-    /**
-     * adminView
+     * adminIndex
      *
      * @return mixed
      */
-    public function adminView()
+    public function adminIndex()
     {
-        return $this->unknownAction('AdminView');
+        return $this->unknownAction('adminIndex');
     }
 
     /**
@@ -71,9 +64,28 @@ abstract class HCBaseController extends BaseController
      *
      * @return mixed
      */
-    public function listData()
+    public function apiIndex()
     {
-        return $this->unknownAction('listData');
+        return $this->createQuery()->get();
+    }
+
+    /**
+     * Creating data list
+     * @return mixed
+     */
+    public function apiIndexPaginate()
+    {
+        return $this->createQuery()->paginate($this->recordsPerPage)->appends($this->getRequestParametersRaw());
+    }
+
+    /**
+     * Getting a list records for API call
+     *
+     * @return mixed
+     */
+    public function apiIndexSync()
+    {
+        return $this->unknownAction('apiIndexSync');
     }
 
     /**
@@ -84,45 +96,24 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function getSingleRecord(string $id)
+    public function apiShow(string $id)
     {
-        return $this->unknownAction('single');
+        return $this->unknownAction('apiShow');
     }
 
+    //***************************************************** STORE START ***********************************************/
+
     /**
-     * Function which will be overridden by class which will use this one,
+     * Function which will store new record
      *
      * @return mixed
      */
-    public function createQuery()
-    {
-        return $this->unknownAction('createQuery');
-    }
-
-    /**
-     * Function which will be overridden by class which will use this one,
-     *
-     * @return mixed
-     */
-    public function listUpdate()
-    {
-        return $this->unknownAction('listUpdate');
-    }
-
-    //***************************************************** CREATE START **********************************************/
-
-    /**
-     * Function which will create new record
-     *
-     * @param array|null $data
-     * @return mixed
-     */
-    public function create(array $data = null)
+    public function apiStore()
     {
         DB::beginTransaction();
 
         try {
-            $record = $this->__create($data);
+            $record = $this->__apiStore();
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -131,19 +122,18 @@ abstract class HCBaseController extends BaseController
 
         DB::commit();
 
-        return $record;
+        return response($record);
     }
 
     /**
      * Function which will be overridden by class which will use this one,
      * to create new record
      *
-     * @param array|null $data
      * @return mixed
      */
-    protected function __create(array $data = null)
+    protected function __apiStore()
     {
-        return $this->unknownAction('__create');
+        return $this->unknownAction('__apiStore');
     }
 
     //***************************************************** CREATE END ************************************************/
@@ -156,12 +146,12 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function update(string $id)
+    public function apiUpdate(string $id)
     {
         DB::beginTransaction();
 
         try {
-            $record = $this->__update($id);
+            $record = $this->__apiUpdate($id);
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -180,9 +170,9 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    protected function __update(string $id)
+    protected function __apiUpdate(string $id)
     {
-        return $this->unknownAction('Update');
+        return $this->unknownAction('__apiUpdate');
     }
 
     //***************************************************** UPDATE END ************************************************/
@@ -195,12 +185,12 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function updateStrict(string $id)
+    public function apiUpdateStrict(string $id)
     {
         DB::beginTransaction();
 
         try {
-            $record = $this->__updateStrict($id);
+            $record = $this->__apiUpdateStrict($id);
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -219,9 +209,9 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    protected function __updateStrict(string $id)
+    protected function __apiUpdateStrict(string $id)
     {
-        return $this->unknownAction('UpdateStrict');
+        return $this->unknownAction('__apiUpdateStrict');
     }
 
     //***************************************************** UPDATE END ************************************************/
@@ -237,9 +227,9 @@ abstract class HCBaseController extends BaseController
      * @param array $list
      * @return mixed
      */
-    protected function __delete(array $list)
+    protected function __apiDestroy(array $list)
     {
-        return $this->unknownAction('delete');
+        return $this->unknownAction('__apiDestroy');
     }
 
     /**
@@ -248,7 +238,7 @@ abstract class HCBaseController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function delete(string $id = null)
+    public function apiDestroy(string $id = null)
     {
         return $this->initializeDelete($id, true);
     }
@@ -277,9 +267,9 @@ abstract class HCBaseController extends BaseController
 
         try {
             if ($soft)
-                $response = $this->__delete($list);
+                $response = $this->__apiDestroy($list);
             else
-                $response = $this->__forceDelete($list);
+                $response = $this->__apiForceDelete($list);
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -291,7 +281,7 @@ abstract class HCBaseController extends BaseController
         if (isset($response))
             return $response;
 
-        return ['success' => true];
+        return ['success' => true, 'list' => $list];
     }
 
     //*********************************************** FORCE DELETE START **********************************************/
@@ -305,9 +295,9 @@ abstract class HCBaseController extends BaseController
      * @param array $list
      * @return mixed
      */
-    protected function __forceDelete(array $list)
+    protected function __apiForceDelete(array $list)
     {
-        return $this->unknownAction('delete');
+        return $this->unknownAction('__apiForceDelete');
     }
 
     /**
@@ -316,7 +306,7 @@ abstract class HCBaseController extends BaseController
      * @param string $id
      * @return mixed
      */
-    public function forceDelete(string $id = null)
+    public function apiForceDelete(string $id = null)
     {
         return $this->initializeDelete($id, false);
     }
@@ -331,55 +321,78 @@ abstract class HCBaseController extends BaseController
      *
      * @return mixed
      */
-    public function restore()
+    public function apiRestore()
     {
         $toRestore = request()->input('list');
 
         if (sizeOf($toRestore) <= 0)
             return HCLog::info('CORE-0006', trans('HCTranslations::core.nothing_to_restore'));
 
-        $response = $this->__restore($toRestore);
+        $response = $this->__apiRestore($toRestore);
 
         if (isset($response))
             return $response;
 
-        return ["success" => true];
+        return ['success' => true, 'list' => $toRestore];
     }
 
     /**
      * Function which will be overridden by class which will use this one,
      * this method will be used from list view to restore multiple records at a time
-     * This function will be called only if header as updateType:restore
      *
      * @param array $list
      * @return mixed
      */
-    protected function __restore(array $list)
+    protected function __apiRestore(array $list)
     {
-        return $this->unknownAction('restore');
+        return $this->unknownAction('__apiRestore');
     }
 
     //****************************************** RESTORE END **********************************************************/
 
     //****************************************** MERGE START **********************************************************/
 
-    protected function __merge()
-    {
-        try {
-            return $this->merge();
-        } catch (\Exception $e) {
-            return HCLog::error('CORE-0007' . $e->getCode(), $e->getMessage());
-        }
-    }
-
     /**
-     * Merge prepare function
+     * Function which will gather records which will be merged
      *
      * @return mixed
      */
-    private function merge()
+    public function apiMergePrepare()
     {
-        $this->unknownAction('Merge');
+        return $this->unknownAction('apiPrepareMerge');
+    }
+
+    /**
+     * Function will can be used to merge multiple records into one
+     *
+     * @return mixed
+     */
+    public function apiMerge()
+    {
+        DB::beginTransaction();
+
+        try {
+            $record = $this->__apiMerge();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return HCLog::error('CORE-0007' . $e->getCode(), $e->getMessage());
+        }
+
+        DB::commit();
+
+        return $record;
+    }
+
+    /**
+     * Function which will be overridden by class which will use this one,
+     * Here the actual merging will happen
+     *
+     * @return mixed
+     */
+    protected function __apiMerge()
+    {
+        $this->unknownAction('__apiMerge');
     }
 
     //******************************************** MERGE END **********************************************************/
@@ -391,130 +404,34 @@ abstract class HCBaseController extends BaseController
      * @param string $id
      * @return mixed
      */
-    public function duplicate(string $id)
+    public function apiDuplicate(string $id)
     {
-        return $this->unknownAction('');
+        DB::beginTransaction();
+
+        try {
+            $record = $this->__apiDuplicate($id);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return HCLog::error('CORE-0008' . $e->getCode(), $e->getMessage());
+        }
+
+        DB::commit();
+
+        return $record;
     }
 
     /**
+     * Function which will be overridden by class which will use this one,
+     * Here the actual duplication will happen
+     *
      * @param string $id
      * @return mixed
      */
-    protected function __duplicate(string $id)
+    protected function __apiDuplicate(string $id)
     {
-        try {
-            return $this->duplicate($id);
-        } catch (\Exception $e) {
-            return HCLog::error('CORE-0008' . $e->getCode(), $e->getMessage());
-        }
+        return $this->unknownAction('__apiDuplicate');
     }
 
     //****************************************** DUPLICATE END ********************************************************/
-
-    /**
-     * Get only valid request params for records filtering
-     *
-     * @param Builder $query
-     * @param array $availableFields - Model available fields to select
-     * @return mixed
-     */
-    protected function getRequestParameters(Builder $query, array $availableFields)
-    {
-        $givenFields = $this->getRequestParametersRaw();
-
-        foreach ($givenFields as $fieldName => $value) {
-
-            $from = substr($fieldName, 0, -5);
-            $to = substr($fieldName, 0, -3);
-
-            if (in_array($from, $availableFields) && $value != '')
-                $query->where($from, '>=', $value);
-
-            if (in_array($to, $availableFields) && $value != '')
-                $query->where($to, '<=', $value);
-
-            if (in_array($fieldName, $availableFields))
-                if (is_array($value))
-                    $query->whereIn($fieldName, $value);
-                else
-                    $query->where($fieldName, '=', $value);
-        }
-
-        return $query;
-    }
-
-    /**
-     * Gathering all request parameters
-     *
-     * @return array
-     */
-    protected function getRequestParametersRaw()
-    {
-        return request()->except(['page', 'q', 'deleted', 'sort_by', 'sort_order']);
-    }
-
-    /**
-     * Ordering content
-     *
-     * @param Builder $query
-     * @param array $availableFields
-     * @return mixed
-     */
-    protected function orderData(Builder $query, array $availableFields)
-    {
-        $sortBy = request()->input('sort_by');
-        $sortOrder = request()->input('sort_order');
-
-        if (in_array($sortBy, $availableFields))
-            if (in_array(strtolower($sortOrder), ['asc', 'desc']))
-                $query = $query->orderBy($sortBy, $sortOrder);
-
-        return $query;
-    }
-
-    /**
-     * Check for deleted records option
-     *
-     * @param Builder $query
-     * @return mixed
-     */
-    protected function checkForDeleted(Builder $query)
-    {
-        if (request()->has('deleted') && request()->input('deleted') === '1')
-            $query = $query->onlyTrashed();
-
-        return $query;
-    }
-
-    /**
-     * Creating data list
-     * @return mixed
-     */
-    public function listPage()
-    {
-        return $this->createQuery()->paginate($this->recordsPerPage)->appends($this->getRequestParametersRaw());
-    }
-
-    /**
-     * Creating data list based on search
-     * @return mixed
-     */
-    public function search()
-    {
-        if (!request('q'))
-            return [];
-
-        //TODO set limit to start search
-
-        return $this->list();
-    }
-
-    /**
-     * Creating data list
-     * @return mixed
-     */
-    public function list()
-    {
-        return $this->createQuery()->get();
-    }
 }

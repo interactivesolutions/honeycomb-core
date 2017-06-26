@@ -137,22 +137,42 @@ if (!function_exists ('sanitizeString')) {
 if (!function_exists ('formManagerYesNo')) {
 
     /**
+     * @param string $type - checkBoxList | dropDownList
      * @param string $id
      * @param string $trans
      * @param int $required
      * @param int $requiredVisible
+     * @param string $tabID
+     * @param bool $showNo
+     * @param bool $showYes
      * @return array
      */
-    function formManagerYesNo (string $id, string $trans, int $required = 0, int $requiredVisible = 0)
+    function formManagerYesNo (string $type = 'dropDownList', string $id, string $trans, int $required = 0, int $requiredVisible = 0, string $tabID = null, bool $showNo = true, bool $showYes = true)
     {
-        return [
-            "type"            => "dropDownList",
+        $structure = [
+            "tabID"           => $tabID,
+            "type"            => $type,
             "fieldID"         => $id,
             "label"           => $trans,
             "required"        => $required,
             "requiredVisible" => $requiredVisible,
-            "options"         => [['id' => '1', 'label' => 'Yes'], ['id' => '0', 'label' => 'No']]
+            "options"         => [],
         ];
+
+        if ($showYes && $showNo) {
+            $structure['options'][] = ['id' => '0', 'label' => trans ('HCTranslations::core.checkbox.no')];
+            $structure['options'][] = ['id' => '1', 'label' => trans ('HCTranslations::core.checkbox.yes')];
+        } else {
+            if ($showYes) {
+                $structure['label']     = " ";
+                $structure['options'][] = ['id' => '1', 'label' => $trans];
+            } else if ($showNo) {
+                $structure['label']     = " ";
+                $structure['options'][] = ['id' => '0', 'label' => $trans];
+            }
+        }
+
+        return $structure;
     }
 }
 
@@ -163,17 +183,19 @@ if (!function_exists ('formManagerCheckBox')) {
      * @param string $trans
      * @param int $required
      * @param int $requiredVisible
+     * @param string|null $tabID
      * @return array
      */
-    function formManagerCheckBox (string $id, string $trans, int $required = 0, int $requiredVisible = 0)
+    function formManagerCheckBox (string $id, string $trans, int $required = 0, int $requiredVisible = 0, string $tabID = null)
     {
         return [
             "type"            => "checkBoxList",
             "fieldID"         => $id,
-            "label"           => $trans,
+            "label"           => ' ',
+            "tabID"           => $tabID,
             "required"        => $required,
             "requiredVisible" => $requiredVisible,
-            "options"         => [['id' => '1', 'label' => 'Yes']]
+            "options"         => [['id' => '1', 'label' => $trans]],
         ];
     }
 }
@@ -206,5 +228,69 @@ if (!function_exists ('createTranslationKey')) {
     function createTranslationKey (string $string)
     {
         return str_replace (' ', '_', strtolower ($string));
+    }
+}
+
+if (!function_exists ('hcview')) {
+    /**
+     * Get the evaluated view contents for the given view.
+     *
+     * @param  string $view
+     * @param  array $data
+     * @param  array $mergeData
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    function hcview ($view = null, $data = [], $mergeData = [])
+    {
+        if (!array_key_exists ($view, config ('hc.views'))) {
+            return view ($view, $data, $mergeData);
+        }
+
+        return view (array_get (config ('hc.views'), $view), $data, $mergeData);
+    }
+}
+
+if (!function_exists ('checkActiveMenuItems')) {
+
+    /**
+     * Check if menu item has active sub menu element
+     *
+     * @param array $item
+     * @param $routeName
+     * @return bool
+     */
+    function checkActiveMenuItems (array $item, $routeName)
+    {
+        if ($item['route'] == $routeName) {
+            return true;
+        }
+
+        if (array_key_exists ('children', $item)) {
+            foreach ($item['children'] as $child) {
+                $found = checkActiveMenuItems ($child, $routeName);
+
+                if ($found) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists ('hcSuccess')) {
+
+    /**
+     * After successful database interaction return success statement
+     * @param string $message
+     * @return array
+     */
+    function hcSuccess (string $message = '')
+    {
+        return [
+            "success" => true,
+            "message" => $message,
+        ];
     }
 }

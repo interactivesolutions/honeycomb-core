@@ -25,6 +25,19 @@ class HCMultiLanguageModel extends HCUuidModel
     }
 
     /**
+     * Single translation only
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function translation()
+    {
+        if (is_null($this->translationsClass))
+            $this->translationsClass = get_class($this) . 'Translations';
+
+        return $this->hasOne($this->translationsClass, 'record_id', 'id');
+    }
+
+    /**
      * Update translations
      *
      * @param array $data
@@ -32,18 +45,15 @@ class HCMultiLanguageModel extends HCUuidModel
      */
     public function updateTranslation(array $data)
     {
-        $data['record_id'] = $this->id;
-
         $translations = $this->translations()->where([
-            'record_id'     => array_get($data, 'record_id'),
+            'record_id'     => $this->id,
             'language_code' => array_get($data, 'language_code'),
         ])->first();
 
-        if (is_null($translations)) {
+        if (is_null($translations))
             $translations = $this->translations()->create($data);
-        } else {
+        else
             $translations->update($data);
-        }
 
         return $translations;
     }
@@ -53,7 +63,7 @@ class HCMultiLanguageModel extends HCUuidModel
      *
      * @param array $data
      */
-    public function updateTranslations(array $data)
+    public function updateTranslations(array $data = [])
     {
         foreach ($data as $translationsData) {
             $this->updateTranslation($translationsData);
@@ -66,7 +76,7 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param string $nameKey
      * @return mixed
      */
-    public static function translatedList(string $nameKey = 'name')
+    public static function translatedList(string $nameKey = "name")
     {
         return (new static())->with('translations')->get()->map(function ($item, $key) use ($nameKey) {
             return [
@@ -84,7 +94,7 @@ class HCMultiLanguageModel extends HCUuidModel
      * @param string $key
      * @return mixed
      */
-    public function getTranslationValue(string $key = 'name')
+    public function getTranslationValue(string $key = "name")
     {
         return get_translation_name(
             $key, app()->getLocale(), $this->translations

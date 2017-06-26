@@ -14,11 +14,16 @@ class HCCommand extends Command
      */
     protected $signature = 'hc:command';
 
+    /**
+     * Replaceable symbols
+     *
+     * @var array
+     */
     protected $toReplace = ['.', '_', '/', ' ', '-', ':'];
 
     public function __construct()
     {
-        parent::__construct ();
+        parent::__construct();
     }
 
     /**
@@ -29,7 +34,7 @@ class HCCommand extends Command
      */
     public function createDirectory(string $path)
     {
-        if (!is_dir($path))
+        if( ! is_dir($path) )
             return mkdir($path, 0755, true);
     }
 
@@ -41,21 +46,20 @@ class HCCommand extends Command
      */
     public function deleteDirectory(string $path, bool $withFiles = false)
     {
-        if ($path == '*')
+        if( $path == '*' )
             $this->abort('Can not delete "*", please specify folder or file.');
 
         $files = glob($path . '/*');
 
-        foreach ($files as $file) {
-            if (is_file($file) && !$withFiles) return;
+        foreach ( $files as $file ) {
+            if( is_file($file) && ! $withFiles ) return;
             is_dir($file) ? $this->deleteDirectory($file, $withFiles) : unlink($file);
         }
-        if (is_dir($path))
-            try{
+        if( is_dir($path) )
+            try {
                 rmdir($path);
-                $this->info ('Deleting folder: ' . $path);
-            } catch (\Exception $e)
-            {
+                $this->info('Deleting folder: ' . $path);
+            } catch ( \Exception $e ) {
                 $this->comment('Can not delete ' . $path . ', it might contain hidden files, such as .gitignore');
             }
     }
@@ -72,22 +76,22 @@ class HCCommand extends Command
         $destination = $configuration['destination'];
         $templateDestination = $configuration['templateDestination'];
 
-        if ($destination[0] == '/')
+        if( $destination[0] == '/' )
             $preserveSlash = '/';
         else
             $preserveSlash = '';
 
-        if (!isset($destination))
+        if( ! isset($destination) )
             $this->error('File creation failed, destination not set');
 
-        if (!isset($templateDestination))
+        if( ! isset($templateDestination) )
             $this->error('File creation failed, template destination not set');
 
         $destination = str_replace('\\', '/', $destination);
 
         $template = file_get_contents($templateDestination);
 
-        if (isset($configuration['content']))
+        if( isset($configuration['content']) )
             $template = replaceBrackets($template, $configuration['content']);
 
         $directory = array_filter(explode('/', $destination));
@@ -98,6 +102,20 @@ class HCCommand extends Command
         file_put_contents($destination, $template);
 
         $this->info('Created: ' . $destination);
+    }
+
+    /**
+     * Get replaceable symbols
+     *
+     * @param array $ignoreSymbols
+     * @return array
+     */
+    public function getToReplace(array $ignoreSymbols): array
+    {
+        if( empty($ignoreSymbols) )
+            return $this->toReplace;
+
+        return array_diff($this->toReplace, $ignoreSymbols);
     }
 
     /**
@@ -115,44 +133,48 @@ class HCCommand extends Command
      * Make string in dot from slashes
      *
      * @param string $string
+     * @param array $ignoreToReplace
      * @return mixed
      */
-    protected function stringWithDots(string $string)
+    protected function stringWithDots(string $string, array $ignoreToReplace = [])
     {
-        return str_replace($this->toReplace, '.', $string);
+        return str_replace($this->getToReplace($ignoreToReplace), '.', $string);
     }
 
     /**
      * Get string in underscore
      *
      * @param string $string
+     * @param array $ignoreToReplace
      * @return mixed
      */
-    protected function stringWithUnderscore(string $string)
+    protected function stringWithUnderscore(string $string, array $ignoreToReplace = [])
     {
-        return str_replace($this->toReplace, '_', trim($string, '/'));
+        return str_replace($this->getToReplace($ignoreToReplace), '_', trim($string, '/'));
     }
 
     /**
      * Get string in dash
      *
      * @param string $string
+     * @param array $ignoreToReplace
      * @return mixed
      */
-    protected function stringWithDash(string $string)
+    protected function stringWithDash(string $string, array $ignoreToReplace = [])
     {
-        return str_replace($this->toReplace, '-', trim($string, '/'));
+        return str_replace($this->getToReplace($ignoreToReplace), '-', trim($string, '/'));
     }
 
     /**
      * Remove all items from string
      *
      * @param string $string
+     * @param array $ignoreToReplace
      * @return mixed
      */
-    protected function stringOnly(string $string)
+    protected function stringOnly(string $string, array $ignoreToReplace = [])
     {
-        return str_replace($this->toReplace, '', trim($string, '/'));
+        return str_replace($this->getToReplace($ignoreToReplace), '', trim($string, '/'));
     }
 
     /**
