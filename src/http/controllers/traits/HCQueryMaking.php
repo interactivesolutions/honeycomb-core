@@ -100,14 +100,11 @@ trait HCQueryMaking
         $sortBy = request()->input('sort_by');
         $sortOrder = request()->input('sort_order');
 
-        if (in_array($sortBy, $availableFields)) {
+        if (in_array($sortBy, $availableFields))
             if (in_array(strtolower($sortOrder), ['asc', 'desc']))
-                $query = $query->orderBy($sortBy, $sortOrder);
-        } else {
-            $query = $query->orderBy('created_at', 'desc');
-        }
+                return $query->orderBy($sortBy, $sortOrder);
 
-        return $query;
+        return $query->orderBy('created_at', 'desc');
     }
 
 
