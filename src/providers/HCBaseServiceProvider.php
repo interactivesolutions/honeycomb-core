@@ -49,17 +49,11 @@ class HCBaseServiceProvider extends ServiceProvider
         // registering elements to publish
         $this->registerPublishElements ();
 
-        // registering helpers
-        $this->registerHelpers ();
-
         //registering middleware
         $this->registerMiddleWare($router);
 
         // registering routes
-        $this->registerRoutes ();
-
-        //register providers
-        $this->registerProviders ();
+        $this->registerRoutes ($router);
 
         //registering router items
         $this->registerRouterItems ($router);
@@ -69,14 +63,29 @@ class HCBaseServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //register providers
+        $this->registerProviders ();
+
+        // registering helpers
+        $this->registerHelpers ();
+    }
+
+    /**
      * Register helper function
      */
     protected function registerHelpers ()
     {
         $filePath = $this->homeDirectory . '/../http/helpers.php';
 
-        if (file_exists ($filePath))
+        if( file_exists($filePath) ) {
             require_once $filePath;
+        }
     }
 
     /**
@@ -111,15 +120,19 @@ class HCBaseServiceProvider extends ServiceProvider
 
     /**
      * Registering routes
+     * @param Router $router
      */
-    protected function registerRoutes ()
+    protected function registerRoutes (Router $router)
     {
         $filePath = $this->homeDirectory . '/../../app/honeycomb/routes.php';
 
-        if (file_exists ($filePath))
-            \Route::group (['namespace' => $this->namespace], function ($router) use ($filePath) {
-                require $filePath;
-            });
+        if( file_exists($filePath) ) {
+            if (! $this->app->routesAreCached()) {
+                $router->group(['namespace' => $this->namespace], function (Router $router) use ($filePath) {
+                    require $filePath;
+                });
+            }
+        }
     }
 
     /**
