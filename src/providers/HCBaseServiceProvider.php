@@ -23,7 +23,7 @@ class HCBaseServiceProvider extends ServiceProvider
     /**
      * @var string
      */
-    protected $namespace = 'some\test\app\http\controllers';
+    protected $namespace = '';
 
     /**
      * @var string
