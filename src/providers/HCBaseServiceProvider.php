@@ -128,7 +128,10 @@ class HCBaseServiceProvider extends ServiceProvider
 
         if( file_exists($filePath) ) {
             if (! $this->app->routesAreCached()) {
-                $router->group(['namespace' => $this->namespace], function (Router $router) use ($filePath) {
+                $router->group([
+                    'namespace'  => $this->namespace,
+                    'middleware' => 'web',
+                ], function (Router $router) use ($filePath) {
                     require $filePath;
                 });
             }
