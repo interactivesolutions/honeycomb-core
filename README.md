@@ -1,4 +1,4 @@
-# honeycomb-acl
+# honeycomb-core
 https://github.com/interactivesolutions/honeycomb-core
 
 ## Description
