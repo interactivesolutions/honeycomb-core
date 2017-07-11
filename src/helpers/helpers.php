@@ -160,8 +160,8 @@ if (!function_exists ('formManagerYesNo')) {
         ];
 
         if ($showYes && $showNo) {
-            $structure['options'][] = ['id' => '0', 'label' => trans ('HCTranslations::core.checkbox.no')];
-            $structure['options'][] = ['id' => '1', 'label' => trans ('HCTranslations::core.checkbox.yes')];
+            $structure['options'][] = ['id' => '0', 'label' => trans ('HCTranslations::core.no')];
+            $structure['options'][] = ['id' => '1', 'label' => trans ('HCTranslations::core.yes')];
         } else {
             if ($showYes) {
                 $structure['label']     = " ";
