@@ -294,3 +294,17 @@ if (!function_exists ('hcSuccess')) {
         ];
     }
 }
+
+if (!function_exists ('stringToDouble')) {
+
+    /**
+     * Formatting 0,15 to 0.15 and etc
+     *
+     * @param string $value
+     * @return mixed
+     */
+    function stringToDouble (string $value = "0.0")
+    {
+        return str_replace (',', '.', $value);
+    }
+}
