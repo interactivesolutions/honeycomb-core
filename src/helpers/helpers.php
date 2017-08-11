@@ -7,9 +7,10 @@ if (!function_exists ('get_translation_name')) {
      * @param string $key
      * @param string $lang
      * @param array $data
+     * @param null $customNotFoundText
      * @return mixed
      */
-    function get_translation_name (string $key, string $lang, array $data)
+    function get_translation_name (string $key, string $lang, array $data, $customNotFoundText = null)
     {
         if (is_array ($data)) {
             $data = collect ($data);
@@ -24,7 +25,11 @@ if (!function_exists ('get_translation_name')) {
         }
 
         if (is_null ($name)) {
-            $name = trans ('HCTranslations::core.no_translation');
+            if( is_null($customNotFoundText) ) {
+                $name = trans('HCTranslations::core.no_translation');
+            } else {
+                $name = $customNotFoundText;
+            }
         }
 
         return $name;
