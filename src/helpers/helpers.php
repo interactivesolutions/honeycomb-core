@@ -24,7 +24,7 @@ if (!function_exists ('get_translation_name')) {
         }
 
         if (is_null ($name)) {
-            $name = trans ('core::core.no_translation');
+            $name = trans ('HCTraslations::core.no_translation');
         }
 
         return $name;
