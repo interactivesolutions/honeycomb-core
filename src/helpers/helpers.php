@@ -25,8 +25,8 @@ if (!function_exists ('get_translation_name')) {
         }
 
         if (is_null ($name)) {
-            if( is_null($customNotFoundText) ) {
-                $name = trans('HCTranslations::core.no_translation');
+            if (is_null ($customNotFoundText)) {
+                $name = trans ('HCTranslations::core.no_translation');
             } else {
                 $name = $customNotFoundText;
             }
@@ -169,10 +169,10 @@ if (!function_exists ('formManagerYesNo')) {
             $structure['options'][] = ['id' => '1', 'label' => trans ('HCTranslations::core.yes')];
         } else {
             if ($showYes) {
-                $structure['label']     = " ";
+                $structure['label'] = " ";
                 $structure['options'][] = ['id' => '1', 'label' => $trans];
             } else if ($showNo) {
-                $structure['label']     = " ";
+                $structure['label'] = " ";
                 $structure['options'][] = ['id' => '0', 'label' => $trans];
             }
         }
@@ -313,3 +313,63 @@ if (!function_exists ('stringToDouble')) {
         return str_replace (',', '.', $value);
     }
 }
+
+if (!function_exists ('removeRecordsWithNoTranslation')) {
+
+    /**
+     * Removing records from array with no translation
+     * used by Front-End
+     *
+     * @param array $list
+     * @return mixed
+     */
+    function removeRecordsWithNoTranslation (array $list)
+    {
+        $contentList = [];
+
+        foreach ($list as $item) {
+            if ($item['translation'] !== null)
+                array_push ($contentList, $item);
+        }
+
+        return $contentList;
+    }
+}
+
+if (!function_exists ('formManagerSeo')) {
+
+    /**
+     * Adding seo fields (title, description, keywords
+     * used by Form-Managers
+     *
+     * @param array $list
+     * @param bool $multiLanguage
+     * @return mixed
+     */
+    function formManagerSeo (array &$list, bool $multiLanguage = true)
+    {
+        $list['structure'] = array_merge ($list['structure'],
+            [[
+                "type"          => "singleLine",
+                "fieldID"       => "translations.seo_title",
+                "label"         => trans ("HCTranslations::core.seo_title"),
+                "tabID"         => trans ('HCTranslations::core.seo'),
+                "multiLanguage" => $multiLanguage,
+            ], [
+                "type"          => "textArea",
+                "fieldID"       => "translations.seo_description",
+                "label"         => trans ("HCTranslations::core.seo_description"),
+                "tabID"         => trans ('HCTranslations::core.seo'),
+                "multiLanguage" => $multiLanguage,
+                "rows"          => 5,
+            ], [
+                "type"          => "singleLine",
+                "fieldID"       => "translations.seo_keywords",
+                "label"         => trans ("HCTranslations::core.seo_keywords"),
+                "tabID"         => trans ('HCTranslations::core.seo'),
+                "multiLanguage" => $multiLanguage,
+            ]]);
+    }
+}
+
+
