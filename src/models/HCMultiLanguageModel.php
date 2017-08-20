@@ -34,7 +34,7 @@ class HCMultiLanguageModel extends HCUuidModel
         if (is_null($this->translationsClass))
             $this->translationsClass = get_class($this) . 'Translations';
 
-        return $this->hasOne($this->translationsClass, 'record_id', 'id');
+        return $this->hasOne($this->translationsClass, 'record_id', 'id')->where('language_code', app()->getLocale());
     }
 
     /**
