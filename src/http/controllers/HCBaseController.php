@@ -1,9 +1,6 @@
-<?php
-
-namespace interactivesolutions\honeycombcore\http\controllers;
+<?php namespace interactivesolutions\honeycombcore\http\controllers;
 
 use DB;
-
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;

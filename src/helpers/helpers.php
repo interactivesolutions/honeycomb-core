@@ -308,8 +308,11 @@ if (!function_exists ('stringToDouble')) {
      * @param string $value
      * @return mixed
      */
-    function stringToDouble (string $value = "0.0")
+    function stringToDouble ($value)
     {
+        if (!$value)
+            $value = "0.0";
+
         return str_replace (',', '.', $value);
     }
 }
