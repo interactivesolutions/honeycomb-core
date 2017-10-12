@@ -5,8 +5,11 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use interactivesolutions\honeycombcore\errors\facades\HCLog;
+
+use HCLog;
+use interactivesolutions\honeycombacl\app\models\HCUsers;
 use interactivesolutions\honeycombcore\http\controllers\traits\HCQueryMaking;
+
 
 abstract class HCBaseController extends BaseController
 {
@@ -18,6 +21,10 @@ abstract class HCBaseController extends BaseController
      * @var int
      */
     protected $recordsPerPage = 50;
+
+    function __construct(HCUsers $users)
+    {
+    }
 
     /**
      * @return \interactivesolutions\honeycombacl\app\models\HCUsers|null
