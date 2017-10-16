@@ -72,7 +72,6 @@ class HCRollbarServiceProvider extends ServiceProvider
                 Rollbar::report_fatal_error();
             }
         });
-
     }
 
 }
