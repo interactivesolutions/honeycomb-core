@@ -2,7 +2,6 @@
 
 namespace interactivesolutions\honeycombcore\providers;
 
-use Cog\Ownership\Providers\OwnershipServiceProvider;
 use File;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -81,7 +80,7 @@ class HCCoreServiceProvider extends ServiceProvider
     {
         $filePath = __DIR__ . '/../helpers/helpers.php';
 
-        if (file_exists($filePath)) {
+        if (File::isFile($filePath)) {
             require_once $filePath;
         }
     }
@@ -92,12 +91,11 @@ class HCCoreServiceProvider extends ServiceProvider
     protected function registerProviders()
     {
         // register rollbar service provider
-        $this->app->register(HCRollbarServiceProvider::class);
+        if (class_exists(HCRollbarServiceProvider::class))
+            $this->app->register(HCRollbarServiceProvider::class);
 
         // register LogViewer service provider
-        $this->app->register(LaravelLogViewerServiceProvider::class);
-
-        //register ownership service provider
-        $this->app->register(OwnershipServiceProvider::class);
+        if (class_exists(LaravelLogViewerServiceProvider::class))
+            $this->app->register(LaravelLogViewerServiceProvider::class);
     }
 }
