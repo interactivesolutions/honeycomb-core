@@ -8,6 +8,7 @@ use File;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use InteractiveSolutions\HoneycombCore\Errors\HCLog;
+use InteractiveSolutions\HoneycombCore\Repositories\Repository;
 use Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider;
 
 class HCCoreServiceProvider extends ServiceProvider
@@ -73,6 +74,8 @@ class HCCoreServiceProvider extends ServiceProvider
         $this->commands($this->commands);
 
         $this->registerHelpers();
+
+        $this->registerRepositories();
     }
 
     /**
@@ -97,5 +100,13 @@ class HCCoreServiceProvider extends ServiceProvider
         if (class_exists(LaravelLogViewerServiceProvider::class)) {
             $this->app->register(LaravelLogViewerServiceProvider::class);
         }
+    }
+
+    /**
+     *
+     */
+    private function registerRepositories(): void
+    {
+        $this->app->singleton(Repository::class);
     }
 }
