@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use InteractiveSolutions\HoneycombCore\Contracts\RepositoryContract;
-use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
+use InteractiveSolutions\HoneycombCore\Models\HCModel;
 
 /**
  * Class Repository
@@ -216,15 +216,15 @@ abstract class Repository implements RepositoryContract
     }
 
     /**
-     * @return HCUuidModel
+     * @return HCModel
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    final protected function makeModel(): HCUuidModel
+    final protected function makeModel(): HCModel
     {
         $model = app($this->model());
 
-        if (!$model instanceof HCUuidModel) {
-            throw new \RuntimeException('Class '. $this->model() . ' must be en instance of InteractiveSolutions\\HoneycombCore\\Models\\HCModel');
+        if (!$model instanceof HCModel) {
+            throw new \RuntimeException('Class ' . $this->model() . ' must be en instance of InteractiveSolutions\\HoneycombCore\\Models\\HCModel');
         }
 
         return $model;

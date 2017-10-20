@@ -1,11 +1,11 @@
 <?php
 
-Route::get('/', function () {
+Route::get('/', function() {
     return hcview('HCCoreUI::welcome');
 });
 
-if( config('hc.multiLanguage') ) {
-    Route::get('{lang}', function () {
+if (config('hc.multiLanguage')) {
+    Route::get('{lang}', function() {
         return hcview('HCCoreUI::welcome');
     });
 }
