@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use InteractiveSolutions\HoneycombCore\Contracts\RepositoryContract;
 use InteractiveSolutions\HoneycombCore\Models\HCModel;
+use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
 /**
  * Class Repository
@@ -216,10 +217,10 @@ abstract class Repository implements RepositoryContract
     }
 
     /**
-     * @return HCModel
+     * @return HCUuidModel|HCModel|Model
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    final protected function makeModel(): HCModel
+    final protected function makeModel(): Model
     {
         $model = app($this->model());
 

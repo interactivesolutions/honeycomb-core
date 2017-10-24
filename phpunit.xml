@@ -36,7 +36,7 @@
          syntaxCheck="true"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="example Tests">
+        <testsuite name="Tests">
             <directory surffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
