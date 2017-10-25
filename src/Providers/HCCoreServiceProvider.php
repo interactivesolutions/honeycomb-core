@@ -66,9 +66,8 @@ class HCCoreServiceProvider extends ServiceProvider
 
         $this->registerProviders();
 
-        $this->app->bind('hclog', function() {
-            return new HCLog;
-        });
+        // register HCLog alias
+        $this->app->alias(HCLog::class, 'hclog');
 
         // register artisan commands
         $this->commands($this->commands);
