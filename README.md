@@ -13,3 +13,9 @@ It will not work alone.
 
 You can find it in:
 https://github.com/interactivesolutions/honeycomb-cms
+
+
+## Requirement
+
+ - php: `^7.1`
+ - laravel: `^5.5`

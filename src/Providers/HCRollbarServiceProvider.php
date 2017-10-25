@@ -30,12 +30,12 @@ class HCRollbarServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $app = $this->app;
-
-        // Listen to log messages.
-        $app['log']->listen(function($level, $message, $context) use ($app) {
-            $app['rollbar.handler']->log($level, $message, $context);
-        });
+//        $app = $this->app;
+//
+//        // Listen to log messages.
+//        $app['log']->listen(function($level, $message, $context) use ($app) {
+//            $app['rollbar.handler']->log($level, $message, $context);
+//        });
     }
 
     /**
@@ -45,41 +45,41 @@ class HCRollbarServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $app = $this->app;
+//        $app = $this->app;
+//
+//        $this->app['rollbar.client'] = $this->app->share(function($app) {
+//            $config = $app['config']->get('services.rollbar');
+//
+//            Rollbar::$instance = $rollbar = new RollbarNotifier($config);
+//
+//            return $rollbar;
+//        });
 
-        $this->app['rollbar.client'] = $this->app->share(function($app) {
-            $config = $app['config']->get('services.rollbar');
 
-            Rollbar::$instance = $rollbar = new RollbarNotifier($config);
-
-            return $rollbar;
-        });
-
-
-        $this->app['rollbar.handler'] = $this->app->share(function($app) {
-            $client = $app['rollbar.client'];
-
-            $level = $app['config']->get('services.rollbar.level', 'debug');
-
-            return new RollbarLogHandler($client, $app, $level);
-        });
-
-        // If the Rollbar client was resolved, then there is a possibility that there
-        // are unsent error messages in the internal queue, so let's flush them.
-        register_shutdown_function(function() use ($app) {
-            if (isset($app['rollbar.client'])) {
-                $app['rollbar.client']->flush();
-            }
-        });
-
-        // Register the fatal error handler.
-        register_shutdown_function(function() use ($app) {
-            if (isset($app['rollbar.client'])) {
-                $app->make('rollbar.client');
-
-                Rollbar::report_fatal_error();
-            }
-        });
+//        $this->app['rollbar.handler'] = $this->app->share(function($app) {
+//            $client = $app['rollbar.client'];
+//
+//            $level = $app['config']->get('services.rollbar.level', 'debug');
+//
+//            return new RollbarLogHandler($client, $app, $level);
+//        });
+//
+//        // If the Rollbar client was resolved, then there is a possibility that there
+//        // are unsent error messages in the internal queue, so let's flush them.
+//        register_shutdown_function(function() use ($app) {
+//            if (isset($app['rollbar.client'])) {
+//                $app['rollbar.client']->flush();
+//            }
+//        });
+//
+//        // Register the fatal error handler.
+//        register_shutdown_function(function() use ($app) {
+//            if (isset($app['rollbar.client'])) {
+//                $app->make('rollbar.client');
+//
+//                Rollbar::report_fatal_error();
+//            }
+//        });
     }
 
 }
