@@ -92,7 +92,7 @@ trait HCQueryMaking
         $data = [];
 
         foreach ($this->strictUpdateKeys as $value) {
-            if (request()->has($value)) {
+            if (request()->filled($value)) {
                 $data[$value] = request($value);
             }
         }
@@ -154,7 +154,7 @@ trait HCQueryMaking
      */
     protected function checkForDeleted(Builder $query)
     {
-        if (request()->has('deleted') && request()->input('deleted') === '1') {
+        if (request()->filled('deleted') && request()->input('deleted') === '1') {
             $query = $query->onlyTrashed();
         }
 
