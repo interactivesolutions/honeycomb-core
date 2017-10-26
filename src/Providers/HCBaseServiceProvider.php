@@ -47,10 +47,13 @@ class HCBaseServiceProvider extends ServiceProvider
         $this->commands($this->commands);
 
         // loading views
-        $this->loadViewsFrom($this->homeDirectory . '/../../resources/views', $this->serviceProviderNameSpace);
+        $this->loadViews();
 
         // loading translations
-        $this->loadTranslationsFrom($this->homeDirectory . '/../../resources/lang', $this->serviceProviderNameSpace);
+        $this->loadTranslations();
+
+        // load migrations
+        $this->loadMigrations();
 
         // registering elements to publish
         $this->registerPublishElements();
@@ -99,15 +102,6 @@ class HCBaseServiceProvider extends ServiceProvider
      */
     protected function registerPublishElements()
     {
-        $directory = $this->homeDirectory . '/../../database/migrations/';
-
-        // Publish your migrations
-        if (file_exists($directory)) {
-            $this->publishes([
-                $this->homeDirectory . '/../../database/migrations/' => database_path('/migrations'),
-            ], 'migrations');
-        }
-
         $directory = $this->homeDirectory . '/../public';
 
         // Publishing assets
@@ -119,7 +113,7 @@ class HCBaseServiceProvider extends ServiceProvider
 
         $directory = $this->homeDirectory . '/../config';
 
-        // Publishing assets
+        // Publishing configs
         if (file_exists($directory)) {
             $this->publishes([
                 $this->homeDirectory . '/../config' => config_path('/'),
@@ -175,5 +169,29 @@ class HCBaseServiceProvider extends ServiceProvider
      */
     protected function registerMiddleWare(Router $router)
     {
+    }
+
+    /**
+     *
+     */
+    protected function loadMigrations(): void
+    {
+        $this->loadMigrationsFrom($this->homeDirectory . '/../../database/migrations');
+    }
+
+    /**
+     *
+     */
+    protected function loadTranslations(): void
+    {
+        $this->loadTranslationsFrom($this->homeDirectory . '/../../resources/lang', $this->serviceProviderNameSpace);
+    }
+
+    /**
+     *
+     */
+    protected function loadViews(): void
+    {
+        $this->loadViewsFrom($this->homeDirectory . '/../../resources/views', $this->serviceProviderNameSpace);
     }
 }
