@@ -6,6 +6,7 @@ namespace InteractiveSolutions\HoneycombCore\Http\Controllers;
 
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 /**
  * Class HCCoreFormValidator
@@ -98,15 +99,14 @@ abstract class HCCoreFormValidator
     /**
      * Must return string!!
      *
-     * @param string $errors
+     * @param MessageBag $errors
      * @return mixed
      */
-    protected function formatErrors(string $errors)
+    protected function formatErrors(MessageBag $errors)
     {
-        $errors = json_decode($errors);
         $output = '';
 
-        foreach ($errors as $error) {
+        foreach ($errors->messages() as $error) {
             foreach ($error as $message) {
                 $output .= $message . "\r\n";
             }
