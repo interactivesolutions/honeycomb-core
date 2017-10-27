@@ -119,10 +119,11 @@ abstract class Enumerable
      */
     public static function options(): array
     {
-        return array_map(function(Enumerable $enumerable) {
-            return $enumerable->name();
-        }, self::enum());
+        return array_values(array_map(function(Enumerable $enumerable) {
+            return ['id' => $enumerable->id(), 'name' => $enumerable->name()];
+        }, self::enum()));
     }
+
 
     /**
      * @return string

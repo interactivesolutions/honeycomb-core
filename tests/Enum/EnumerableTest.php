@@ -120,9 +120,18 @@ class EnumerableTest extends TestCase
     public function it_should_return_enum_ids_and_names_as_key_value_pairs_on_calling_options_method(): void
     {
         $this->assertEquals([
-            'desc_id' => 'desc_name',
-            'test_id_1' => 'test_name_1',
-            'test_id_2' => 'test_name_2',
+            [
+                'id' => 'desc_id',
+                'name' => 'desc_name',
+            ],
+            [
+                'id' => 'test_id_1',
+                'name' => 'test_name_1',
+            ],
+            [
+                'id' => 'test_id_2',
+                'name' => 'test_name_2',
+            ],
         ], TestEnum::testOne()->options());
     }
 }
