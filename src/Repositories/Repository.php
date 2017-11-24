@@ -5,13 +5,12 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombCore\Repositories;
 
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use InteractiveSolutions\HoneycombCore\Contracts\RepositoryContract;
-use InteractiveSolutions\HoneycombCore\Models\HCModel;
-use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
 /**
  * Class Repository
@@ -37,7 +36,7 @@ abstract class Repository implements RepositoryContract
     /**
      * @param array $columns
      * @return Collection
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function all(array $columns = ['*']): Collection
     {
@@ -48,19 +47,27 @@ abstract class Repository implements RepositoryContract
      * @param int $perPage
      * @param array $columns
      * @return LengthAwarePaginator
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function paginate(int $perPage = self::DEFAULT_PER_PAGE, array $columns = ['*']): LengthAwarePaginator
     {
         return $this->makeQuery()->paginate($perPage, $columns);
     }
 
-    //todo: since laravel 5.4 make create function
+    /**
+     * @param array $data
+     * @return Model
+     * @throws BindingResolutionException
+     */
+    public function create(array $data = []): Model
+    {
+        return $this->makeQuery()->create($data);
+    }
 
     /**
      * @param array $data
      * @return bool
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function insert(array $data = []): bool
     {
@@ -72,7 +79,7 @@ abstract class Repository implements RepositoryContract
      * @param $attributeValue
      * @param string $attributeField
      * @return int
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function update(array $data, $attributeValue, string $attributeField = self::DEFAULT_ATTRIBUTES_FIELD): int
     {
@@ -89,7 +96,7 @@ abstract class Repository implements RepositoryContract
      * @param $attributeValues
      * @param string $attributeField
      * @return int
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function updateWhereIn(
         array $data,
@@ -103,7 +110,7 @@ abstract class Repository implements RepositoryContract
      * @param array $attributes
      * @param array $values
      * @return Model
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function updateOrCreate(array $attributes, array $values = []): Model
     {
@@ -113,7 +120,7 @@ abstract class Repository implements RepositoryContract
     /**
      * @param array $criteria
      * @return mixed
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function delete(array $criteria = [])
     {
@@ -124,7 +131,7 @@ abstract class Repository implements RepositoryContract
      * @param $id
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function find($id, array $columns = ['*'])
     {
@@ -135,7 +142,7 @@ abstract class Repository implements RepositoryContract
      * @param $id
      * @param array $columns
      * @return mixed|static
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function findAndLock($id, array $columns = ['*'])
     {
@@ -146,7 +153,7 @@ abstract class Repository implements RepositoryContract
      * @param array $criteria
      * @param array $columns
      * @return Model|null|static
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function findOneBy(array $criteria = [], array $columns = ['*'])
     {
@@ -157,7 +164,7 @@ abstract class Repository implements RepositoryContract
      * @param array $criteria
      * @param array $columns
      * @return array|null|\stdClass
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function findOneByAndLock(array $criteria = [], array $columns = ['*'])
     {
@@ -168,7 +175,7 @@ abstract class Repository implements RepositoryContract
      * @param $id
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Collection|Model
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function findOrFail($id, array $columns = ['*'])
     {
@@ -179,7 +186,7 @@ abstract class Repository implements RepositoryContract
      * @param $id
      * @param array $columns
      * @return mixed
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function findAndLockOrFail($id, array $columns = ['*'])
     {
@@ -190,7 +197,7 @@ abstract class Repository implements RepositoryContract
      * @param array $criteria
      * @param array $columns
      * @return Collection
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function findAllBy(array $criteria = [], array $columns = ['*']): Collection
     {
@@ -200,7 +207,7 @@ abstract class Repository implements RepositoryContract
     /**
      * @param array $data
      * @return int
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function insertGetId(array $data): int
     {
@@ -209,7 +216,7 @@ abstract class Repository implements RepositoryContract
 
     /**
      * @return int
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function count(): int
     {
@@ -217,14 +224,14 @@ abstract class Repository implements RepositoryContract
     }
 
     /**
-     * @return HCUuidModel|HCModel|Model
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @return Model
+     * @throws BindingResolutionException
      */
     final protected function makeModel(): Model
     {
         $model = app($this->model());
 
-        if (!$model instanceof HCModel) {
+        if (!$model instanceof Model) {
             throw new \RuntimeException('Class ' . $this->model() . ' must be en instance of InteractiveSolutions\\HoneycombCore\\Models\\HCModel');
         }
 
@@ -233,7 +240,7 @@ abstract class Repository implements RepositoryContract
 
     /**
      * @return Builder
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     final public function makeQuery(): Builder
     {

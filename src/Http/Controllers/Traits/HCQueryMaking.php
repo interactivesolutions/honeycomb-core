@@ -15,7 +15,7 @@ trait HCQueryMaking
     /**
      * Function which will be overridden by class which will use this one,
      *
-     * @return Builder | mixed
+     * @return Builder|mixed
      */
     protected function createQuery()
     {
