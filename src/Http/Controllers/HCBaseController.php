@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombCore\Http\Controllers;
 
 use DB;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -68,11 +69,11 @@ abstract class HCBaseController extends BaseController
 
     /**
      * Creating data list
-     * @return mixed
+     * @return LengthAwarePaginator
      */
-    public function apiIndexPaginate()
+    public function apiIndexPaginate(): LengthAwarePaginator
     {
-        return $this->createQuery()->paginate($this->recordsPerPage)->appends($this->getRequestParametersRaw());
+        return $this->createQuery()->paginate($this->recordsPerPage)->appends(request()->all());
     }
 
     /**
