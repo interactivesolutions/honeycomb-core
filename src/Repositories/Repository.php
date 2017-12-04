@@ -55,6 +55,26 @@ abstract class Repository implements RepositoryContract
     }
 
     /**
+     * @param string $column
+     * @return mixed
+     * @throws BindingResolutionException
+     */
+    public function max(string $column = 'id')
+    {
+        return $this->makeQuery()->max($column);
+    }
+
+    /**
+     * @param string $column
+     * @return mixed
+     * @throws BindingResolutionException
+     */
+    public function min(string $column = 'id')
+    {
+        return $this->makeQuery()->min($column);
+    }
+
+    /**
      * @param array $data
      * @return Model
      * @throws BindingResolutionException
@@ -202,6 +222,18 @@ abstract class Repository implements RepositoryContract
     public function findAllBy(array $criteria = [], array $columns = ['*']): Collection
     {
         return $this->makeQuery()->select($columns)->where($criteria)->get();
+    }
+
+    /**
+     * @param array $whereValues
+     * @param string $whereField
+     * @param array $columns
+     * @return Collection
+     * @throws BindingResolutionException
+     */
+    public function findWhereIn(array $whereValues = [], string $whereField = 'id', array $columns = ['*']): Collection
+    {
+        return $this->makeQuery()->select($columns)->whereIn($whereField, $whereValues)->get();
     }
 
     /**
