@@ -125,9 +125,9 @@ trait HCQueryMaking
     /**
      * Creating data list based on search
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
-    protected function search(Builder $query)
+    protected function search(Builder $query): Builder
     {
         $q = request('q');
 
@@ -168,7 +168,7 @@ trait HCQueryMaking
      * @param string $phrase
      * @return Builder
      */
-    protected function searchQuery(Builder $query, string $phrase)
+    protected function searchQuery(Builder $query, string $phrase): Builder
     {
         return $query;
     }
