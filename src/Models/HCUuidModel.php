@@ -6,6 +6,7 @@ namespace InteractiveSolutions\HoneycombCore\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class HCUuidModel
@@ -38,7 +39,7 @@ class HCUuidModel extends HCModel
          */
         static::creating(function($model) {
             if (!isset($model->attributes['id'])) {
-                $model->attributes['id'] = uuid4();
+                $model->attributes['id'] = Uuid::uuid4()->toString();;
             }
 
             $model->{$model->getKeyName()} = $model->attributes['id'];
