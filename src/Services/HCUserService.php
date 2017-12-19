@@ -31,6 +31,7 @@ namespace InteractiveSolutions\HoneycombNewCore\Services;
 
 use InteractiveSolutions\HoneycombNewCore\Repositories\HCPersonalInfoRepository;
 use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
+use Tests\Feature\Repositories\HCUser;
 
 /**
  * Class HCUserService
@@ -62,7 +63,7 @@ class HCUserService
     /**
      * @return HCUserRepository
      */
-    public function getUserRepository(): HCUserRepository
+    public function getRepository(): HCUserRepository
     {
         return $this->userRepository;
     }
@@ -71,12 +72,15 @@ class HCUserService
      * @param array $userData
      * @param string $userId
      * @param array $personalData
+     * @return HCUser
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function updateUser(array $userData, string $userId, array $personalData = []): void
+    public function updateUser(array $userData, string $userId, array $personalData = []): HCUser
     {
-        $this->userRepository->update($userData, $userId);
+        $user = $this->userRepository->updateOrCreate($userData, $userId);
         $this->personalInfoRepository->updateOrCreate(['user_id' => $userId], $personalData);
+
+        return $user;
     }
 
     /**

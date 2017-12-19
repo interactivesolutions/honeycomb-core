@@ -30,7 +30,6 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers\Admin;
 
 use Illuminate\Database\Connection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCController;
@@ -143,7 +142,7 @@ class HCUsersController extends HCController
         $this->connection->beginTransaction();
 
         try {
-            $record = $this->service->updateUser($request->getInputData(), $id);
+            $record = $this->service->updateUser($id, $request->getUserData());
 
             $this->connection->commit();
 
@@ -153,39 +152,26 @@ class HCUsersController extends HCController
             return \HCResponse::error('USER-002', $exception->getMessage());
         }
 
-        return $this->getById($record->id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Updated',
+            'data' => $record,
+        ]);
     }
 
     /**
      * Getting single record
      *
-     * @param string $id
+     * @param string $recordId
      * todo: return DTO
-     * @return Model
+     * @return JsonResponse
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function getById(string $id): Model
+    public function getById(string $recordId): JsonResponse
     {
-        return $this->service->getUserRepository()->getById($id);
-
-//        $with = [
-//            'roles' => function($query) {
-//                $query->select('id', 'name as label');
-//            },
-//        ];
-//
-//        $select = HCUsers::getFillableFields();
-//
-//        $record = HCUsers::with($with)
-//            ->select($select)
-//            ->where('id', $id)
-//            ->firstOrFail();
-//
-//        $record->is_active = [
-//            ['id' => $record->activated_at ? 1 : 0],
-//        ];
-//
-//        return $record;
+        return response()->json(
+            $this->service->getRepository()->getRecordById($recordId)
+        );
     }
 
 
@@ -199,7 +185,7 @@ class HCUsersController extends HCController
         $this->connection->beginTransaction();
 
         try {
-            $list = $this->service->getUserRepository()->deleteSoft($request->getDestroyIds());
+            $list = $this->service->getRepository()->deleteSoft($request->getDestroyIds());
 
             $this->connection->commit();
         } catch (\Exception $exception) {
@@ -221,7 +207,7 @@ class HCUsersController extends HCController
         $this->connection->beginTransaction();
 
         try {
-            $list = $this->service->getUserRepository()->deleteForce($request->getDestroyIds());
+            $list = $this->service->getRepository()->deleteForce($request->getDestroyIds());
 
             $this->connection->commit();
         } catch (\Exception $exception) {
@@ -244,7 +230,7 @@ class HCUsersController extends HCController
         $this->connection->beginTransaction();
 
         try {
-            $list = $this->service->getUserRepository()->restore($request->getInputData());
+            $list = $this->service->getRepository()->restore($request->getInputData());
 
             $this->connection->commit();
         } catch (\Exception $exception) {
@@ -304,5 +290,26 @@ class HCUsersController extends HCController
                 ->orWhere('last_activity', 'LIKE', '%' . $phrase . '%');
         });
     }
+
+
+    /**
+     * Getting a list records for API call
+     *
+     * @return mixed
+     */
+    public function getList()
+    {
+        return $this->service->getRepository()->createQuery()->get();
+    }
+
+    /**
+     * Creating data list
+     * @return LengthAwarePaginator
+     */
+    public function getListPaginate(): LengthAwarePaginator
+    {
+        return $this->service->getRepository()->createQuery()->appends(request()->all());
+    }
+
 
 }
