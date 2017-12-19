@@ -3,9 +3,10 @@
 namespace InteractiveSolutions\HoneycombNewCore\DTO;
 
 use Carbon\Carbon;
-use InteractiveSolutions\HoneycombAcl\Models\Acl\Roles;
+use Illuminate\Support\Collection;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCRoles;
 
-class HCUserDTO extends BaseDTO
+class HCUserDTO extends HCBaseDTO
 {
     private $userId;
     private $email;
@@ -24,7 +25,7 @@ class HCUserDTO extends BaseDTO
     private $last_activity;
 
     /**
-     * @var Roles
+     * @var HCRoles
      */
     private $roles;
 
@@ -37,7 +38,7 @@ class HCUserDTO extends BaseDTO
      * @param Carbon|null $last_login
      * @param Carbon|null $last_visited
      * @param Carbon|null $last_activity
-     * @param Roles $roles
+     * @param Collection $roles
      */
     public function __construct(
         string $userId,
@@ -46,7 +47,7 @@ class HCUserDTO extends BaseDTO
         Carbon $last_login = null,
         Carbon $last_visited = null,
         Carbon $last_activity = null,
-        Roles $roles
+        Collection $roles
     ) {
         $this->userId = $userId;
         $this->email = $email;
@@ -87,19 +88,14 @@ class HCUserDTO extends BaseDTO
     /**
      * @return array
      */
-    protected function jsonData(): array
+    public function jsonData(): array
     {
-        $dto->forget(['email'. 'is_active'])->jsonData();
-        $dto->only(['email'. 'is_active'])->jsonData();
-
         $data = [
             'id' => $this->getUserId(),
             'email' => $this->getEmail(),
             'is_active' => $this->getActivated(),
             'roles' => $this->getRoles(),
         ];
-
-        array_forget($data, $forget);
 
         return $data;
     }

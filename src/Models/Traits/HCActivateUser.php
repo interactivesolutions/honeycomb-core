@@ -27,24 +27,64 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories;
+namespace InteractiveSolutions\HoneycombNewCore\Models\Traits;
 
-
-use InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserPersonalInfo;
-use InteractiveSolutions\HoneycombCore\Repositories\Repository;
+use InteractiveSolutions\HoneycombNewCore\Notifications\HCActivationLink;
+use InteractiveSolutions\HoneycombNewCore\Services\UserActivationService;
 
 /**
- * Class HCPersonalInfoRepository
- * @package InteractiveSolutions\HoneycombNewCore\Repositories\Users
+ * Trait ActivateUser
+ * @package InteractiveSolutions\HoneycombNewCore\Models\Traits
  */
-class HCPersonalInfoRepository extends Repository
+trait HCActivateUser
 {
+    /**
+     * Check if user is activated
+     *
+     * @return bool
+     */
+    public function isActivated(): bool
+    {
+        return !!$this->activated_at;
+    }
 
     /**
-     * @return string
+     * Check if user is not activated
+     *
+     * @return bool
      */
-    public function model(): string
+    public function isNotActivated(): bool
     {
-        return HCUserPersonalInfo::class;
+        return !$this->isActivated();
+    }
+
+    /**
+     * Create and send user activation
+     */
+    public function createTokenAndSendActivationCode(): void
+    {
+        $activationService = app(UserActivationService::class);
+
+        $activationService->sendActivationMail($this);
+    }
+
+    /**
+     * Send the activation link notification.
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function sendActivationLinkNotification($token): void
+    {
+        $this->notify(new HCActivationLink($token));
+    }
+
+    /**
+     * Activate account
+     */
+    public function activate(): void
+    {
+        $this->activated_at = $this->freshTimestamp();
+        $this->save();
     }
 }

@@ -29,12 +29,9 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Providers;
 
-use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Routing\Router;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUsers;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
-use InteractiveSolutions\HoneycombNewCore\Services\UserActivationService;
 use InteractiveSolutions\HoneycombCore\Providers\HCBaseServiceProvider;
+use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
 
 /**
  * Class HCNewCoreServiceProvider
@@ -71,91 +68,20 @@ class HCNewCoreServiceProvider extends HCBaseServiceProvider
     protected $serviceProviderNameSpace = 'HCNewCore';
 
     /**
-     *
-     */
-    public function register(): void
-    {
-        parent::register();
-
-//        $this->registerRepositories();
-//        $this->registerServices();
-    }
-
-    /**
      * @param Router $router
      */
-    protected function registerRouterItems(Router $router): void
+    protected function registerRoutes(Router $router): void
     {
-        parent::registerRouterItems($router);
+        $routes = [
+            $this->modulePath('Routes/Admin/04_routes.users.php'),
+        ];
 
-//        $router->aliasMiddleware('acl', HCNewCorePermissionsMiddleware::class);
-//        $router->aliasMiddleware('auth', HCNewCoreAuthenticate::class);
-//        $router->pushMiddleWareToGroup('web', HCNewCoreAdminMenu::class);
-//        $router->pushMiddleWareToGroup('web', HCLogLastActivity::class);
-    }
-
-    /**
-     * Register acl permissions
-     *
-     * @param Gate $gate
-     * @throws \Exception
-     */
-    protected function registerGateItems(Gate $gate): void
-    {
-        parent::registerGateItems($gate);
-
-        $gate->before(function(HCUsers $user) {
-            if ($user->isSuperAdmin()) {
-                return true;
-            }
-        });
-
-        $permissions = getHCPermissions();
-
-        if (!is_null($permissions)) {
-            foreach ($permissions as $permission) {
-                $gate->define($permission->action, function(HCUsers $user) use ($permission) {
-                    return $user->hasPermission($permission);
-                });
-            }
+        foreach ($routes as $route) {
+            $router->group(['namespace' => $this->namespace], function($router) use ($route) {
+                require $route;
+            });
         }
     }
-
-//    /**
-//     *
-//     */
-//    protected function registerHelpers(): void
-//    {
-//        include_once $this->homeDirectory . '/../Helpers/helpers.php';
-//    }
-
-//    /**
-//     * @param Router $router
-//     */
-//    protected function registerRoutes(Router $router): void
-//    {
-//        $routes = [
-//            $this->modulePath('Routes/Admin/01_routes.acl.permissions.php'),
-//            $this->modulePath('Routes/Admin/02_routes.acl.roles.php'),
-//            $this->modulePath('Routes/Admin/03_routes.access.php'),
-//            $this->modulePath('Routes/Admin/04__routes.users.groups.php'),
-//            $this->modulePath('Routes/Admin/04_routes.users.php'),
-//
-//            $this->modulePath('Routes/Api/01_routes.acl.permissions.php'),
-//            $this->modulePath('Routes/Api/02_routes.acl.roles.php'),
-//            $this->modulePath('Routes/Api/04__routes.users.groups.php'),
-//            $this->modulePath('Routes/Api/04_routes.users.php'),
-//
-//            $this->modulePath('Routes/Public/01_routes.auth.php'),
-//            $this->modulePath('Routes/Public/02_routes.password.php'),
-//        ];
-//
-//        foreach ($routes as $route) {
-//            $router->group(['namespace' => $this->namespace], function($router) use ($route) {
-//                require $route;
-//            });
-//        }
-//    }
 
     /**
      *
@@ -190,20 +116,4 @@ class HCNewCoreServiceProvider extends HCBaseServiceProvider
         return __DIR__ . '/../' . $path;
     }
 
-    /**
-     *
-     */
-    private function registerRepositories(): void
-    {
-        $this->app->singleton(HCUserRepository::class);
-        $this->app->singleton(RolesRepository::class);
-    }
-
-    /**
-     *
-     */
-    private function registerServices(): void
-    {
-        $this->app->singleton(UserActivationService::class);
-    }
 }

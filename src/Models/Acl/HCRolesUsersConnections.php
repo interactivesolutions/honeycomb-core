@@ -27,24 +27,44 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories;
+namespace InteractiveSolutions\HoneycombNewCore\Models\Acl;
 
-
-use InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserPersonalInfo;
-use InteractiveSolutions\HoneycombCore\Repositories\Repository;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use InteractiveSolutions\HoneycombCore\Models\HCModel;
 
 /**
- * Class HCPersonalInfoRepository
- * @package InteractiveSolutions\HoneycombNewCore\Repositories\Users
+ * Class RolesUsersConnections
+ *
+ * @package InteractiveSolutions\HoneycombNewCore\Models\Acl
+ * @property int $count
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string $role_id
+ * @property string $user_id
+ * @method static Builder|HCRolesUsersConnections whereCount($value)
+ * @method static Builder|HCRolesUsersConnections whereCreatedAt($value)
+ * @method static Builder|HCRolesUsersConnections whereRoleId($value)
+ * @method static Builder|HCRolesUsersConnections whereUpdatedAt($value)
+ * @method static Builder|HCRolesUsersConnections whereUserId($value)
+ * @mixin \Eloquent
  */
-class HCPersonalInfoRepository extends Repository
+class HCRolesUsersConnections extends HCModel
 {
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'hc_acl_roles_users_connections';
 
     /**
-     * @return string
+     * The attributes that are mass assignable.
+     *
+     * @var array
      */
-    public function model(): string
-    {
-        return HCUserPersonalInfo::class;
-    }
+    protected $fillable = [
+        'role_id',
+        'user_id',
+    ];
 }

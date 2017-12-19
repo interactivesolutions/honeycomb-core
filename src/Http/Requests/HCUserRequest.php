@@ -7,17 +7,16 @@ use Illuminate\Foundation\Http\FormRequest;
 class HCUserRequest extends FormRequest
 {
     /**
-     * * Get create inputs
+     * Get request inputs
      *
      * @return array
      */
     public function getInputData(): array
     {
-        switch ($this->method())
-        {
+        switch ($this->method()) {
             case 'DELETE' :
                 return [
-                    'list' => $this->input('list')
+                    'list' => $this->input('list'),
                 ];
 
             case 'POST' :
@@ -36,11 +35,14 @@ class HCUserRequest extends FormRequest
 
             case 'PATCH' :
                 return [
-                    'list' => $this->input('list')
+                    'list' => $this->input('list'),
                 ];
         }
+    }
 
-        return $return;
+    public function getListFields()
+    {
+        return $this->all();
     }
 
     /**
@@ -48,9 +50,9 @@ class HCUserRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -58,29 +60,26 @@ class HCUserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
-        switch ($this->method())
-        {
+        $rules = [];
+
+        switch ($this->method()) {
             case 'DELETE' :
-                return [
+                $rules = [
                     'list' => 'required',
                 ];
 
             case 'POST' :
-                return [
-
-                ];
+                $rules = [];
 
             case 'PUT' :
-                return [
-
-                ];
+                $rules = [];
 
             case 'PATCH' :
-                return [
-
-                ];
+                $rules = [];
         }
+
+        return $rules;
     }
 }

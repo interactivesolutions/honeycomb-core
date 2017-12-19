@@ -42,13 +42,9 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\Roles;
-use InteractiveSolutions\HoneycombNewCore\Models\Traits\ActivateUser;
-use InteractiveSolutions\HoneycombNewCore\Models\Traits\UserRoles;
-use InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserPersonalInfo;
-use InteractiveSolutions\HoneycombNewCore\Notifications\HCAdminWelcomeEmail;
-use InteractiveSolutions\HoneycombNewCore\Notifications\HCResetPassword;
 use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
+use InteractiveSolutions\HoneycombNewCore\Models\Traits\HCActivateUser;
+use InteractiveSolutions\HoneycombNewCore\Models\Traits\HCUserRoles;
 
 /**
  * Class HCUsers
@@ -85,7 +81,7 @@ use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
  */
 class HCUsers extends HCUuidModel implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, Notifiable, UserRoles, ActivateUser;
+    use Authenticatable, Authorizable, CanResetPassword, Notifiable, HCUserRoles, HCActivateUser;
 
     /**
      * The database table used by the model.

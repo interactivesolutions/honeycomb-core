@@ -29,7 +29,7 @@ declare(strict_types = 1);
 
 Route::group(['prefix' => config('hc.admin_url'), 'namespace' => 'Admin', 'middleware' => ['web', 'auth']], function() {
 
-    Route::get('user', [
+    Route::get('userss', [
         'as' => 'admin.user.index',
         'middleware' => ['acl:interactivesolutions_honeycomb_acl_user_list'],
         'uses' => 'HCUserController@index',
