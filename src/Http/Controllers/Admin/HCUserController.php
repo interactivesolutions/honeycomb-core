@@ -3,7 +3,7 @@
  * @copyright 2017 interactivesolutions
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
+ * of this software and associated documentation files (the 'Software'), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
@@ -12,7 +12,7 @@
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -32,6 +32,7 @@ namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers\Admin;
 use Illuminate\Database\Connection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
+use InteractiveSolutions\HoneycombNewCore\Helpers\HCFrontendResponse;
 use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCController;
 use InteractiveSolutions\HoneycombNewCore\Http\Requests\HCUserRequest;
 use InteractiveSolutions\HoneycombNewCore\Services\HCUserService;
@@ -49,18 +50,25 @@ class HCUserController extends HCController
     private $service;
 
     /**
+     * @var HCFrontendResponse
+     */
+    private $response;
+
+    /**
      * HCUsersController constructor.
      * @param Connection $connection
      * @param HCUserService $service
+     * @param HCFrontendResponse $response
      */
-    public function __construct(Connection $connection, HCUserService $service)
+    public function __construct(Connection $connection, HCUserService $service, HCFrontendResponse $response)
     {
         $this->connection = $connection;
         $this->service = $service;
+        $this->response = $response;
     }
 
     /**
-     * Admin view
+     * Admin panel page view
      *
      * @return View
      */
@@ -72,7 +80,7 @@ class HCUserController extends HCController
             'listURL' => route('admin.api.user'),
             'newFormUrl' => route('admin.api.form-manager', ['users-new']),
             'editFormUrl' => route('admin.api.form-manager', ['users-edit']),
-            'headers' => $this->getIndexHeaders(),
+            'headers' => $this->getTableColumns(),
         ];
 
         $config['actions'] = $this->getActions('interactivesolutions_honeycomb_acl_users_');
@@ -81,34 +89,62 @@ class HCUserController extends HCController
     }
 
     /**
-     * Creating Admin List Header based on Main Table
+     * Get admin page table columns settings
      *
      * @return array
      */
-    public function getIndexHeaders(): array
+    public function getTableColumns(): array
     {
-        return [
+        $columns = [
             'email' => [
-                "type" => "text",
-                "label" => trans('HCNewCore::users.email'),
+                'type' => 'text',
+                'label' => trans('HCNewCore::users.email'),
             ],
             'last_login' => [
-                "type" => "text",
-                "label" => trans('HCNewCore::users.last_login'),
+                'type' => 'text',
+                'label' => trans('HCNewCore::users.last_login'),
             ],
             'last_activity' => [
-                "type" => "text",
-                "label" => trans('HCNewCore::users.last_activity'),
+                'type' => 'text',
+                'label' => trans('HCNewCore::users.last_activity'),
             ],
             'activated_at' => [
-                "type" => "text",
-                "label" => trans('HCNewCore::users.activation.activated_at'),
+                'type' => 'text',
+                'label' => trans('HCNewCore::users.activation.activated_at'),
             ],
         ];
+
+        return $columns;
     }
 
     /**
-     * Create record
+     * Getting a list records for API call
+     *
+     * @param HCUserRequest $request
+     * @return JsonResponse
+     */
+    public function getList(HCUserRequest $request): JsonResponse
+    {
+        return response()->json(
+            $this->service->getRepository()->getList($request)
+        );
+    }
+
+    /**
+     * Creating data list
+     * @param HCUserRequest $request
+     * @return JsonResponse
+     */
+    public function getListPaginate(HCUserRequest $request): JsonResponse
+    {
+        return response()->json(
+            $this->service->getRepository()->getListPaginate($request)
+        );
+    }
+
+    /**
+     * Store record
+     *
      * @param HCUserRequest $request
      * @return JsonResponse
      * @throws \Exception
@@ -121,23 +157,24 @@ class HCUserController extends HCController
             $record = $this->service->createUser($request->getInputData());
 
             $this->connection->commit();
-
         } catch (\Throwable $exception) {
             $this->connection->rollBack();
 
-            return \HCResponse::error('USER-001', $exception->getMessage());
+            return $this->response->error($exception->getMessage());
         }
 
-        return $this->getById($record->id);
+        return $this->response->success('Created', $this->getById($record->id));
     }
 
     /**
+     * Update record
+     *
      * @param HCUserRequest $request
      * @param string $id
      * @return mixed
      * @throws \Exception
      */
-    public function update(HCUserRequest $request, string $id)
+    public function update(HCUserRequest $request, string $id): JsonResponse
     {
         $this->connection->beginTransaction();
 
@@ -149,21 +186,16 @@ class HCUserController extends HCController
         } catch (\Throwable $exception) {
             $this->connection->rollBack();
 
-            return \HCResponse::error('USER-002', $exception->getMessage());
+            return $this->response->error($exception->getMessage());
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Updated',
-            'data' => $record,
-        ]);
+        return $this->response->success('Updated', $record);
     }
 
     /**
      * Getting single record
      *
      * @param string $recordId
-     * todo: return DTO
      * @return JsonResponse
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
@@ -173,7 +205,6 @@ class HCUserController extends HCController
             $this->service->getRepository()->getRecordById($recordId)
         );
     }
-
 
     /**
      * @param HCUserRequest $request
@@ -191,10 +222,10 @@ class HCUserController extends HCController
         } catch (\Exception $exception) {
             $this->connection->rollBack();
 
-            return \HCResponse::error('USER-002', $exception->getMessage());
+            return $this->response->error($exception->getMessage());
         }
 
-        return response()->json(['success' => true, 'list' => $list]);
+        return $this->response->success('Successfully deleted', $list);
     }
 
     /**
@@ -213,10 +244,10 @@ class HCUserController extends HCController
         } catch (\Exception $exception) {
             $this->connection->rollBack();
 
-            return \HCResponse::error('USER-002', $exception->getMessage());
+            return $this->response->error($exception->getMessage());
         }
 
-        return response()->json(['success' => true, 'list' => $list]);
+        return $this->response->success('Successfully deleted', $list);
     }
 
     /**
@@ -235,33 +266,9 @@ class HCUserController extends HCController
         } catch (\Exception $exception) {
             $this->connection->rollBack();
 
-            return \HCResponse::error('USER-002', $exception->getMessage());
+            return $this->response->error($exception->getMessage());
         }
 
-        return response()->json(['success' => true, 'list' => $list]);
+        return $this->response->success('Successfully deleted', $list);
     }
-
-    /**
-     * Getting a list records for API call
-     *
-     * @param HCUserRequest $request
-     * @return JsonResponse
-     */
-    public function getList(HCUserRequest $request): JsonResponse
-    {
-        return $this->service->getRepository()->getList($request);
-    }
-
-    /**
-     * Creating data list
-     * @param HCUserRequest $request
-     * @return JsonResponse
-     */
-    public function getListPaginate(HCUserRequest $request): JsonResponse
-    {
-        return response()->json(
-            $this->service->getRepository()->getListPaginate($request)
-        );
-    }
-
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace InteractiveSolutions\HoneycombNewCore\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -14,30 +16,36 @@ class HCUserRequest extends FormRequest
     public function getInputData(): array
     {
         switch ($this->method()) {
-            case 'DELETE' :
+            case 'DELETE':
                 return [
                     'list' => $this->input('list'),
                 ];
+                break;
 
-            case 'POST' :
+            case 'POST':
                 return [
                     'record' => [
                         'email' => $this->input('email'),
                     ],
                 ];
+                break;
 
-            case 'PUT' :
+            case 'PUT':
                 return [
                     'record' => [
                         'email' => $this->input('email'),
                     ],
                 ];
+                break;
 
-            case 'PATCH' :
+            case 'PATCH':
                 return [
                     'list' => $this->input('list'),
                 ];
+                break;
         }
+
+        return [];
     }
 
     public function getListFields()
@@ -62,24 +70,26 @@ class HCUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [];
-
         switch ($this->method()) {
-            case 'DELETE' :
-                $rules = [
+            case 'DELETE':
+                return [
                     'list' => 'required',
                 ];
+                break;
 
-            case 'POST' :
-                $rules = [];
+            case 'POST':
+                return [];
+                break;
 
-            case 'PUT' :
-                $rules = [];
+            case 'PUT':
+                return [];
+                break;
 
-            case 'PATCH' :
-                $rules = [];
+            case 'PATCH':
+                return [];
+                break;
         }
 
-        return $rules;
+        return [];
     }
 }

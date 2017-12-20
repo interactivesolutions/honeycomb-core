@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers;
 
-
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -13,13 +12,6 @@ use Illuminate\Routing\Controller;
 class HCController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    /**
-     * Default records per page for pagination
-     *
-     * @var int
-     */
-    protected $recordsPerPage = 50;
 
     /**
      * Getting allowed actions for admin view

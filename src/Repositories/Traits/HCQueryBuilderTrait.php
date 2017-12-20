@@ -28,6 +28,39 @@ trait HCQueryBuilderTrait
     protected $minimumSearchInputLength = 0;
 
     /**
+     * Creating data query
+     *
+     * @param Request $request
+     * @param array $availableFields
+     * @return Builder
+     */
+    protected function createBuilderQuery(Request $request, array $availableFields = null): Builder
+    {
+        $with = [];
+
+        if ($availableFields == null) {
+            $availableFields = $this->model()::getFillableFields();
+        }
+
+        $builder = $this->model()::with($with)->select($availableFields)
+            ->where(function (Builder $query) use ($request, $availableFields) {
+                // add request filtering
+                $this->filterByRequestParameters($query, $request, $availableFields);
+            });
+
+        // check if soft deleted records must be shown
+        $builder = $this->checkForDeleted($builder, $request);
+
+        // search through items
+        $builder = $this->search($builder, $request);
+
+        // set order
+        $builder = $this->orderData($builder, $request, $availableFields);
+
+        return $builder;
+    }
+
+    /**
      * Get only valid request params for records filtering
      *
      * @param Builder $query
@@ -40,7 +73,6 @@ trait HCQueryBuilderTrait
         $givenFields = $this->getRequestParameters($request);
 
         foreach ($givenFields as $fieldName => $value) {
-
             $from = substr($fieldName, 0, -5);
             $to = substr($fieldName, 0, -3);
 
@@ -161,7 +193,7 @@ trait HCQueryBuilderTrait
     {
         $fields = $this->model()::getFillableFields();
 
-        return $query->where(function(Builder $query) use ($fields, $phrase) {
+        return $query->where(function (Builder $query) use ($fields, $phrase) {
             foreach ($fields as $key => $field) {
                 $method = $key == 0 ? 'where' : 'orWhere';
 

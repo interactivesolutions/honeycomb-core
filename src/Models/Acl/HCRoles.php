@@ -33,7 +33,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUsers;
+use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
 use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
 /**
@@ -48,7 +48,7 @@ use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
  * @property string $name
  * @property string $slug
  * @property-read Collection|HCPermissions[] $permissions
- * @property-read Collection|HCUsers[] $users
+ * @property-read Collection|HCUser[] $users
  * @method static Builder|HCRoles notSuperAdmin()
  * @method static Builder|HCRoles superAdmin()
  * @method static Builder|HCRoles whereCount($value)
@@ -113,7 +113,7 @@ class HCRoles extends HCUuidModel
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(HCUsers::class, HCRolesUsersConnections::getTableName(), 'role_id', 'user_id');
+        return $this->belongsToMany(HCUser::class, HCRolesUsersConnections::getTableName(), 'role_id', 'user_id');
     }
 
     /**

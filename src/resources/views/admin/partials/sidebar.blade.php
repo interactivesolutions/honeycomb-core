@@ -1,0 +1,23 @@
+<aside class="main-sidebar">
+
+    <section class="sidebar">
+
+        <div class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control search-menu-box"
+                       placeholder="{{ trans('HCTranslations::core.filter') }}"/>
+                <span class="input-group-btn">
+                  <button name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+
+            @if( isset($adminMenu) )
+                @include('HCCoreUI::admin.partials.submenu', ['menuItems' => $adminMenu])
+            @endif
+
+        </ul>
+    </section>
+</aside>

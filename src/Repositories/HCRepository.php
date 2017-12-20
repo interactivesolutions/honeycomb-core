@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Repositories;
 
-
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -248,7 +247,6 @@ abstract class HCRepository implements HCRepositoryContract
 
     /**
      * @return int
-     * @throws BindingResolutionException
      */
     public function count(): int
     {
@@ -257,14 +255,15 @@ abstract class HCRepository implements HCRepositoryContract
 
     /**
      * @return Model
-     * @throws BindingResolutionException
      */
     final protected function makeModel(): Model
     {
         $model = app($this->model());
 
         if (!$model instanceof Model) {
-            throw new \RuntimeException('Class ' . $this->model() . ' must be en instance of InteractiveSolutions\\HoneycombCore\\Models\\HCModel');
+            throw new \RuntimeException(
+                'Class ' . $this->model() . ' must be instance of InteractiveSolutions\\HoneycombCore\\Models\\HCModel'
+            );
         }
 
         return $model;
@@ -272,7 +271,6 @@ abstract class HCRepository implements HCRepositoryContract
 
     /**
      * @return Builder
-     * @throws BindingResolutionException
      */
     final public function makeQuery(): Builder
     {

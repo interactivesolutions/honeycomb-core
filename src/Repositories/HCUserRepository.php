@@ -25,17 +25,14 @@
  * http://www.interactivesolutions.lt
  */
 
-
 namespace InteractiveSolutions\HoneycombNewCore\Repositories;
 
-
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use InteractiveSolutions\HoneycombNewCore\DTO\HCUserDTO;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUsers;
+use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
 use InteractiveSolutions\HoneycombNewCore\Repositories\Traits\HCQueryBuilderTrait;
 
 /**
@@ -44,7 +41,6 @@ use InteractiveSolutions\HoneycombNewCore\Repositories\Traits\HCQueryBuilderTrai
  */
 class HCUserRepository extends HCRepository
 {
-
     use HCQueryBuilderTrait;
 
     /**
@@ -52,37 +48,35 @@ class HCUserRepository extends HCRepository
      */
     public function model(): string
     {
-        return HCUsers::class;
+        return HCUser::class;
     }
 
     /**
      * @param string $userId
-     * @return HCUsers|Model|null
+     * @return HCUser|Model|null
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function getById(string $userId): ? HCUsers
+    public function getById(string $userId): ? HCUser
     {
         return $this->makeQuery()->find($userId);
     }
 
     /**
      * @param string $userId
-     * @return HCUsers|Model|null
+     * @return HCUser|Model|null
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function getByIdWithPersonal(string $userId): ? HCUsers
+    public function getByIdWithPersonal(string $userId): ? HCUser
     {
         return $this->makeQuery()->with('personal')->where('id', '=', $userId)->firstOrFail();
     }
 
     public function deleteSoft()
     {
-
     }
 
     public function deleteForce()
     {
-
     }
 
     /**
@@ -95,12 +89,12 @@ class HCUserRepository extends HCRepository
         $record = $this->getById($userId);
 
         $record->load([
-            'roles' => function($query) {
+            'roles' => function ($query) {
                 $query->select('id', 'name as label');
             },
         ]);
 
-        return (new HCUserDTO(
+        return new HCUserDTO(
             $record->id,
             $record->email,
             $record->activated_at,
@@ -108,7 +102,7 @@ class HCUserRepository extends HCRepository
             $record->last_visited,
             $record->last_activity,
             $record->roles
-        ))->jsonData();
+        );
     }
 
     /**
@@ -117,7 +111,7 @@ class HCUserRepository extends HCRepository
      */
     public function getList(Request $request): Collection
     {
-        return $this->createQuery($request)->get();
+        return $this->createBuilderQuery($request)->get();
     }
 
     /**
@@ -131,39 +125,6 @@ class HCUserRepository extends HCRepository
         int $perPage = self::DEFAULT_PER_PAGE,
         array $columns = ['*']
     ): LengthAwarePaginator {
-        return $this->createQuery($request)->paginate($perPage, $columns)->appends($request->all());
-    }
-
-    /**
-     * Creating data query
-     *
-     * @param Request $request
-     * @param array $availableFields
-     * @return Builder
-     */
-    protected function createQuery(Request $request, array $availableFields = null): Builder
-    {
-        $with = [];
-
-        if ($availableFields == null) {
-            $availableFields = $this->model()::getFillableFields();
-        }
-
-        $builder = $this->model()::with($with)->select($availableFields)
-            ->where(function(Builder $query) use ($request, $availableFields) {
-                // add request filtering
-                $this->filterByRequestParameters($query, $request, $availableFields);
-            });
-
-        // check if soft deleted records must be shown
-        $builder = $this->checkForDeleted($builder, $request);
-
-        // search through items
-        $builder = $this->search($builder, $request);
-
-        // set order
-        $builder = $this->orderData($builder, $request, $availableFields);
-
-        return $builder;
+        return $this->createBuilderQuery($request)->paginate($perPage, $columns)->appends($request->all());
     }
 }
