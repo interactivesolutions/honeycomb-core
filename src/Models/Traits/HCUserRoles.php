@@ -30,8 +30,8 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombNewCore\Models\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCPermissions;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCRoles;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCPermission;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCRole;
 use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCRolesUsersConnections;
 
 
@@ -45,7 +45,7 @@ trait HCUserRoles
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(
-            HCRoles::class,
+            HCRole::class,
             HCRolesUsersConnections::getTableName(),
             'user_id',
             'role_id'
@@ -61,7 +61,7 @@ trait HCUserRoles
     public function assignRoleBySlug(string $role)
     {
         return $this->roles()->save(
-            HCRoles::where('slug', $role)->firstOrFail()
+            HCRole::where('slug', $role)->firstOrFail()
         );
     }
 
@@ -107,10 +107,10 @@ trait HCUserRoles
     /**
      * Determine if the user may perform the given permission.
      *
-     * @param HCPermissions $permission
+     * @param HCPermission $permission
      * @return bool
      */
-    public function hasPermission(HCPermissions $permission): bool
+    public function hasPermission(HCPermission $permission): bool
     {
         return $this->hasRole($permission->roles);
     }
@@ -162,7 +162,7 @@ trait HCUserRoles
     {
         HCRolesUsersConnections::create([
             'user_id' => $this->id,
-            'role_id' => HCRoles::where('slug', 'user')->firstOrFail()->id,
+            'role_id' => HCRole::where('slug', 'user')->firstOrFail()->id,
         ]);
     }
 
@@ -173,7 +173,7 @@ trait HCUserRoles
     {
         HCRolesUsersConnections::create([
             'user_id' => $this->id,
-            'role_id' => HCRoles::where('slug', 'super-admin')->firstOrFail()->id,
+            'role_id' => HCRole::where('slug', 'super-admin')->firstOrFail()->id,
         ]);
     }
 
@@ -184,7 +184,7 @@ trait HCUserRoles
     {
         HCRolesUsersConnections::create([
             'user_id' => $this->id,
-            'role_id' => HCRoles::where('slug', 'project-admin')->firstOrFail()->id,
+            'role_id' => HCRole::where('slug', 'project-admin')->firstOrFail()->id,
         ]);
     }
 
@@ -195,7 +195,7 @@ trait HCUserRoles
     {
         HCRolesUsersConnections::create([
             'user_id' => $this->id,
-            'role_id' => HCRoles::where('slug', 'editor')->firstOrFail()->id,
+            'role_id' => HCRole::where('slug', 'editor')->firstOrFail()->id,
         ]);
     }
 
@@ -206,7 +206,7 @@ trait HCUserRoles
     {
         HCRolesUsersConnections::create([
             'user_id' => $this->id,
-            'role_id' => HCRoles::where('slug', 'author')->firstOrFail()->id,
+            'role_id' => HCRole::where('slug', 'author')->firstOrFail()->id,
         ]);
     }
 
@@ -217,7 +217,7 @@ trait HCUserRoles
     {
         HCRolesUsersConnections::create([
             'user_id' => $this->id,
-            'role_id' => HCRoles::where('slug', 'contributor')->firstOrFail()->id,
+            'role_id' => HCRole::where('slug', 'contributor')->firstOrFail()->id,
         ]);
     }
 
@@ -228,7 +228,7 @@ trait HCUserRoles
     {
         HCRolesUsersConnections::create([
             'user_id' => $this->id,
-            'role_id' => HCRoles::where('slug', 'moderator')->firstOrFail()->id,
+            'role_id' => HCRole::where('slug', 'moderator')->firstOrFail()->id,
         ]);
     }
 
@@ -239,7 +239,7 @@ trait HCUserRoles
     {
         HCRolesUsersConnections::create([
             'user_id' => $this->id,
-            'role_id' => HCRoles::where('slug', 'subscriber')->firstOrFail()->id,
+            'role_id' => HCRole::where('slug', 'subscriber')->firstOrFail()->id,
         ]);
     }
 
@@ -250,7 +250,7 @@ trait HCUserRoles
     {
         HCRolesUsersConnections::create([
             'user_id' => $this->id,
-            'role_id' => HCRoles::where('slug', 'subscriber')->firstOrFail()->id,
+            'role_id' => HCRole::where('slug', 'subscriber')->firstOrFail()->id,
         ]);
     }
 }

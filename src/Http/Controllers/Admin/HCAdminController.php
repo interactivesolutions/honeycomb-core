@@ -5,13 +5,13 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers\Admin;
 
 use Illuminate\View\View;
-use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCController;
+use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCBaseController;
 
 /**
  * Class HCAdminController
  * @package InteractiveSolutions\HoneycombNewCore\Http\Controllers\Admin
  */
-class HCAdminController extends HCController
+class HCAdminController extends HCBaseController
 {
     /**
      * Admin dashboard

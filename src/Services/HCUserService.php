@@ -31,7 +31,7 @@ namespace InteractiveSolutions\HoneycombNewCore\Services;
 
 use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
 use InteractiveSolutions\HoneycombNewCore\Repositories\HCPersonalInfoRepository;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
+use InteractiveSolutions\HoneycombNewCore\Repositories\HCUseRepository;
 
 /**
  * Class HCUserService
@@ -40,7 +40,7 @@ use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
 class HCUserService
 {
     /**
-     * @var HCUserRepository
+     * @var HCUseRepository
      */
     private $userRepository;
 
@@ -51,19 +51,19 @@ class HCUserService
 
     /**
      * HCUserService constructor.
-     * @param HCUserRepository $userRepository
+     * @param HCUseRepository $userRepository
      * @param HCPersonalInfoRepository $personalRepository
      */
-    public function __construct(HCUserRepository $userRepository, HCPersonalInfoRepository $personalRepository)
+    public function __construct(HCUseRepository $userRepository, HCPersonalInfoRepository $personalRepository)
     {
         $this->userRepository = $userRepository;
         $this->personalInfoRepository = $personalRepository;
     }
 
     /**
-     * @return HCUserRepository
+     * @return HCUseRepository
      */
-    public function getRepository(): HCUserRepository
+    public function getRepository(): HCUseRepository
     {
         return $this->userRepository;
     }

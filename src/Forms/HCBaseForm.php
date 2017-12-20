@@ -40,20 +40,6 @@ use InteractiveSolutions\HoneycombNewCore\Models\HCUsers;
 abstract class HCBaseForm implements HCFormContract
 {
     /**
-     * Name of the form
-     *
-     * @var string
-     */
-    protected $formID = 'users';
-
-    /**
-     * Is form multi language
-     *
-     * @var bool
-     */
-    protected $multiLanguage = false;
-
-    /**
      * Creating form
      *
      * @param bool $edit

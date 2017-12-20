@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Artisan;
  * Class HCFormManagerController
  * @package InteractiveSolutions\HoneycombNewCore\http\controllers
  */
-class HCFormManagerController extends HCController
+class HCFormManagerController extends HCBaseController
 {
     /**
      * Get form structure as json object

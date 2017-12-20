@@ -4,7 +4,7 @@ namespace InteractiveSolutions\HoneycombNewCore\DTO;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCRoles;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCRole;
 
 class HCUserDTO extends HCBaseDTO
 {
@@ -153,7 +153,7 @@ class HCUserDTO extends HCBaseDTO
     }
 
     /**
-     * @return Collection|HCRoles
+     * @return Collection|HCRole
      */
     public function getRoles()
     {

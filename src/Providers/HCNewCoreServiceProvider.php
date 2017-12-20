@@ -29,30 +29,12 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Providers;
 
-use Illuminate\Routing\Router;
-use InteractiveSolutions\HoneycombCore\Providers\HCBaseServiceProvider;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
-
 /**
  * Class HCNewCoreServiceProvider
  * @package InteractiveSolutions\HoneycombNewCore\Providers
  */
 class HCNewCoreServiceProvider extends HCBaseServiceProvider
 {
-    /**
-     * @var string
-     */
-    protected $homeDirectory = __DIR__;
-
-    /**
-     * Console commands
-     *
-     * @var array
-     */
-    protected $commands = [
-
-    ];
-
     /**
      * Namespace
      *
@@ -61,59 +43,24 @@ class HCNewCoreServiceProvider extends HCBaseServiceProvider
     protected $namespace = 'InteractiveSolutions\HoneycombNewCore\Http\Controllers';
 
     /**
-     * Provider facade name
+     * Provider name
      *
      * @var string
      */
-    protected $serviceProviderNameSpace = 'HCNewCore';
+    protected $packageName = 'HCNewCore';
 
     /**
-     * @param Router $router
-     */
-    protected function registerRoutes(Router $router): void
-    {
-        $routes = [
-            $this->modulePath('Routes/Admin/04_routes.users.php'),
-        ];
-
-        foreach ($routes as $route) {
-            $router->group(['namespace' => $this->namespace], function($router) use ($route) {
-                require $route;
-            });
-        }
-    }
-
-    /**
+     * List of route paths to load
      *
+     * @var array
      */
-    protected function loadViews(): void
-    {
-        $this->loadViewsFrom($this->homeDirectory . '/../resources/views', $this->serviceProviderNameSpace);
-    }
+    protected $routes = [
+        // core
+        'Routes/routes.form-manager.php',
+        'Routes/routes.logs.php',
+        'Routes/routes.welcome.php',
 
-    /**
-     *
-     */
-    protected function loadMigrations(): void
-    {
-        $this->loadMigrationsFrom($this->homeDirectory . '/../Database/Migrations');
-    }
-
-    /**
-     *
-     */
-    protected function loadTranslations(): void
-    {
-        $this->loadTranslationsFrom($this->homeDirectory . '/../resources/lang', $this->serviceProviderNameSpace);
-    }
-
-    /**
-     * @param string $path
-     * @return string
-     */
-    private function modulePath(string $path): string
-    {
-        return __DIR__ . '/../' . $path;
-    }
-
+        'Routes/Admin/routes.index.php',
+        'Routes/Admin/routes.users.php',
+    ];
 }

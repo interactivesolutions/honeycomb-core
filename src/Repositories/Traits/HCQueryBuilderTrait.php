@@ -42,7 +42,8 @@ trait HCQueryBuilderTrait
             $availableFields = $this->model()::getFillableFields();
         }
 
-        $builder = $this->model()::with($with)->select($availableFields)
+        $builder = $this->model()::with($with)
+            ->select($availableFields)
             ->where(function (Builder $query) use ($request, $availableFields) {
                 // add request filtering
                 $this->filterByRequestParameters($query, $request, $availableFields);
@@ -157,13 +158,13 @@ trait HCQueryBuilderTrait
      */
     protected function search(Builder $query, Request $request): Builder
     {
-        $q = $request->input('q');
+        $phrase = $request->input('q');
 
-        if (!$q || strlen($q) < $this->minimumSearchInputLength) {
+        if (!$phrase || strlen($phrase) < $this->minimumSearchInputLength) {
             return $query;
         }
 
-        return $this->searchQuery($query, $q);
+        return $this->searchQuery($query, $phrase);
     }
 
     /**
@@ -176,7 +177,7 @@ trait HCQueryBuilderTrait
     protected function checkForDeleted(Builder $query, Request $request): Builder
     {
         if ($request->filled('deleted') && $request->input('deleted') === '1') {
-            $query = $query->onlyTrashed();
+            $query->onlyTrashed();
         }
 
         return $query;

@@ -33,11 +33,11 @@ use Illuminate\Database\Connection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use InteractiveSolutions\HoneycombNewCore\Helpers\HCFrontendResponse;
-use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCController;
+use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCBaseController;
 use InteractiveSolutions\HoneycombNewCore\Http\Requests\HCUserRequest;
 use InteractiveSolutions\HoneycombNewCore\Services\HCUserService;
 
-class HCUserController extends HCController
+class HCUserController extends HCBaseController
 {
     /**
      * @var Connection

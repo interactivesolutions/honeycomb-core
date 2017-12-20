@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Repositories;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +14,7 @@ use InteractiveSolutions\HoneycombNewCore\Contracts\HCRepositoryContract;
  * Class Repository
  * @package InteractiveSolutions\HoneycombCore\Repositories
  */
-abstract class HCRepository implements HCRepositoryContract
+abstract class HCBaseRepository implements HCRepositoryContract
 {
     /**
      *
@@ -35,7 +34,6 @@ abstract class HCRepository implements HCRepositoryContract
     /**
      * @param array $columns
      * @return Collection
-     * @throws BindingResolutionException
      */
     public function all(array $columns = ['*']): Collection
     {
@@ -46,7 +44,6 @@ abstract class HCRepository implements HCRepositoryContract
      * @param int $perPage
      * @param array $columns
      * @return LengthAwarePaginator
-     * @throws BindingResolutionException
      */
     public function paginate(int $perPage = self::DEFAULT_PER_PAGE, array $columns = ['*']): LengthAwarePaginator
     {
@@ -56,7 +53,6 @@ abstract class HCRepository implements HCRepositoryContract
     /**
      * @param string $column
      * @return mixed
-     * @throws BindingResolutionException
      */
     public function max(string $column = 'id')
     {
@@ -66,7 +62,6 @@ abstract class HCRepository implements HCRepositoryContract
     /**
      * @param string $column
      * @return mixed
-     * @throws BindingResolutionException
      */
     public function min(string $column = 'id')
     {
@@ -76,7 +71,6 @@ abstract class HCRepository implements HCRepositoryContract
     /**
      * @param array $data
      * @return Model
-     * @throws BindingResolutionException
      */
     public function create(array $data = []): Model
     {
@@ -86,7 +80,6 @@ abstract class HCRepository implements HCRepositoryContract
     /**
      * @param array $data
      * @return bool
-     * @throws BindingResolutionException
      */
     public function insert(array $data = []): bool
     {
@@ -98,7 +91,6 @@ abstract class HCRepository implements HCRepositoryContract
      * @param $attributeValue
      * @param string $attributeField
      * @return int
-     * @throws BindingResolutionException
      */
     public function update(array $data, $attributeValue, string $attributeField = self::DEFAULT_ATTRIBUTES_FIELD): int
     {
@@ -115,7 +107,6 @@ abstract class HCRepository implements HCRepositoryContract
      * @param $attributeValues
      * @param string $attributeField
      * @return int
-     * @throws BindingResolutionException
      */
     public function updateWhereIn(
         array $data,
@@ -129,7 +120,6 @@ abstract class HCRepository implements HCRepositoryContract
      * @param array $attributes
      * @param array $values
      * @return Model
-     * @throws BindingResolutionException
      */
     public function updateOrCreate(array $attributes, array $values = []): Model
     {
@@ -139,7 +129,6 @@ abstract class HCRepository implements HCRepositoryContract
     /**
      * @param array $criteria
      * @return mixed
-     * @throws BindingResolutionException
      */
     public function delete(array $criteria = [])
     {
@@ -147,32 +136,29 @@ abstract class HCRepository implements HCRepositoryContract
     }
 
     /**
-     * @param $id
+     * @param $recordId
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
-     * @throws BindingResolutionException
      */
-    public function find($id, array $columns = ['*'])
+    public function find($recordId, array $columns = ['*'])
     {
-        return $this->makeQuery()->find($id, $columns);
+        return $this->makeQuery()->find($recordId, $columns);
     }
 
     /**
-     * @param $id
+     * @param $recordId
      * @param array $columns
      * @return mixed|static
-     * @throws BindingResolutionException
      */
-    public function findAndLock($id, array $columns = ['*'])
+    public function findAndLock($recordId, array $columns = ['*'])
     {
-        return $this->makeQuery()->lockForUpdate()->find($id, $columns);
+        return $this->makeQuery()->lockForUpdate()->find($recordId, $columns);
     }
 
     /**
      * @param array $criteria
      * @param array $columns
      * @return Model|null|static
-     * @throws BindingResolutionException
      */
     public function findOneBy(array $criteria = [], array $columns = ['*'])
     {
@@ -183,7 +169,6 @@ abstract class HCRepository implements HCRepositoryContract
      * @param array $criteria
      * @param array $columns
      * @return array|null|\stdClass
-     * @throws BindingResolutionException
      */
     public function findOneByAndLock(array $criteria = [], array $columns = ['*'])
     {
@@ -191,32 +176,29 @@ abstract class HCRepository implements HCRepositoryContract
     }
 
     /**
-     * @param $id
+     * @param $recordId
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Collection|Model
-     * @throws BindingResolutionException
      */
-    public function findOrFail($id, array $columns = ['*'])
+    public function findOrFail($recordId, array $columns = ['*'])
     {
-        return $this->makeQuery()->findOrFail($id, $columns);
+        return $this->makeQuery()->findOrFail($recordId, $columns);
     }
 
     /**
-     * @param $id
+     * @param $recordId
      * @param array $columns
      * @return mixed
-     * @throws BindingResolutionException
      */
-    public function findAndLockOrFail($id, array $columns = ['*'])
+    public function findAndLockOrFail($recordId, array $columns = ['*'])
     {
-        return $this->makeQuery()->lockForUpdate()->findOrFail($id, $columns);
+        return $this->makeQuery()->lockForUpdate()->findOrFail($recordId, $columns);
     }
 
     /**
      * @param array $criteria
      * @param array $columns
      * @return Collection
-     * @throws BindingResolutionException
      */
     public function findAllBy(array $criteria = [], array $columns = ['*']): Collection
     {
@@ -228,7 +210,6 @@ abstract class HCRepository implements HCRepositoryContract
      * @param string $whereField
      * @param array $columns
      * @return Collection
-     * @throws BindingResolutionException
      */
     public function findWhereIn(array $whereValues = [], string $whereField = 'id', array $columns = ['*']): Collection
     {
@@ -238,7 +219,6 @@ abstract class HCRepository implements HCRepositoryContract
     /**
      * @param array $data
      * @return int
-     * @throws BindingResolutionException
      */
     public function insertGetId(array $data): int
     {

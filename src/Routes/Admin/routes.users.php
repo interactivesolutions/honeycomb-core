@@ -27,16 +27,18 @@
 
 declare(strict_types = 1);
 
-Route::group(['prefix' => config('hc.admin_url'), 'namespace' => 'Admin', 'middleware' => ['web', 'auth']], function() {
-
+Route::group([
+    'prefix' => config('hc.admin_url'),
+    'namespace' => 'Admin',
+    'middleware' => ['web', 'auth'],
+], function () {
     Route::get('userss', [
         'as' => 'admin.user.index',
         'middleware' => ['acl:interactivesolutions_honeycomb_acl_user_list'],
         'uses' => 'HCUserController@index',
     ]);
 
-    Route::group(['prefix' => 'api/user'], function() {
-
+    Route::group(['prefix' => 'api/user'], function () {
         Route::get('/', [
             'as' => 'admin.api.user',
             'middleware' => ['acl:interactivesolutions_honeycomb_acl_user_list'],
@@ -71,7 +73,7 @@ Route::group(['prefix' => config('hc.admin_url'), 'namespace' => 'Admin', 'middl
             'uses' => 'HCUserController@deleteForce',
         ]);
 
-        Route::group(['prefix' => '{id}'], function() {
+        Route::group(['prefix' => '{id}'], function () {
 
             Route::get('/', [
                 'as' => 'admin.api.user.single',
@@ -90,7 +92,6 @@ Route::group(['prefix' => config('hc.admin_url'), 'namespace' => 'Admin', 'middl
                 'middleware' => ['acl:interactivesolutions_honeycomb_acl_user_update'],
                 'uses' => 'HCUserController@patch',
             ]);
-
         });
     });
 });

@@ -32,17 +32,16 @@ namespace InteractiveSolutions\HoneycombNewCore\Models;
 use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 use InteractiveSolutions\HoneycombNewCore\Models\Traits\HCActivateUser;
 use InteractiveSolutions\HoneycombNewCore\Models\Traits\HCUserRoles;
 
@@ -186,8 +185,7 @@ class HCUser extends HCUuidModel implements AuthenticatableContract, Authorizabl
     public function sendWelcomeEmailWithPassword(string $password): void
     {
         $this->notify(
-            (new HCAdminWelcomeEmail())
-                ->withPassword($password)
+            (new HCAdminWelcomeEmail())->withPassword($password)
         );
     }
 

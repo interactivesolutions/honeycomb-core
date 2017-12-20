@@ -39,7 +39,7 @@ use InteractiveSolutions\HoneycombNewCore\Repositories\Traits\HCQueryBuilderTrai
  * Class HCUserRepository
  * @package InteractiveSolutions\HoneycombNewCore\Repositories
  */
-class HCUserRepository extends HCRepository
+class HCUseRepository extends HCBaseRepository
 {
     use HCQueryBuilderTrait;
 
