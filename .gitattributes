@@ -6,3 +6,4 @@ CHANGELOG-* export-ignore
 .gitignore export-ignore
 composer.lock export-ignore
 phpunit.xml export-ignore
+InteractiveSolutions.codestyle.xml export-ignore
