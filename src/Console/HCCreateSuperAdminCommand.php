@@ -31,15 +31,15 @@ namespace InteractiveSolutions\HoneycombCore\Console;
 
 use Carbon\Carbon;
 use DB;
-use InteractiveSolutions\HoneycombCore\Console\HCCommand;
+use Illuminate\Console\Command;
 use InteractiveSolutions\HoneycombCore\Models\HCUser;
 use Validator;
 
 /**
- * Class HCSuperAdmin
+ * Class HCCreateSuperAdminCommand
  * @package InteractiveSolutions\HoneycombCore\Console
  */
-class HCSuperAdmin extends HCCommand
+class HCCreateSuperAdminCommand extends Command
 {
     /**
      * The name and signature of the console command.

@@ -29,11 +29,11 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Providers;
 
-use InteractiveSolutions\HoneycombCore\Console\HCAdminMenu;
+use InteractiveSolutions\HoneycombCore\Console\HCGenerateAdminMenuCommand;
 use InteractiveSolutions\HoneycombCore\Console\HCAdminURL;
-use InteractiveSolutions\HoneycombCore\Console\HCForms;
-use InteractiveSolutions\HoneycombCore\Console\HCPermissions;
-use InteractiveSolutions\HoneycombCore\Console\HCSuperAdmin;
+use InteractiveSolutions\HoneycombCore\Console\HCGenerateFormsCommand;
+use InteractiveSolutions\HoneycombCore\Console\HCScanRolePermissionsCommand;
+use InteractiveSolutions\HoneycombCore\Console\HCCreateSuperAdminCommand;
 use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
 use InteractiveSolutions\HoneycombCore\Repositories\HCUserRepository;
 use InteractiveSolutions\HoneycombCore\Services\HCUserActivationService;
@@ -50,11 +50,10 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
      * @var array
      */
     protected $commands = [
-        HCPermissions::class,
-        HCAdminMenu::class,
-        HCForms::class,
-        HCAdminURL::class,
-        HCSuperAdmin::class,
+        HCScanRolePermissionsCommand::class,
+        HCGenerateAdminMenuCommand::class,
+        HCGenerateFormsCommand::class,
+        HCCreateSuperAdminCommand::class,
     ];
 
     /**

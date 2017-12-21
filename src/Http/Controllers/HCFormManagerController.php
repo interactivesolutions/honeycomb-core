@@ -5,7 +5,6 @@ namespace InteractiveSolutions\HoneycombCore\Http\Controllers;
 
 use Cache;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Artisan;
 
 /**
  * Class HCFormManagerController
@@ -50,7 +49,7 @@ class HCFormManagerController extends HCBaseController
     {
         if (!cache()->has('hc-forms')) {
             // generate forms
-            Artisan::call('hc:forms');
+            \Artisan::call('hc:forms');
         }
 
         $formHolder = cache()->get('hc-forms');

@@ -31,14 +31,31 @@ namespace InteractiveSolutions\HoneycombCore\Console;
 
 use Cache;
 use Carbon\Carbon;
-use InteractiveSolutions\HoneycombCore\Console\HCCommand;
+use Illuminate\Console\Command;
+use InteractiveSolutions\HoneycombCore\Helpers\HCConfigParseHelper;
 
 /**
- * Class HCForms
+ * Class HCGenerateFormsCommand
  * @package InteractiveSolutions\HoneycombCore\Console
  */
-class HCForms extends HCCommand
+class HCGenerateFormsCommand extends Command
 {
+    /**
+     * @var HCConfigParseHelper
+     */
+    private $helper;
+
+    /**
+     * HCGenerateFormsCommand constructor.
+     * @param HCConfigParseHelper $helper
+     */
+    public function __construct(HCConfigParseHelper $helper)
+    {
+        parent::__construct();
+
+        $this->helper = $helper;
+    }
+
     /**
      * The name and signature of the console command.
      *
@@ -51,40 +68,33 @@ class HCForms extends HCCommand
      *
      * @var string
      */
-    protected $description = 'Go through honeycomb related packages and get all form items';
+    protected $description = 'Go through honeycomb related packages config files and get all form settings';
 
 
     /**
-     * Execute the console command.
+     * Get all honeycomb form config files and add it to cache
      */
     public function handle(): void
     {
         $this->comment('Scanning form items..');
-        $this->generateFormData();
-        $this->comment('-');
-    }
 
-    /**
-     * Generating form data
-     */
-    private function generateFormData(): void
-    {
-        $files = $this->getConfigFiles();
-        $formDataHolder = [];
+        $filePaths = $this->helper->getConfigFilesSorted();
 
+        $formHolder = [];
 
-        if (!empty($files)) {
-            foreach ($files as $file) {
+        foreach ($filePaths as $filePath) {
 
-                $file = json_decode(file_get_contents($file), true);
+            $file = json_decode(file_get_contents($filePath), true);
 
-                if (isset($file['formData'])) {
-                    $formDataHolder = array_merge($formDataHolder, $file['formData']);
-                }
+            if (isset($file['formData'])) {
+                $formHolder = array_merge($formHolder, $file['formData']);
             }
         }
 
         Cache::forget('hc-forms');
-        Cache::put('hc-forms', $formDataHolder, Carbon::now()->addMonth());
+        Cache::put('hc-forms', $formHolder, Carbon::now()->addMonth());
+
+        $this->info('registered forms: ' . count($formHolder));
+        $this->comment('-');
     }
 }

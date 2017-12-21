@@ -29,14 +29,15 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Console;
 
+use Illuminate\Console\Command;
 use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclPermission;
 use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
 
 /**
- * Class HCPermissions
+ * Class HCScanRolePermissionsCommand
  * @package InteractiveSolutions\HoneycombCore\Console
  */
-class HCPermissions extends HCCommand
+class HCScanRolePermissionsCommand extends Command
 {
     /**
      * The name and signature of the console command.

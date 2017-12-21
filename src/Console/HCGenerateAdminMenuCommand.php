@@ -29,51 +29,65 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Console;
 
-use InteractiveSolutions\HoneycombCore\Console\HCCommand;
-
+use Cache;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 /**
- * Class HCAdminURL
+ * Class HCGenerateAdminMenuCommand
  * @package InteractiveSolutions\HoneycombCore\Console
  */
-class HCAdminURL extends HCCommand
+class HCGenerateAdminMenuCommand extends Command
 {
-    /**
-     *
-     */
-    const KEY = 'HC_ADMIN_URL';
-
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'hc:admin-url';
+    protected $signature = 'hc:admin-menu';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate secure admin url';
+    protected $description = 'Go through honeycomb related packages and get all menu items';
+
+    /**
+     * Menu list holder
+     *
+     * @var array
+     */
+    private $adminMenuHolder = [];
 
     /**
      * Execute the console command.
      */
     public function handle(): void
     {
-        $this->generateURL();
+        $this->comment('Scanning menu items..');
+        $this->generateMenu();
+        $this->comment('-');
     }
 
     /**
-     * Generate url
+     * Get admin menu
      */
-    private function generateURL(): void
+    private function generateMenu(): void
     {
-        $url = 'admin' . random_str(8);
+        $files = $this->getConfigFiles();
 
-        addEnvVariable(self::KEY, $url);
+        if (!empty($files)) {
+            foreach ($files as $file) {
+                $fileContent = validateJSONFromPath($file);
 
-        $this->info("Admin URL $url set successfully.");
+                if (isset($fileContent['adminMenu'])) {
+                    $this->adminMenuHolder = array_merge($this->adminMenuHolder, $fileContent['adminMenu']);
+                }
+            }
+        }
+
+        Cache::forget('hc-admin-menu');
+        Cache::put('hc-admin-menu', $this->adminMenuHolder, Carbon::now()->addWeek());
     }
 }
