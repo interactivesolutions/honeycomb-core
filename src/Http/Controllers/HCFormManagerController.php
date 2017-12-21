@@ -47,12 +47,7 @@ class HCFormManagerController extends HCBaseController
      */
     private function getForm(string $key): array
     {
-        if (!cache()->has('hc-forms')) {
-            // generate forms
-            \Artisan::call('hc:forms');
-        }
-
-        $formHolder = cache()->get('hc-forms');
+        $formHolder = cache()->get('hc-forms', []);
 
         $new = substr($key, 0, -4);
         $edit = substr($key, 0, -5);

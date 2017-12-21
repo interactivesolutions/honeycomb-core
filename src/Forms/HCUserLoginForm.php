@@ -48,7 +48,7 @@ class HCUserLoginForm extends HCBaseForm
             'buttons' => [
                 [
                     "class" => "col-centered btn btn-primary",
-                    "label" => trans('HCTranslations::core.buttons.login'),
+                    "label" => trans('HCCore::core.buttons.login'),
                     "type" => "submit",
                 ],
             ],
@@ -65,7 +65,14 @@ class HCUserLoginForm extends HCBaseForm
                     "label" => trans("HCCore::users.login.password"),
                     "required" => 1,
                 ],
-                formManagerCheckBox('remember', trans('HCCore::users.login.remember')),
+                [
+                    "type" => "checkBoxList",
+                    "fieldID" => 'remember',
+                    "label" => ' ',
+                    "required" => 0,
+                    "requiredVisible" => 0,
+                    "options" => [['id' => '1', 'label' => trans('HCCore::users.login.remember')]],
+                ],
             ],
         ];
 
