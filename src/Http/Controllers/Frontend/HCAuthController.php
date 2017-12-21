@@ -33,11 +33,15 @@ use DB;
 use HCLog;
 use Illuminate\Database\Connection;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
-use InteractiveSolutions\HoneycombCore\Services\HCUserActivationService;
+use Illuminate\View\View;
+use InteractiveSolutions\HoneycombCore\Helpers\HCFrontendResponse;
 use InteractiveSolutions\HoneycombCore\Http\Controllers\HCBaseController;
+use InteractiveSolutions\HoneycombCore\Http\Requests\HCUserRequest;
+use InteractiveSolutions\HoneycombCore\Services\HCUserActivationService;
+use InteractiveSolutions\HoneycombCore\Services\HCUserService;
 
 /**
  * Class HCAuthController
@@ -79,14 +83,32 @@ class HCAuthController extends HCBaseController
     private $connection;
 
     /**
+     * @var HCFrontendResponse
+     */
+    private $response;
+
+    /**
+     * @var HCUserService
+     */
+    private $userService;
+
+    /**
      * AuthController constructor.
      * @param Connection $connection
      * @param HCUserActivationService $activation
+     * @param HCFrontendResponse $response
+     * @param HCUserService $userService
      */
-    public function __construct(Connection $connection, HCUserActivationService $activation)
-    {
+    public function __construct(
+        Connection $connection,
+        HCUserActivationService $activation,
+        HCFrontendResponse $response,
+        HCUserService $userService
+    ) {
         $this->connection = $connection;
         $this->activation = $activation;
+        $this->response = $response;
+        $this->userService = $userService;
     }
 
 
@@ -94,7 +116,6 @@ class HCAuthController extends HCBaseController
      * Displays users login form
      *
      * @return View
-     * @throws \Illuminate\Container\EntryNotFoundException
      */
     public function showLoginForm(): View
     {
@@ -109,7 +130,6 @@ class HCAuthController extends HCBaseController
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Container\EntryNotFoundException
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function login(Request $request)
     {
@@ -130,7 +150,7 @@ class HCAuthController extends HCBaseController
         $this->incrementLoginAttempts($request);
 
         if (!$this->attemptLogin($request)) {
-            return HCLog::info('AUTH-002', trans('HCCore::users.errors.login'));
+            return $this->response->error(trans('HCCore::users.errors.login'));
         }
 
         // check if user is not activated
@@ -141,21 +161,23 @@ class HCAuthController extends HCBaseController
 
             $response = $this->activation->sendActivationMail($user);
 
-            return HCLog::info('AUTH-003', $response);
+            return $this->response->error($response);
         }
-
-        //TODO update providers?
 
         auth()->user()->updateLastLogin();
 
-        //redirect to intended url
-        return response(['success' => true, 'redirectURL' => session()->pull('url.intended', url('/'))]);
+        return $this->response->success(
+            'Success',
+            null,
+            session()->pull('url.intended', url('/'))
+        );
     }
 
     /**
      * Display users register form
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|View
+     * @return \Illuminate\Contracts\View\Factory|RedirectResponse|\Illuminate\Routing\Redirector|View
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     public function showRegister()
     {
@@ -169,30 +191,25 @@ class HCAuthController extends HCBaseController
     /**
      * User registration
      *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|mixed|\Symfony\Component\HttpFoundation\Response
+     * @param HCUserRequest $request
+     * @return JsonResponse
      * @throws \Exception
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
-    public function register()
+    public function register(HCUserRequest $request): JsonResponse
     {
         if (!config('hc.allow_registration')) {
             throw new \Exception();
         }
 
-        $userController = new HCUsersController();
-
         $this->connection->beginTransaction();
 
         try {
-            $response = $userController->apiStore();
-
-            if (get_class($response) == 'Illuminate\Http\JsonResponse') {
-                return $response;
-            }
-
-        } catch (\Exception $e) {
+            $this->userService->createUser($request->getInputData());
+        } catch (\Exception $exception) {
             $this->connection->rollback();
 
-            return response(['success' => false, 'message' => 'AUTH-004 - ' . $e->getMessage()]);
+            return $this->response->error($exception->getMessage());
         }
 
         $this->connection->commit();
@@ -204,26 +221,6 @@ class HCAuthController extends HCBaseController
         } else {
             return response(['success' => true, 'redirectURL' => route('auth.login')]);
         }
-    }
-
-    /**
-     * Get input data
-     *
-     * @param $data
-     * @return mixed
-     */
-    protected function getData(array $data)
-    {
-        /* // get nickname from first part of email and add timestamp after it
-         $nickname = head (explode ('@', array_get ($data, 'userData.email'))) . '_' . Carbon::now ()->timestamp;
-
-         array_set ($data, 'userPersonalData.nickname', $nickname);
-
-         $basicRole = ACLRole::whereSlug ('basic')->firstOrFail ();
-
-         array_set ($data, 'roles', [$basicRole->id]);
-
-         return $data;*/
     }
 
     /**
@@ -240,22 +237,7 @@ class HCAuthController extends HCBaseController
 
         $request->session()->regenerate();
 
-        return redirect('/')
-            ->with('flash_notice', trans('HCCore::users.success.logout'));
-    }
-
-    /**
-     * Update user providers during login
-     */
-    protected function updateProviders()
-    {
-        /*$user = auth ()->user ();
-
-        $provider = 'LOCAL';
-
-        $user->update (['provider' => $provider]);
-
-        $user->providers ()->sync ([$provider], false);*/
+        return redirect('/')->with('flash_notice', trans('HCCore::users.success.logout'));
     }
 
     /**
@@ -272,10 +254,8 @@ class HCAuthController extends HCBaseController
 
         if (is_null($tokenRecord)) {
             $message = trans('HCCore::users.activation.token_not_exists');
-        } else {
-            if (strtotime($tokenRecord->created_at) + 60 * 60 * 24 < time()) {
-                $message = trans('HCCore::users.activation.token_expired');
-            }
+        } elseif (strtotime($tokenRecord->created_at) + 60 * 60 * 24 < time()) {
+            $message = trans('HCCore::users.activation.token_expired');
         }
 
         return view('HCCore::auth.activation', ['token' => $token, 'message' => $message]);
@@ -283,16 +263,18 @@ class HCAuthController extends HCBaseController
 
     /**
      * Active user account
-     * @return $this|\Illuminate\Http\RedirectResponse
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function activate()
+    public function activate(Request $request): RedirectResponse
     {
         $this->connection->beginTransaction();
 
         try {
             $this->activation->activateUser(
-                request()->input('token')
+                $request->input('token')
             );
         } catch (\Exception $e) {
             $this->connection->rollback();
@@ -323,14 +305,18 @@ class HCAuthController extends HCBaseController
      * Redirect the user after determining they are locked out.
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResponse
      */
-    protected function sendLockoutResponse(Request $request)
+    protected function sendLockoutResponse(Request $request): JsonResponse
     {
         $seconds = $this->limiter()->availableIn(
             $this->throttleKey($request)
         );
 
-        return HCLog::info('AUTH-005', trans('auth.throttle', ['seconds' => $seconds]));
+        return $this->response->error(
+            trans('auth.throttle', ['seconds' => $seconds]),
+            null,
+            JsonResponse::HTTP_LOCKED
+        );
     }
 }
