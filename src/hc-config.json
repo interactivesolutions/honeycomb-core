@@ -14,21 +14,21 @@
         {
             "route": "admin.users.index",
             "parent": "admin.index",
-            "translation": "HCACL::users.page_title",
+            "translation": "HCNewCore::users.page_title",
             "icon": "fa-users",
             "aclPermission": "interactivesolutions_honeycomb_acl_users_list"
         },
         {
             "route": "admin.acl.roles.index",
             "parent": "admin.users.index",
-            "translation": "HCACL::acl_roles.page_title",
+            "translation": "HCNewCore::acl_roles.page_title",
             "icon": "fa-user-md",
             "aclPermission": "interactivesolutions_honeycomb_acl_acl_roles_list"
         },
         {
             "route": "admin.acl.permissions.index",
             "parent": "admin.users.index",
-            "translation": "HCACL::acl_permissions.page_title",
+            "translation": "HCNewCore::acl_permissions.page_title",
             "icon": "fa-server",
             "aclPermission": "interactivesolutions_honeycomb_acl_acl_permissions_list",
             "priority": 1
@@ -36,7 +36,7 @@
         {
             "route": "admin.acl.access.index",
             "parent": "admin.users.index",
-            "translation": "HCACL::acl_access.page_title",
+            "translation": "HCNewCore::acl_access.page_title",
             "icon": "fa-unlock-alt",
             "aclPermission": "interactivesolutions_honeycomb_acl_acl_access_list",
             "priority": 2
@@ -44,7 +44,7 @@
         {
             "route": "admin.routes.users.groups.index",
             "parent": "admin.users.index",
-            "translation": "HCACL::users_groups.page_title",
+            "translation": "HCNewCore::users_groups.page_title",
             "icon": "fa-users",
             "aclPermission": "interactivesolutions_honeycomb_acl_routes_users_groups_list",
             "priority": 10

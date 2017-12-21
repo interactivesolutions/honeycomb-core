@@ -1,4 +1,4 @@
-@extends('HCCoreUI::admin.layout')
+@extends('HCNewCore::admin.layout')
 
 @if(isset( $config['title'] ) &&  ! empty($config['title']))
     @section('content-header',  $config['title'] )
@@ -37,7 +37,7 @@
         </div>
 
         @if($config['permissions'] == '[]')
-            {{ trans('HCACL::acl_access.no_roles') }}
+            {{ trans('HCNewCore::acl_access.no_roles') }}
         @else
             <div class="col-md-12">
                 <div id="roleList"></div>
@@ -54,7 +54,7 @@
         var updateUrl = "{{ $config['updateUrl'] }}";
         var permissions = {!!  $config['permissions'] !!};
         var currentRolesArray = {!! json_encode(auth()->user()->currentRolesArray()) !!};
-        var permissionsHeader = '{{ trans('HCACL::acl_access.permissions') }}'
+        var permissionsHeader = '{{ trans('HCNewCore::acl_access.permissions') }}'
 
         jQuery(function () {
 

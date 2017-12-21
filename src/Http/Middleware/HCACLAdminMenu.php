@@ -31,11 +31,14 @@ namespace InteractiveSolutions\HoneycombNewCore\Http\Middleware;
 
 use Artisan;
 use Closure;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
-class HCACLAdminMenu
+class HCAclAdminMenu
 {
+    /**
+     * @var array
+     */
     private $itemsWithoutParent = [];
 
     /**
@@ -44,6 +47,7 @@ class HCACLAdminMenu
      * @param Request $request
      * @param Closure $next
      * @return mixed
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     public function handle(Request $request, Closure $next)
     {
@@ -83,7 +87,7 @@ class HCACLAdminMenu
      */
     private function sortByWeight(array $adminMenu): array
     {
-        usort($adminMenu, function($a, $b) {
+        usort($adminMenu, function ($a, $b) {
             if (!array_key_exists('priority', $a)) {
                 $a['priority'] = 0;
             }
@@ -96,7 +100,6 @@ class HCACLAdminMenu
         });
 
         foreach ($adminMenu as &$item) {
-
             if (array_key_exists('children', $item)) {
                 $item['children'] = $this->sortByWeight($item['children']);
             }
@@ -130,7 +133,7 @@ class HCACLAdminMenu
                 $branch[] = $element;
             } else {
                 if (!is_null($parent) && $fillIncorrect) {
-                    $value = array_first($elements, function($value, $key) use ($parent) {
+                    $value = array_first($elements, function ($value, $key) use ($parent) {
                         return $value['route'] == $parent;
                     }, false);
 

@@ -20,6 +20,6 @@ class HCAdminController extends HCBaseController
      */
     public function index(): View
     {
-        return view('HCCore::admin.dashboard');
+        return view('HCNewCore::admin.dashboard');
     }
 }

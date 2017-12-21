@@ -10,7 +10,7 @@ if (!function_exists('get_translation_name')) {
      * @param null $customNotFoundText
      * @return mixed
      */
-    function get_translation_name(string $key, string $lang, array $data, $customNotFoundText = null)
+    function getTranslationName(string $key, string $lang, array $data, $customNotFoundText = null)
     {
         if (is_array($data)) {
             $data = collect($data);
@@ -36,6 +36,7 @@ if (!function_exists('get_translation_name')) {
     }
 }
 
+
 if (!function_exists('uuid4')) {
     /**
      * Generates uuid4 id
@@ -54,6 +55,7 @@ if (!function_exists('uuid4')) {
         return $uuid4;
     }
 }
+
 
 if (!function_exists('pluralizeLT')) {
     /**
@@ -85,6 +87,7 @@ if (!function_exists('pluralizeLT')) {
     }
 }
 
+
 if (!function_exists('isPackageEnabled')) {
     /**
      * Check if package is registered at config/app.php file
@@ -100,6 +103,7 @@ if (!function_exists('isPackageEnabled')) {
     }
 }
 
+
 if (!function_exists('settings')) {
     //TODO create settings service
     function settings($key)
@@ -107,6 +111,7 @@ if (!function_exists('settings')) {
         return $key;
     }
 }
+
 
 if (!function_exists('sanitizeString')) {
 
@@ -176,86 +181,6 @@ if (!function_exists('sanitizeString')) {
     }
 }
 
-if (!function_exists('formManagerYesNo')) {
-
-    /**
-     * @param string $type - checkBoxList | dropDownList
-     * @param string $fieldId
-     * @param string $trans
-     * @param int $required
-     * @param int $requiredVisible
-     * @param string $tabID
-     * @param bool $showNo
-     * @param bool $showYes
-     * @return array
-     */
-    function formManagerYesNo(
-        string $fieldId,
-        string $trans,
-        string $type = 'dropDownList',
-        int $required = 0,
-        int $requiredVisible = 0,
-        string $tabID = null,
-        bool $showNo = true,
-        bool $showYes = true
-    ) {
-        $structure = [
-            'tabID' => $tabID,
-            'type' => $type,
-            'fieldID' => $fieldId,
-            'label' => $trans,
-            'required' => $required,
-            'requiredVisible' => $requiredVisible,
-            'options' => [],
-        ];
-
-        if ($showYes && $showNo) {
-            $structure['options'][] = ['id' => '0', 'label' => trans('HCTranslations::core.no')];
-            $structure['options'][] = ['id' => '1', 'label' => trans('HCTranslations::core.yes')];
-        } else {
-            if ($showYes) {
-                $structure['label'] = ' ';
-                $structure['options'][] = ['id' => '1', 'label' => $trans];
-            } else {
-                if ($showNo) {
-                    $structure['label'] = ' ';
-                    $structure['options'][] = ['id' => '0', 'label' => $trans];
-                }
-            }
-        }
-
-        return $structure;
-    }
-}
-
-if (!function_exists('formManagerCheckBox')) {
-
-    /**
-     * @param string $fieldId
-     * @param string $trans
-     * @param int $required
-     * @param int $requiredVisible
-     * @param string|null $tabID
-     * @return array
-     */
-    function formManagerCheckBox(
-        string $fieldId,
-        string $trans,
-        int $required = 0,
-        int $requiredVisible = 0,
-        string $tabID = null
-    ) {
-        return [
-            'type' => 'checkBoxList',
-            'fieldID' => $fieldId,
-            'label' => ' ',
-            'tabID' => $tabID,
-            'required' => $required,
-            'requiredVisible' => $requiredVisible,
-            'options' => [['id' => '1', 'label' => $trans]],
-        ];
-    }
-}
 
 if (!function_exists('addAllOptionToDropDownList')) {
 
@@ -276,6 +201,7 @@ if (!function_exists('addAllOptionToDropDownList')) {
     }
 }
 
+
 if (!function_exists('createTranslationKey')) {
     //TODO move to Translations package
     //TODO improve removal of ,/'?[][\ and etc...
@@ -290,6 +216,7 @@ if (!function_exists('createTranslationKey')) {
         return str_replace(' ', '_', strtolower($string));
     }
 }
+
 
 if (!function_exists('checkActiveMenuItems')) {
 
@@ -320,6 +247,7 @@ if (!function_exists('checkActiveMenuItems')) {
     }
 }
 
+
 if (!function_exists('stringToDouble')) {
 
     /**
@@ -337,6 +265,7 @@ if (!function_exists('stringToDouble')) {
         return str_replace(',', '.', $value);
     }
 }
+
 
 if (!function_exists('removeRecordsWithNoTranslation')) {
 
@@ -360,6 +289,7 @@ if (!function_exists('removeRecordsWithNoTranslation')) {
         return $contentList;
     }
 }
+
 
 if (!function_exists('formManagerSeo')) {
 

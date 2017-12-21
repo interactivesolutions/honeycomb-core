@@ -1,4 +1,4 @@
-@extends('HCACL::auth.layout')
+@extends('HCNewCore::auth.layout')
 
 @section('content')
 
@@ -11,17 +11,17 @@
 
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">{{ trans('HCACL::users.login.title') }}</p>
+                <p class="login-box-msg">{{ trans('HCNewCore::users.login.title') }}</p>
 
                 <div id="login-form"></div>
 
                 {{--<div class="social-auth-links text-center"></div>--}}
 
-                <a href="{{ route('users.password.remind')}}">{{ trans('HCACL::users.passwords.forgot_password') }}</a><br>
+                <a href="{{ route('users.password.remind')}}">{{ trans('HCNewCore::users.passwords.forgot_password') }}</a><br>
 
                 @if( isset($config['registration_enabled']))
                     <a href="{{ route('auth.register') }}"
-                       class="text-center">{{ trans('HCACL::users.register.title') }}</a>
+                       class="text-center">{{ trans('HCNewCore::users.register.title') }}</a>
                 @endif
 
             </div>

@@ -27,44 +27,48 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Models\Users;
-
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use InteractiveSolutions\HoneycombNewCore\Models\HCModel;
+namespace InteractiveSolutions\HoneycombNewCore\Forms;
 
 /**
- * Class HCGroupsUsers
- *
- * @package InteractiveSolutions\HoneycombNewCore\Models\Users
- * @property int $count
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string $group_id
- * @property string $user_id
- * @method static Builder|HCGroupsUsers whereCount($value)
- * @method static Builder|HCGroupsUsers whereCreatedAt($value)
- * @method static Builder|HCGroupsUsers whereGroupId($value)
- * @method static Builder|HCGroupsUsers whereUpdatedAt($value)
- * @method static Builder|HCGroupsUsers whereUserId($value)
- * @mixin \Eloquent
+ * Class HCUserLoginForm
+ * @package InteractiveSolutions\HoneycombNewCore\Forms
  */
-class HCGroupsUsers extends HCModel
+class HCUserLoginForm extends HCBaseForm
 {
     /**
-     * The database table used by the model.
+     * Creating form
      *
-     * @var string
+     * @param bool $edit
+     * @return array
      */
-    protected $table = 'hc_users_groups_users';
+    public function createForm(bool $edit = false): array
+    {
+        $form = [
+            'storageURL' => route('auth.login'),
+            'buttons' => [
+                [
+                    "class" => "col-centered btn btn-primary",
+                    "label" => trans('HCTranslations::core.buttons.login'),
+                    "type" => "submit",
+                ],
+            ],
+            'structure' => [
+                [
+                    "type" => "singleLine",
+                    "fieldID" => "email",
+                    "label" => trans("HCNewCore::users.login.email"),
+                    "required" => 1,
+                ],
+                [
+                    "type" => "password",
+                    "fieldID" => "password",
+                    "label" => trans("HCNewCore::users.login.password"),
+                    "required" => 1,
+                ],
+                formManagerCheckBox('remember', trans('HCNewCore::users.login.remember')),
+            ],
+        ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'group_id',
-        'user_id',
-    ];
+        return $form;
+    }
 }

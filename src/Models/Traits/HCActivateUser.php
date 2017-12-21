@@ -30,7 +30,7 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombNewCore\Models\Traits;
 
 use InteractiveSolutions\HoneycombNewCore\Notifications\HCActivationLink;
-use InteractiveSolutions\HoneycombNewCore\Services\UserActivationService;
+use InteractiveSolutions\HoneycombNewCore\Services\HCUserActivationService;
 
 /**
  * Trait ActivateUser
@@ -63,7 +63,7 @@ trait HCActivateUser
      */
     public function createTokenAndSendActivationCode(): void
     {
-        $activationService = app(UserActivationService::class);
+        $activationService = app(HCUserActivationService::class);
 
         $activationService->sendActivationMail($this);
     }

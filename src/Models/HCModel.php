@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class HCModel
- * @package InteractiveSolutions\HoneycombNewCore\models
+ * @package InteractiveSolutions\HoneycombNewCore\Models
  */
 class HCModel extends Model
 {

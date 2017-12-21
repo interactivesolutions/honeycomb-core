@@ -36,7 +36,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use InteractiveSolutions\HoneycombNewCore\Services\UserActivationService;
+use InteractiveSolutions\HoneycombNewCore\Services\HCUserActivationService;
 use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCBaseController;
 
 /**
@@ -69,7 +69,7 @@ class HCAuthController extends HCBaseController
     protected $redirectUrl;
 
     /**
-     * @var UserActivationService
+     * @var HCUserActivationService
      */
     private $activation;
 
@@ -81,9 +81,9 @@ class HCAuthController extends HCBaseController
     /**
      * AuthController constructor.
      * @param Connection $connection
-     * @param UserActivationService $activation
+     * @param HCUserActivationService $activation
      */
-    public function __construct(Connection $connection, UserActivationService $activation)
+    public function __construct(Connection $connection, HCUserActivationService $activation)
     {
         $this->connection = $connection;
         $this->activation = $activation;
@@ -100,7 +100,7 @@ class HCAuthController extends HCBaseController
     {
         $config = [];
 
-        return hcview('HCACL::auth.login', $config);
+        return view('HCNewCore::auth.login', $config);
     }
 
     /**
@@ -130,7 +130,7 @@ class HCAuthController extends HCBaseController
         $this->incrementLoginAttempts($request);
 
         if (!$this->attemptLogin($request)) {
-            return HCLog::info('AUTH-002', trans('HCACL::users.errors.login'));
+            return HCLog::info('AUTH-002', trans('HCNewCore::users.errors.login'));
         }
 
         // check if user is not activated
@@ -163,7 +163,7 @@ class HCAuthController extends HCBaseController
             return redirect('/');
         }
 
-        return hcview('HCACL::auth.register');
+        return view('HCNewCore::auth.register');
     }
 
     /**
@@ -197,7 +197,7 @@ class HCAuthController extends HCBaseController
 
         $this->connection->commit();
 
-        session(['activation_message' => trans('HCACL::users.activation.activate_account')]);
+        session(['activation_message' => trans('HCNewCore::users.activation.activate_account')]);
 
         if ($this->redirectUrl) {
             return response(['success' => true, 'redirectURL' => $this->redirectUrl]);
@@ -241,7 +241,7 @@ class HCAuthController extends HCBaseController
         $request->session()->regenerate();
 
         return redirect('/')
-            ->with('flash_notice', trans('HCACL::users.success.logout'));
+            ->with('flash_notice', trans('HCNewCore::users.success.logout'));
     }
 
     /**
@@ -271,14 +271,14 @@ class HCAuthController extends HCBaseController
         $tokenRecord = DB::table('hc_users_activations')->where('token', $token)->first();
 
         if (is_null($tokenRecord)) {
-            $message = trans('HCACL::users.activation.token_not_exists');
+            $message = trans('HCNewCore::users.activation.token_not_exists');
         } else {
             if (strtotime($tokenRecord->created_at) + 60 * 60 * 24 < time()) {
-                $message = trans('HCACL::users.activation.token_expired');
+                $message = trans('HCNewCore::users.activation.token_expired');
             }
         }
 
-        return hcview('HCACL::auth.activation', ['token' => $token, 'message' => $message]);
+        return view('HCNewCore::auth.activation', ['token' => $token, 'message' => $message]);
     }
 
     /**

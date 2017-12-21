@@ -94,16 +94,16 @@ class HCUsersValidator extends HCCoreFormValidator
     {
         // field.condition => translation
         return [
-            'nickname.required' => trans('HCACL::users.validator.nickname.required'),
-            'nickname.unique' => trans('HCACL::users.validator.nickname.unique'),
-            'nickname.min' => trans('HCACL::users.validator.nickname.min', ['count' => 3]),
-            'email.required' => trans('HCACL::users.validator.email.required'),
-            'email.unique' => trans('HCACL::users.validator.email.unique'),
-            'email.min' => trans('HCACL::users.validator.email.min', ['count' => 5]),
-            'password.required' => trans('HCACL::users.validator.password.required'),
-            'password.min' => trans('HCACL::users.validator.password.min', ['count' => 5]),
-            'password.confirmed' => trans('HCACL::users.validator.password.confirmed'),
-            'roles.required' => trans('HCACL::users.validator.roles.required'),
+            'nickname.required' => trans('HCNewCore::users.validator.nickname.required'),
+            'nickname.unique' => trans('HCNewCore::users.validator.nickname.unique'),
+            'nickname.min' => trans('HCNewCore::users.validator.nickname.min', ['count' => 3]),
+            'email.required' => trans('HCNewCore::users.validator.email.required'),
+            'email.unique' => trans('HCNewCore::users.validator.email.unique'),
+            'email.min' => trans('HCNewCore::users.validator.email.min', ['count' => 5]),
+            'password.required' => trans('HCNewCore::users.validator.password.required'),
+            'password.min' => trans('HCNewCore::users.validator.password.min', ['count' => 5]),
+            'password.confirmed' => trans('HCNewCore::users.validator.password.confirmed'),
+            'roles.required' => trans('HCNewCore::users.validator.roles.required'),
         ];
     }
 }

@@ -31,7 +31,7 @@ namespace InteractiveSolutions\HoneycombNewCore\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUsers;
+use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
 
 /**
  * Class HCLogLastActivity
@@ -49,7 +49,7 @@ class HCLogLastActivity
     public function handle(Request $request, Closure $next)
     {
         if (auth()->check()) {
-            /** @var HCUsers $user */
+            /** @var HCUser $user */
             $user = auth()->user();
             $user->updateLastActivity();
         }

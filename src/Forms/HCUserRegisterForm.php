@@ -30,25 +30,11 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombNewCore\Forms;
 
 /**
- * Class HCUsersRegisterForm
+ * Class HCUserRegisterForm
  * @package InteractiveSolutions\HoneycombNewCore\Forms
  */
-class HCUsersRegisterForm
+class HCUserRegisterForm extends HCBaseForm
 {
-    /**
-     * Name of the form
-     *
-     * @var string
-     */
-    protected $formID = 'users-register';
-
-    /**
-     * Is form multi language
-     *
-     * @var int
-     */
-    protected $multiLanguage = 0;
-
     /**
      * Creating form
      *
@@ -70,14 +56,14 @@ class HCUsersRegisterForm
                 [
                     "type" => "singleLine",
                     "fieldID" => "email",
-                    "label" => trans("HCACL::users.email"),
+                    "label" => trans("HCNewCore::users.email"),
                     "required" => 1,
                     "requiredVisible" => 1,
                 ],
                 [
                     "type" => "password",
                     "fieldID" => "password",
-                    "label" => trans("HCACL::users.register.password"),
+                    "label" => trans("HCNewCore::users.register.password"),
                     "required" => 1,
                     "requiredVisible" => 1,
                 ],

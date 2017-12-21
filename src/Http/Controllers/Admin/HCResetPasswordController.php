@@ -32,15 +32,13 @@ namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
-use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCBaseController;
 
 /**
  * Class ResetPasswordController
  * @package InteractiveSolutions\HoneycombNewCore\Http\Controllers
  */
-class ResetPasswordController extends HCBaseController
+class HCResetPasswordController extends HCBaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -81,7 +79,7 @@ class ResetPasswordController extends HCBaseController
      */
     public function showResetForm(Request $request, $token = null): View
     {
-        return hcview('HCACL::password.reset')->with(
+        return view('HCNewCore::password.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }
@@ -91,12 +89,13 @@ class ResetPasswordController extends HCBaseController
      * Get the response for a successful password reset.
      *
      * @param string $response
-     * @return Response
+     * @return JsonResponse
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
-    protected function sendResetResponse($response): Response
+    protected function sendResetResponse($response): JsonResponse
     {
         //redirect to intended url
-        return response([
+        return response()->json([
             'success' => true,
             'message' => trans($response),
             'redirectURL' => session('url.intended', url('/')),

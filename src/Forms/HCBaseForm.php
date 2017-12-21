@@ -30,8 +30,8 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombNewCore\Forms;
 
 use InteractiveSolutions\HoneycombNewCore\Contracts\HCFormContract;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\Roles;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUsers;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
+use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
 
 /**
  * Class HCBaseForm

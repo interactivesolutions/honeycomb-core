@@ -29,9 +29,8 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Models\Users;
 
-
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUsers;
+use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
 use InteractiveSolutions\HoneycombNewCore\Models\HCUuidModel;
 
 /**
@@ -70,6 +69,6 @@ class HCUserPersonalInfo extends HCUuidModel
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(HCUsers::class, 'user_id', 'id');
+        return $this->belongsTo(HCUser::class, 'user_id', 'id');
     }
 }

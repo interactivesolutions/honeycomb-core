@@ -36,7 +36,7 @@ use Illuminate\Support\Collection;
 use InteractiveSolutions\HoneycombNewCore\Models\HCUuidModel;
 
 /**
- * Class Permissions
+ * Class HCAclPermission
  *
  * @package InteractiveSolutions\HoneycombNewCore\Models\Acl
  * @property string $id
@@ -47,7 +47,7 @@ use InteractiveSolutions\HoneycombNewCore\Models\HCUuidModel;
  * @property string $name
  * @property string $controller
  * @property string $action
- * @property-read Collection|Roles[] $roles
+ * @property-read Collection|HCAclRole[] $roles
  * @method static Builder|HCAclPermission whereAction($value)
  * @method static Builder|HCAclPermission whereController($value)
  * @method static Builder|HCAclPermission whereCount($value)
@@ -100,8 +100,8 @@ class HCAclPermission extends HCUuidModel
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(
-            Roles::class,
-            RolesPermissionsConnections::getTableName(),
+            HCAclRole::class,
+            'hc_acl_role_permissions',
             'permission_id',
             'role_id'
         );

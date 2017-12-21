@@ -30,8 +30,8 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombNewCore\Services;
 
 use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCPersonalInfoRepository;
 use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
+use InteractiveSolutions\HoneycombNewCore\Repositories\Users\HCPersonalInfoRepository;
 
 /**
  * Class HCUserService
@@ -42,7 +42,7 @@ class HCUserService
     /**
      * @var HCUserRepository
      */
-    private $userRepository;
+    private $repository;
 
     /**
      * @var HCPersonalInfoRepository
@@ -51,12 +51,12 @@ class HCUserService
 
     /**
      * HCUserService constructor.
-     * @param HCUserRepository $userRepository
+     * @param HCUserRepository $repository
      * @param HCPersonalInfoRepository $personalRepository
      */
-    public function __construct(HCUserRepository $userRepository, HCPersonalInfoRepository $personalRepository)
+    public function __construct(HCUserRepository $repository, HCPersonalInfoRepository $personalRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->repository = $repository;
         $this->personalInfoRepository = $personalRepository;
     }
 
@@ -65,7 +65,7 @@ class HCUserService
      */
     public function getRepository(): HCUserRepository
     {
-        return $this->userRepository;
+        return $this->repository;
     }
 
     /**
@@ -73,12 +73,11 @@ class HCUserService
      * @param string $userId
      * @param array $personalData
      * @return HCUser
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function updateUser(array $userData, string $userId, array $personalData = []): HCUser
     {
         /** @var HCUser $record */
-        $record = $this->userRepository->updateOrCreate(['id' => $userId], $userData);
+        $record = $this->repository->updateOrCreate(['id' => $userId], $userData);
         $this->personalInfoRepository->updateOrCreate(['user_id' => $userId], $personalData);
 
         return $record;
@@ -88,12 +87,11 @@ class HCUserService
      * @param array $userData
      * @param array $personalData
      * @return HCUser
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function createUser(array $userData, array $personalData = []): HCUser
     {
         /** @var HCUser $record */
-        $record = $this->userRepository->create($userData);
+        $record = $this->repository->create($userData);
         $personalData['user_id'] = $record->id;
 
         $this->personalInfoRepository->updateOrCreate(['user_id' => $record->id], $personalData);

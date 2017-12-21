@@ -27,5 +27,5 @@
 
 return [
     'page_title' => 'User access',
-    'permissions' => 'Permissions',
+    'permissions' => 'HCAclPermission',
 ];

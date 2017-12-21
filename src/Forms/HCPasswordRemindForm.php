@@ -33,27 +33,14 @@ namespace InteractiveSolutions\HoneycombNewCore\Forms;
  * Class HCPasswordRemindForm
  * @package InteractiveSolutions\HoneycombNewCore\Forms
  */
-class HCPasswordRemindForm
+class HCPasswordRemindForm extends HCBaseForm
 {
-    /**
-     * Name of the form
-     *
-     * @var string
-     */
-    protected $formID = 'password-remind';
-
-    /**
-     * Is form multi language
-     *
-     * @var int
-     */
-    protected $multiLanguage = 0;
-
     /**
      * Creating form
      *
      * @param bool $edit
      * @return array
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     public function createForm(bool $edit = false): array
     {
@@ -70,7 +57,7 @@ class HCPasswordRemindForm
                 [
                     "type" => "email",
                     "fieldID" => "email",
-                    "label" => trans('HCACL::users.login.email'),
+                    "label" => trans('HCNewCore::users.login.email'),
                     "editType" => 0,
                     "required" => 1,
                     "requiredVisible" => 0,

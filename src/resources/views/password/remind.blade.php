@@ -1,6 +1,7 @@
-@extends('HCACL::auth.layout')
+@extends('HCNewCore::auth.layout')
 
 @section('content')
+
     <div class="login-page" style="position: fixed; top:0; left: 0; bottom: 0; right: 0;">
 
         <div class="login-box">
@@ -10,11 +11,11 @@
 
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">{{ trans('HCACL::users.passwords.reset_view') }}</p>
+                <p class="login-box-msg">{{ trans('HCNewCore::users.passwords.remind') }}</p>
 
-                <div id="password-reset-form"></div>
+                <div id="password-remind-form"></div>
 
-                <a href="{{ route('auth.login')}}">{{ trans('HCACL::users.login.title') }}</a><br>
+                <a href="{{ route('auth.login')}}">{{ trans('HCNewCore::users.login.title') }}</a><br>
             </div>
         </div>
 
@@ -26,8 +27,8 @@
         $(document).ready(function () {
             HCService.FormManager.initialize();
             var form = HCService.FormManager.createForm({
-                'structureURL': '{{  route('public.api.form-manager', 'password-reset-new')}}?token={{ $token }}',
-                'divID': '#password-reset-form'
+                'structureURL': '{{  route('public.api.form-manager', 'password-remind-new')}}',
+                'divID': '#password-remind-form'
             });
         });
     </script>

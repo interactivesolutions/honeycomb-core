@@ -6,6 +6,10 @@ namespace InteractiveSolutions\HoneycombNewCore\Helpers;
 
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Class HCFrontendResponse
+ * @package InteractiveSolutions\HoneycombNewCore\Helpers
+ */
 class HCFrontendResponse
 {
     /**

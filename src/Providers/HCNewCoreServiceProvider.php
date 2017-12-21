@@ -29,8 +29,14 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Providers;
 
+use InteractiveSolutions\HoneycombNewCore\Console\HCAdminMenu;
+use InteractiveSolutions\HoneycombNewCore\Console\HCAdminURL;
+use InteractiveSolutions\HoneycombNewCore\Console\HCForms;
+use InteractiveSolutions\HoneycombNewCore\Console\HCPermissions;
+use InteractiveSolutions\HoneycombNewCore\Console\HCSuperAdmin;
 use InteractiveSolutions\HoneycombNewCore\Repositories\HCBaseRepository;
 use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
+use InteractiveSolutions\HoneycombNewCore\Services\HCUserActivationService;
 use InteractiveSolutions\HoneycombNewCore\Services\HCUserService;
 use Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider;
 
@@ -79,7 +85,7 @@ class HCNewCoreServiceProvider extends HCBaseServiceProvider
         'Routes/Admin/routes.index.php',
 
         'Routes/Admin/routes.acl.permissions.php',
-        'Routes/Admin/routes.acl.roles.php',
+        'Routes/Admin/routes.roles.php',
         'Routes/Admin/routes.access.php',
         'Routes/Admin/routes.users.php',
 
@@ -112,8 +118,12 @@ class HCNewCoreServiceProvider extends HCBaseServiceProvider
         $this->app->singleton(HCUserRepository::class);
     }
 
+    /**
+     *
+     */
     private function registerServices(): void
     {
         $this->app->singleton(HCUserService::class);
+        $this->app->singleton(HCUserActivationService::class);
     }
 }

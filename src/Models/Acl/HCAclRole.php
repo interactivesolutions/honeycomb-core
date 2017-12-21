@@ -33,11 +33,11 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUsers;
+use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
 use InteractiveSolutions\HoneycombNewCore\Models\HCUuidModel;
 
 /**
- * Class Roles
+ * Class HCAclRole
  *
  * @package InteractiveSolutions\HoneycombNewCore\Models\Acl
  * @property string $id
@@ -49,18 +49,18 @@ use InteractiveSolutions\HoneycombNewCore\Models\HCUuidModel;
  * @property string $slug
  * @property-read Collection|HCAclPermission[] $permissions
  * @property-read Collection|HCUsers[] $users
- * @method static Builder|Roles notSuperAdmin()
- * @method static Builder|Roles superAdmin()
- * @method static Builder|Roles whereCount($value)
- * @method static Builder|Roles whereCreatedAt($value)
- * @method static Builder|Roles whereDeletedAt($value)
- * @method static Builder|Roles whereId($value)
- * @method static Builder|Roles whereName($value)
- * @method static Builder|Roles whereSlug($value)
- * @method static Builder|Roles whereUpdatedAt($value)
+ * @method static Builder|HCAclRole notSuperAdmin()
+ * @method static Builder|HCAclRole superAdmin()
+ * @method static Builder|HCAclRole whereCount($value)
+ * @method static Builder|HCAclRole whereCreatedAt($value)
+ * @method static Builder|HCAclRole whereDeletedAt($value)
+ * @method static Builder|HCAclRole whereId($value)
+ * @method static Builder|HCAclRole whereName($value)
+ * @method static Builder|HCAclRole whereSlug($value)
+ * @method static Builder|HCAclRole whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Roles extends HCUuidModel
+class HCAclRole extends HCUuidModel
 {
     /**
      * The database table used by the model.
@@ -113,7 +113,7 @@ class Roles extends HCUuidModel
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(HCUsers::class, RolesUsersConnections::getTableName(), 'role_id', 'user_id');
+        return $this->belongsToMany(HCUser::class, RolesUsersConnections::getTableName(), 'role_id', 'user_id');
     }
 
     /**

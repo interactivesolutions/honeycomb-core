@@ -33,27 +33,14 @@ namespace InteractiveSolutions\HoneycombNewCore\Forms;
  * Class HCPasswordResetForm
  * @package InteractiveSolutions\HoneycombNewCore\Forms
  */
-class HCPasswordResetForm
+class HCPasswordResetForm extends HCBaseForm
 {
-    /**
-     * Name of the form
-     *
-     * @var string
-     */
-    protected $formID = 'password-reset';
-
-    /**
-     * Is form multi language
-     *
-     * @var int
-     */
-    protected $multiLanguage = 0;
-
     /**
      * Creating form
      *
      * @param bool $edit
      * @return array
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     public function createForm(bool $edit = false): array
     {
@@ -62,7 +49,7 @@ class HCPasswordResetForm
             "buttons" => [
                 [
                     "class" => "col-centered",
-                    "label" => trans('HCACL::users.passwords.reset_button'),
+                    "label" => trans('HCNewCore::users.passwords.reset_button'),
                     "type" => "submit",
                 ],
             ],
@@ -70,7 +57,7 @@ class HCPasswordResetForm
                 [
                     "type" => "email",
                     "fieldID" => "email",
-                    "label" => trans('HCACL::users.login.email'),
+                    "label" => trans('HCNewCore::users.login.email'),
                     "required" => 1,
                     "requiredVisible" => 1,
                     "maxLength" => "197",
@@ -78,7 +65,7 @@ class HCPasswordResetForm
                 [
                     "type" => "password",
                     "fieldID" => "password",
-                    "label" => trans('HCACL::users.passwords.new'),
+                    "label" => trans('HCNewCore::users.passwords.new'),
                     "required" => 1,
                     "requiredVisible" => 1,
                     "maxLength" => "197",
@@ -86,7 +73,7 @@ class HCPasswordResetForm
                 [
                     "type" => "password",
                     "fieldID" => "password_confirmation",
-                    "label" => trans('HCACL::users.passwords.new_again'),
+                    "label" => trans('HCNewCore::users.passwords.new_again'),
                     "required" => 1,
                     "requiredVisible" => 1,
                     "maxLength" => "197",

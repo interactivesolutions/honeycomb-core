@@ -92,7 +92,7 @@ $style = [
                                             @if ($level == 'error')
                                                 Whoops!
                                             @else
-                                                {{ trans('HCACL::password.hello') }}
+                                                {{ trans('HCNewCore::password.hello') }}
                                             @endif
                                         @endif
                                     </h1>
@@ -143,7 +143,7 @@ $style = [
 
                                 <!-- Salutation -->
                                     <p style="{{ $style['paragraph'] }}">
-                                        {{ trans('HCACL::password.regards')}}<br>{{ config('app.name') }}
+                                        {{ trans('HCNewCore::password.regards')}}<br>{{ config('app.name') }}
                                     </p>
 
                                     <!-- Sub Copy -->
@@ -152,7 +152,7 @@ $style = [
                                             <tr>
                                                 <td style="{{ $fontFamily }}">
                                                     <p style="{{ $style['paragraph-sub'] }}">
-                                                        {{ trans('HCACL::password.body_sub', ['actionText' => $actionText]) }}
+                                                        {{ trans('HCNewCore::password.body_sub', ['actionText' => $actionText]) }}
                                                     </p>
 
                                                     <p style="{{ $style['paragraph-sub'] }}">
@@ -182,7 +182,7 @@ $style = [
                                         &copy; {{ date('Y') }}
                                         <a style="{{ $style['anchor'] }}" href="{{ url('/') }}"
                                            target="_blank">{{ config('app.name') }}</a>.
-                                        {{ trans('HCACL::password.copyright') }}
+                                        {{ trans('HCNewCore::password.copyright') }}
                                     </p>
                                 </td>
                             </tr>

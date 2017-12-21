@@ -32,11 +32,10 @@ namespace InteractiveSolutions\HoneycombNewCore\Repositories\Users;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserActivation;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Repository;
+use InteractiveSolutions\HoneycombNewCore\Repositories\HCBaseRepository;
 
-class HCUserActivationRepository extends Repository
+class HCUserActivationRepository extends HCBaseRepository
 {
-
     /**
      * @return string
      */
@@ -48,7 +47,6 @@ class HCUserActivationRepository extends Repository
     /**
      * @param string $userId
      * @return HCUserActivation|Model|null
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getActivation(string $userId): ? HCUserActivation
     {
@@ -58,7 +56,6 @@ class HCUserActivationRepository extends Repository
     /**
      * @param string $token
      * @return HCUserActivation|Model|null
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getActivationByToken(string $token): ? HCUserActivation
     {
@@ -67,7 +64,6 @@ class HCUserActivationRepository extends Repository
 
     /**
      * @param string $token
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function deleteActivation(string $token): void
     {
@@ -77,7 +73,6 @@ class HCUserActivationRepository extends Repository
     /**
      * @param string $userId
      * @param string $token
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function insertActivation(string $userId, string $token): void
     {
@@ -88,7 +83,11 @@ class HCUserActivationRepository extends Repository
         ]);
     }
 
-    public function updateUserActivations(string $userId, string $token)
+    /**
+     * @param string $userId
+     * @param string $token
+     */
+    public function updateUserActivations(string $userId, string $token): void
     {
         $this->makeQuery()
             ->where('user_id', '=', $userId)

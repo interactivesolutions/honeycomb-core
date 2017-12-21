@@ -31,7 +31,6 @@ namespace InteractiveSolutions\HoneycombNewCore\Console;
 
 use Cache;
 use Carbon\Carbon;
-use InteractiveSolutions\HoneycombNewCore\Console\HCCommand;
 
 /**
  * Class HCAdminMenu

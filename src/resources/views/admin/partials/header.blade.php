@@ -20,16 +20,10 @@
 
                 {{-- TODO include existing HoneyComb packages --}}
                 @if(isPackageEnabled(\interactivesolutions\honeycomblanguages\app\providers\HCLanguagesServiceProvider::class))
-
                     @include('HCLanguages::lang-select')
-
                 @endif
 
-                @if(isPackageEnabled(\InteractiveSolutions\HoneycombNewCore\Providers\HCACLServiceProvider::class))
-
-                    @include('HCACL::admin.dropdown')
-
-                @endif
+                @include('HCNewCore::admin.user')
 
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>

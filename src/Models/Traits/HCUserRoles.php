@@ -30,10 +30,9 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombNewCore\Models\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCPermission;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCRole;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCRolesUsersConnections;
-
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclPermission;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
+use InteractiveSolutions\HoneycombNewCore\Repositories\Acl\HCRoleRepository;
 
 trait HCUserRoles
 {
@@ -45,8 +44,8 @@ trait HCUserRoles
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(
-            HCRole::class,
-            HCRolesUsersConnections::getTableName(),
+            HCAclRole::class,
+            'hc_user_roles',
             'user_id',
             'role_id'
         )->withTimestamps();
@@ -61,7 +60,7 @@ trait HCUserRoles
     public function assignRoleBySlug(string $role)
     {
         return $this->roles()->save(
-            HCRole::where('slug', $role)->firstOrFail()
+            HCAclRole::where('slug', $role)->firstOrFail()
         );
     }
 
@@ -107,10 +106,10 @@ trait HCUserRoles
     /**
      * Determine if the user may perform the given permission.
      *
-     * @param HCPermission $permission
+     * @param HCAclPermission $permission
      * @return bool
      */
-    public function hasPermission(HCPermission $permission): bool
+    public function hasPermission(HCAclPermission $permission): bool
     {
         return $this->hasRole($permission->roles);
     }
@@ -122,7 +121,7 @@ trait HCUserRoles
      */
     public function isSuperAdmin(): bool
     {
-        return $this->hasRole('super-admin');
+        return $this->hasRole(HCRoleRepository::ROLE_SA);
     }
 
     /**
@@ -153,104 +152,5 @@ trait HCUserRoles
     public function currentRolesArray()
     {
         return $this->roles()->pluck('slug');
-    }
-
-    /**
-     * Attach user role to user
-     */
-    public function roleUser(): void
-    {
-        HCRolesUsersConnections::create([
-            'user_id' => $this->id,
-            'role_id' => HCRole::where('slug', 'user')->firstOrFail()->id,
-        ]);
-    }
-
-    /**
-     * Attach super admin role to user
-     */
-    public function roleSuperAdmin(): void
-    {
-        HCRolesUsersConnections::create([
-            'user_id' => $this->id,
-            'role_id' => HCRole::where('slug', 'super-admin')->firstOrFail()->id,
-        ]);
-    }
-
-    /**
-     * Attach project admin role to user
-     */
-    public function roleProjectAdmin(): void
-    {
-        HCRolesUsersConnections::create([
-            'user_id' => $this->id,
-            'role_id' => HCRole::where('slug', 'project-admin')->firstOrFail()->id,
-        ]);
-    }
-
-    /**
-     * Attach editor role to user
-     */
-    public function roleEditor(): void
-    {
-        HCRolesUsersConnections::create([
-            'user_id' => $this->id,
-            'role_id' => HCRole::where('slug', 'editor')->firstOrFail()->id,
-        ]);
-    }
-
-    /**
-     * Attach author role to user
-     */
-    public function roleAuthor(): void
-    {
-        HCRolesUsersConnections::create([
-            'user_id' => $this->id,
-            'role_id' => HCRole::where('slug', 'author')->firstOrFail()->id,
-        ]);
-    }
-
-    /**
-     * Attach contributor role to user
-     */
-    public function roleContributor(): void
-    {
-        HCRolesUsersConnections::create([
-            'user_id' => $this->id,
-            'role_id' => HCRole::where('slug', 'contributor')->firstOrFail()->id,
-        ]);
-    }
-
-    /**
-     * Attach moderator role to user
-     */
-    public function roleModerator(): void
-    {
-        HCRolesUsersConnections::create([
-            'user_id' => $this->id,
-            'role_id' => HCRole::where('slug', 'moderator')->firstOrFail()->id,
-        ]);
-    }
-
-    /**
-     * Attach member role to user
-     */
-    public function roleMember(): void
-    {
-        HCRolesUsersConnections::create([
-            'user_id' => $this->id,
-            'role_id' => HCRole::where('slug', 'subscriber')->firstOrFail()->id,
-        ]);
-    }
-
-    /**
-     * Attach subscriber role to user
-     */
-    public function roleSubscriber(): void
-    {
-        HCRolesUsersConnections::create([
-            'user_id' => $this->id,
-            'role_id' => HCRole::where('slug', 'subscriber')->firstOrFail()->id,
-        ]);
     }
 }

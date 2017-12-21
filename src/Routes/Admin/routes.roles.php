@@ -27,24 +27,15 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories;
+Route::prefix(config('hc.admin_url'))
+    ->namespace('Admin')
+    ->middleware(['web', 'auth'])
+    ->group(function () {
+        Route::get('users/access', 'HCRoleController@index')
+            ->name('admin.acl.role.index')
+            ->middleware('acl:interactivesolutions_honeycomb_new_core_acl_role_list');
 
-
-use InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserPersonalInfo;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Repository;
-
-/**
- * Class HCPersonalInfoRepository
- * @package InteractiveSolutions\HoneycombNewCore\Repositories\Users
- */
-class HCPersonalInfoRepository extends Repository
-{
-
-    /**
-     * @return string
-     */
-    public function model(): string
-    {
-        return HCUserPersonalInfo::class;
-    }
-}
+        Route::put('api/users/access', 'HCRoleController@updatePermissions')
+            ->name('admin.acl.role.update.permissions')
+            ->middleware('acl:interactivesolutions_honeycomb_new_core_acl_role_update');
+    });

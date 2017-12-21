@@ -99,7 +99,8 @@ return [
         'user_not_found' => 'Kažkas negerai su jūsų paskyra, prašome bandyti prisijungti arba registruotis iš naujo.',
         'check_email' => 'Prašome pasitikrinti el. paštą dėl aktyvavimo nuorodos',
         'resent_activation' => 'Mes jums pakartotoinai išsiuntėme aktyvacijos nuorodą. Prašoma pasitikrinti el. paštą.',
-        'activate_account' => 'Mes jums išsiuntėme aktyvacijos nuorodą. Prašome pasitikrinti el. pašta ir aktyvuoti savo paskyrą.',
+        'activate_account' => 'Mes jums išsiuntėme aktyvacijos nuorodą. 
+        Prašome pasitikrinti el. pašta ir aktyvuoti savo paskyrą.',
 
         'mail' => [
             'subject' => 'Paskyros patvirtinimas',
@@ -136,7 +137,8 @@ return [
         'show_email' => 'El. paštas: <strong>:email</strong>',
         'show_password' => 'Slaptažodis: <strong>:password</strong>',
         'login_link' => 'Prisijungimo nuoroda',
-        'activation_required' => 'Bet iš pradžių jums reikia aktyvuoti savo paskyrą. Jūs netruktus gausite laiška su aktyvavimo instrukcijomis.',
+        'activation_required' => 'Bet iš pradžių jums reikia aktyvuoti savo paskyrą. 
+        Jūs netruktus gausite laiška su aktyvavimo instrukcijomis.',
     ],
 
     'registered' => [

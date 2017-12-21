@@ -75,11 +75,11 @@ class HCResetPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->view('HCACL::emails.template')
-            ->subject(trans('HCACL::password.subject'))
-            ->line(trans('HCACL::password.first_line'))
-            ->action(trans('HCACL::password.action'), url('password/reset', $this->token))
-            ->line(trans('HCACL::password.second_line'));
+            ->view('HCNewCore::emails.template')
+            ->subject(trans('HCNewCore::password.subject'))
+            ->line(trans('HCNewCore::password.first_line'))
+            ->action(trans('HCNewCore::password.action'), url('password/reset', $this->token))
+            ->line(trans('HCNewCore::password.second_line'));
     }
 
     /**

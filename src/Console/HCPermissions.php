@@ -29,9 +29,8 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Console;
 
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\Permissions;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\Roles;
-use InteractiveSolutions\HoneycombNewCore\Console\HCCommand;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclPermission;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
 
 /**
  * Class HCPermissions
@@ -51,10 +50,11 @@ class HCPermissions extends HCCommand
      *
      * @var string
      */
-    protected $description = 'Go through all packages, find HoneyComb configuration file and store all permissions / roles / connections';
+    protected $description = 'Go through all packages, find HoneyComb configuration file and store
+     all permissions / roles / connections';
 
     /**
-     * Permissions id list
+     * HCAclPermission id list
      *
      * @var
      */
@@ -68,7 +68,7 @@ class HCPermissions extends HCCommand
     private $aclData;
 
     /**
-     * Roles list holder
+     * HCAclRole list holder
      *
      * @var array
      */
@@ -151,7 +151,7 @@ class HCPermissions extends HCCommand
                 $this->removeDeletedPermissions($permission);
 
                 foreach ($permission['actions'] as $action) {
-                    $permissionId = Permissions::firstOrCreate([
+                    $permissionId = HCAclPermission::firstOrCreate([
                         'name' => $permission['name'],
                         'controller' => $permission['controller'],
                         'action' => $action,
@@ -164,7 +164,8 @@ class HCPermissions extends HCCommand
     }
 
     /**
-     * Check if there is any deleted permission actions from config file. If it is than deleted them from role_permissions connection and from permission actions
+     * Check if there is any deleted permission actions from config file.
+     * If it is than deleted them from role_permissions connection and from permission actions
      *
      * @param array $permission
      * @throws \Exception
@@ -173,13 +174,13 @@ class HCPermissions extends HCCommand
     {
         $configActions = collect($permission['actions']);
 
-        $actions = Permissions::where('name', $permission['name'])->pluck('action');
+        $actions = HCAclPermission::where('name', $permission['name'])->pluck('action');
 
         $removedActions = $actions->diff($configActions);
 
         if (!$removedActions->isEmpty()) {
             foreach ($removedActions as $action) {
-                Permissions::deletePermission($action);
+                HCAclPermission::deletePermission($action);
             }
         }
     }
@@ -193,7 +194,7 @@ class HCPermissions extends HCCommand
     {
         if (array_key_exists('rolesActions', $aclData)) {
             foreach ($aclData['rolesActions'] as $role => $actions) {
-                $roleRecord = Roles::firstOrCreate([
+                $roleRecord = HCAclRole::firstOrCreate([
                     'slug' => $role,
                     'name' => ucfirst(str_replace(['-', '_'], ' ', $role)),
                 ]);
@@ -237,7 +238,7 @@ class HCPermissions extends HCCommand
             // if role doesn't have any permissions than create it
 
             // get all permissions
-            $permissions = Permissions::whereIn('action', $allRolesActions[$roleRecord->slug])->get();
+            $permissions = HCAclPermission::whereIn('action', $allRolesActions[$roleRecord->slug])->get();
 
             // sync permissions
             $roleRecord->permissions()->sync($permissions->pluck('id'));

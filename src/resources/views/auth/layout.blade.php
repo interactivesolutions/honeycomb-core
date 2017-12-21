@@ -4,17 +4,17 @@
     <title>Main</title>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
-    @include('HCCoreUI::css.global')
-    @include('HCCoreUI::css.core')
+    @include('HCNewCore::css.global')
+    @include('HCNewCore::css.core')
 
 </head>
 <body>
 
 @yield('content')
 
-@include('HCCoreUI::js.global')
-@include('HCCoreUI::js.shared')
-@include('HCCoreUI::js.form')
+@include('HCNewCore::js.global')
+@include('HCNewCore::js.shared')
+@include('HCNewCore::js.form')
 
 @yield('scripts')
 

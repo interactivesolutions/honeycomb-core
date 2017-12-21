@@ -29,16 +29,15 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Services;
 
-
-use InteractiveSolutions\HoneycombNewCore\Models\HCUsers;
+use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
 use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
 use InteractiveSolutions\HoneycombNewCore\Repositories\Users\HCUserActivationRepository;
 
 /**
- * Class UserActivationService
+ * Class HCUserActivationService
  * @package InteractiveSolutions\HoneycombNewCore\Services
  */
-class UserActivationService
+class HCUserActivationService
 {
     /**
      * @var HCUserActivationRepository
@@ -61,22 +60,22 @@ class UserActivationService
     }
 
     /**
-     * @param HCUsers $user
+     * @param HCUser $user
      * @param int $resendAfter
      * @return string
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
-    public function sendActivationMail(HCUsers $user, int $resendAfter = 24): string
+    public function sendActivationMail(HCUser $user, int $resendAfter = 24): string
     {
         if (!$this->shouldSend($user, $resendAfter)) {
-            return trans('HCACL::users.activation.check_email');
+            return trans('HCNewCore::users.activation.check_email');
         }
 
         $token = $this->createActivation($user->id);
 
         $user->sendActivationLinkNotification($token);
 
-        return trans('HCACL::users.activation.resent_activation');
+        return trans('HCNewCore::users.activation.resent_activation');
     }
 
     /**
@@ -88,13 +87,13 @@ class UserActivationService
         $activation = $this->hcUserActivationRepository->getActivationByToken($token);
 
         if ($activation === null) {
-            throw new \Exception(trans('HCACL::users.activation.bad_token'));
+            throw new \Exception(trans('HCNewCore::users.activation.bad_token'));
         }
 
         $user = $this->hcUserRepository->getById($activation->user_id);
 
         if (is_null($user)) {
-            throw new \Exception(trans('HCACL::users.activation.user_not_found'));
+            throw new \Exception(trans('HCNewCore::users.activation.user_not_found'));
         }
 
         // activate user
@@ -110,7 +109,7 @@ class UserActivationService
     /**
      * @param string $userId
      * @return string
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     public function createActivation(string $userId): string
     {
@@ -127,7 +126,7 @@ class UserActivationService
     /**
      * @param string $userId
      * @return string
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     protected function createToken(string $userId): string
     {
@@ -140,6 +139,7 @@ class UserActivationService
 
     /**
      * @return string
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     protected function getToken(): string
     {
@@ -150,7 +150,6 @@ class UserActivationService
      * @param $user
      * @param int $resendAfter
      * @return bool
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     protected function shouldSend($user, int $resendAfter = 24): bool
     {
@@ -162,7 +161,7 @@ class UserActivationService
     /**
      * @param string $userId
      * @return string
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     protected function regenerateToken(string $userId): string
     {

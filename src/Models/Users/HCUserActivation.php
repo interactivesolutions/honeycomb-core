@@ -27,7 +27,6 @@
 
 namespace InteractiveSolutions\HoneycombNewCore\Models\Users;
 
-
 use Illuminate\Database\Eloquent\Builder;
 use InteractiveSolutions\HoneycombNewCore\Models\HCModel;
 
@@ -50,7 +49,7 @@ class HCUserActivation extends HCModel
     /**
      * @var string
      */
-    protected $table = 'hc_users_activations';
+    protected $table = 'hc_user_activations';
 
     /**
      * @var array

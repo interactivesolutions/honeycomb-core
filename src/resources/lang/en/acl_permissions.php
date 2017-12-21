@@ -34,5 +34,5 @@ return [
     'name' => 'Name',
     'controller' => 'Controller',
     'action' => 'Action',
-    'page_title' => 'Permissions',
+    'page_title' => 'HCAclPermission',
 ];

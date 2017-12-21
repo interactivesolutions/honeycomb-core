@@ -35,5 +35,5 @@ return [
     'slug' => 'Slug',
     'role_id' => 'Role id',
     'permission_id' => 'Permission id',
-    'page_title' => 'Roles',
+    'page_title' => 'HCAclRole',
 ];

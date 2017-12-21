@@ -30,7 +30,7 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombNewCore\Database\Seeds;
 
 use Illuminate\Database\Seeder;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\Roles;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
 use InteractiveSolutions\HoneycombNewCore\Repositories\Acl\RolesRepository;
 
 /**
@@ -53,10 +53,10 @@ class HCUserRolesSeeder extends Seeder
         ];
 
         foreach ($list as $roleData) {
-            $role = Roles::where('slug', $roleData['slug'])->first();
+            $role = HCAclRole::where('slug', $roleData['slug'])->first();
 
             if (!$role) {
-                Roles::create($roleData);
+                HCAclRole::create($roleData);
             }
         }
     }

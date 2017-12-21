@@ -43,7 +43,7 @@ return [
     'companyName' => 'Company Name',
     'companyCode' => 'Company Code',
     'companyVat' => 'Company VAT',
-    'role_groups' => 'Roles',
+    'role_groups' => 'HCAclRole',
     'male' => 'Male',
     'female' => 'Female',
     'provider' => 'Provider',
@@ -51,7 +51,7 @@ return [
     'active_true' => 'Yes',
     'last_login' => 'Last login',
     'last_activity' => 'Last activity',
-    'roles' => 'Roles',
+    'roles' => 'HCAclRole',
     'activity' => 'Activity',
 
     'tabs' => [
@@ -99,7 +99,8 @@ return [
         'user_not_found' => 'Something went wrong with user account, please try again to login or register.',
         'check_email' => 'Check your email for activation link',
         'resent_activation' => 'We have resent a new activation link for your account. Please check your email.',
-        'activate_account' => 'We have sent to your given email address an activation link. Please check your email and activate your account.',
+        'activate_account' => 'We have sent to your given email address an activation link.
+         Please check your email and activate your account.',
 
         'mail' => [
             'subject' => 'Account confirmation',
@@ -136,7 +137,8 @@ return [
         'show_email' => 'Email: <strong>:email</strong>',
         'show_password' => 'Password: <strong>:password</strong>',
         'login_link' => 'Login link',
-        'activation_required' => 'But first you need to activate your account! You will receive and email with activation instructions.',
+        'activation_required' => 'But first you need to activate your account!
+         You will receive and email with activation instructions.',
     ],
 
     'registered' => [
@@ -175,7 +177,7 @@ return [
     'admin' => [
         'menu' => [
             'logout' => 'Logout',
-            'roles' => 'Roles: ',
+            'roles' => 'HCAclRole: ',
             'online' => 'Online',
             'profile' => 'Profile',
         ],
@@ -203,7 +205,7 @@ return [
         ],
 
         'roles' => [
-            'required' => 'Roles are required!',
+            'required' => 'HCAclRole are required!',
             'cant_update_super' => 'You can\'t update super admin role!',
             'cant_update_roles' => 'You can\'t update roles!',
         ],

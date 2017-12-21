@@ -42,8 +42,12 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
 use InteractiveSolutions\HoneycombNewCore\Models\Traits\HCActivateUser;
 use InteractiveSolutions\HoneycombNewCore\Models\Traits\HCUserRoles;
+use InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserPersonalInfo;
+use InteractiveSolutions\HoneycombNewCore\Notifications\HCAdminWelcomeEmail;
+use InteractiveSolutions\HoneycombNewCore\Notifications\HCResetPassword;
 
 /**
  * Class HCUser
@@ -63,7 +67,7 @@ use InteractiveSolutions\HoneycombNewCore\Models\Traits\HCUserRoles;
  * @property string|null $last_activity
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read \InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserPersonalInfo $personal
- * @property-read Collection|Roles[] $roles
+ * @property-read Collection|HCAclRole[] $roles
  * @method static Builder|HCUser whereActivatedAt($value)
  * @method static Builder|HCUser whereCount($value)
  * @method static Builder|HCUser whereCreatedAt($value)
@@ -128,6 +132,9 @@ class HCUser extends HCUuidModel implements AuthenticatableContract, Authorizabl
 
     ];
 
+    /**
+     * @var array
+     */
     protected $casts = [
         'id' => 'string',
     ];

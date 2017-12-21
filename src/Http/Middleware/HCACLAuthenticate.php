@@ -34,10 +34,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 /**
- * Class HCACLAuthenticate
+ * Class HCAclAuthenticate
  * @package InteractiveSolutions\HoneycombNewCore\Http\Middleware
  */
-class HCACLAuthenticate
+class HCAclAuthenticate
 {
     /**
      * Handle an incoming request.

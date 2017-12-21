@@ -25,9 +25,54 @@
  * http://www.interactivesolutions.lt
  */
 
-return [
-    'page_title' => 'Groups',
-    'label' => 'Label',
-    'creator_id' => 'Creator',
+declare(strict_types = 1);
 
-];
+namespace InteractiveSolutions\HoneycombNewCore\Repositories\Acl;
+
+use InteractiveSolutions\HoneycombNewCore\Repositories\HCBaseRepository;
+
+class HCAccessRepository extends HCBaseRepository
+{
+    /**
+     * @return string
+     */
+    public function model(): string
+    {
+        return HCAccess::class;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoleSuperAdminId(): string
+    {
+        return $this->getIdBySlug(self::ROLE_SA);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoleProjectAdminId(): string
+    {
+        return $this->getIdBySlug(self::ROLE_PA);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoleUserId(): string
+    {
+        return $this->getIdBySlug(self::ROLE_U);
+    }
+
+    /**
+     * @param string $slug
+     * @return string
+     */
+    private function getIdBySlug(string $slug): string
+    {
+        return $this->makeQuery()
+            ->where('slug', '=', $slug)
+            ->value('id');
+    }
+}

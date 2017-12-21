@@ -37,10 +37,12 @@ class HCRoleRepository extends HCBaseRepository
      *
      */
     const ROLE_SA = 'super-admin';
+
     /**
      *
      */
     const ROLE_PA = 'project-admin';
+
     /**
      *
      */
@@ -56,7 +58,6 @@ class HCRoleRepository extends HCBaseRepository
 
     /**
      * @return string
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getRoleSuperAdminId(): string
     {
@@ -65,7 +66,6 @@ class HCRoleRepository extends HCBaseRepository
 
     /**
      * @return string
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getRoleProjectAdminId(): string
     {
@@ -74,7 +74,6 @@ class HCRoleRepository extends HCBaseRepository
 
     /**
      * @return string
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getRoleUserId(): string
     {
@@ -82,9 +81,33 @@ class HCRoleRepository extends HCBaseRepository
     }
 
     /**
+     * @param string $roleId
+     * @param string $permissionId
+     * @return string
+     */
+    public function updateOrCreatePermission(string $roleId, string $permissionId): string
+    {
+        $rolePermission = [
+            'role_id' => $roleId,
+            'permission_id' => $permissionId,
+        ];
+
+        $permissionExists = \DB::table('hc_acl_role_permissions')->where($rolePermission)->exist();
+
+        if ($permissionExists) {
+            \DB::table('hc_acl_role_permissions')->where($rolePermission)->delete();
+            $message = 'deleted';
+        } else {
+            \DB::table('hc_acl_role_permissions')->create($rolePermission);
+            $message = 'deleted';
+        }
+
+        return $message;
+    }
+
+    /**
      * @param string $slug
      * @return string
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     private function getIdBySlug(string $slug): string
     {

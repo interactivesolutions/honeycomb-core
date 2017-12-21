@@ -83,20 +83,20 @@ class HCAdminWelcomeEmail extends Notification
     public function toMail($notifiable)
     {
         $message = (new MailMessage)
-            ->view('HCACL::emails.template')
-            ->subject(trans('HCACL::users.welcome_email.subject'))
-            ->greeting(trans('HCACL::users.welcome_email.greeting'))
-            ->line(trans('HCACL::users.welcome_email.text'))
-            ->line(trans('HCACL::users.welcome_email.show_email', ['email' => $notifiable->email]));
+            ->view('HCNewCore::emails.template')
+            ->subject(trans('HCNewCore::users.welcome_email.subject'))
+            ->greeting(trans('HCNewCore::users.welcome_email.greeting'))
+            ->line(trans('HCNewCore::users.welcome_email.text'))
+            ->line(trans('HCNewCore::users.welcome_email.show_email', ['email' => $notifiable->email]));
 
         if ($this->sendPassword) {
-            $message->line(trans('HCACL::users.welcome_email.show_password', ['password' => $this->sendPassword]));
+            $message->line(trans('HCNewCore::users.welcome_email.show_password', ['password' => $this->sendPassword]));
         }
 
-        $message->action(trans('HCACL::users.welcome_email.login_link'), route($this->authRoute));
+        $message->action(trans('HCNewCore::users.welcome_email.login_link'), route($this->authRoute));
 
         if (is_null($notifiable->activated_at)) {
-            $message->line(trans('HCACL::users.welcome_email.activation_required'));
+            $message->line(trans('HCNewCore::users.welcome_email.activation_required'));
         }
 
         return $message;

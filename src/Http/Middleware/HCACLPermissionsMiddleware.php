@@ -33,10 +33,10 @@ use Closure;
 use Illuminate\Http\Request;
 
 /**
- * Class HCACLPermissionsMiddleware
+ * Class HCAclPermissionsMiddleware
  * @package InteractiveSolutions\HoneycombNewCore\Http\Middleware
  */
-class HCACLPermissionsMiddleware
+class HCAclPermissionsMiddleware
 {
     /**
      * Handle an incoming request.
