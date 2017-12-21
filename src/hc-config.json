@@ -1,7 +1,8 @@
 {
     "general": {
         "packageName": "HCCore",
-        "sequence": 0
+        "sequence": 0,
+        "namespace": "InteractiveSolutions\\HoneycombCore"
     },
     "formData": {
         "users": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUserForm",
@@ -25,6 +26,9 @@
             "icon": "fa-user-md",
             "aclPermission": "interactivesolutions_honeycomb_acl_role_list"
         }
+    ],
+    "seeds": [
+        "InteractiveSolutions\\HoneycombCore\\Database\\Seeds\\HCUserRolesSeed"
     ],
     "acl": {
         "permissions": [

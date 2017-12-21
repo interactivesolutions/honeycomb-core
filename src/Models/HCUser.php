@@ -102,7 +102,6 @@ class HCUser extends HCUuidModel implements AuthenticatableContract, Authorizabl
         'id',
         'activated_at',
         'last_login',
-        'last_visited',
         'last_activity',
         'email',
         'password',
@@ -127,7 +126,6 @@ class HCUser extends HCUuidModel implements AuthenticatableContract, Authorizabl
         'deleted_at',
         'activated_at',
         'last_login',
-        'last_visited',
         'last_activity',
 
     ];

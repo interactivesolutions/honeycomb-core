@@ -29,6 +29,7 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Repositories\Acl;
 
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
 use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
 
 class HCRoleRepository extends HCBaseRepository

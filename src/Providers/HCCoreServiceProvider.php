@@ -34,6 +34,7 @@ use InteractiveSolutions\HoneycombCore\Console\HCAdminURL;
 use InteractiveSolutions\HoneycombCore\Console\HCGenerateFormsCommand;
 use InteractiveSolutions\HoneycombCore\Console\HCScanRolePermissionsCommand;
 use InteractiveSolutions\HoneycombCore\Console\HCCreateSuperAdminCommand;
+use InteractiveSolutions\HoneycombCore\Console\HCSeedCommand;
 use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
 use InteractiveSolutions\HoneycombCore\Repositories\HCUserRepository;
 use InteractiveSolutions\HoneycombCore\Services\HCUserActivationService;
@@ -54,6 +55,7 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
         HCGenerateAdminMenuCommand::class,
         HCGenerateFormsCommand::class,
         HCCreateSuperAdminCommand::class,
+        HCSeedCommand::class,
     ];
 
     /**

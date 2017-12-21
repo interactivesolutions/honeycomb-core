@@ -32,7 +32,9 @@ namespace InteractiveSolutions\HoneycombCore\Console;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Console\Command;
-use InteractiveSolutions\HoneycombCore\Models\HCUser;
+use Illuminate\Database\Connection;
+use InteractiveSolutions\HoneycombCore\Repositories\Acl\HCRoleRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\HCUserRepository;
 use Validator;
 
 /**
@@ -53,7 +55,7 @@ class HCCreateSuperAdminCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Creates super admin account or updates its password';
+    protected $description = 'Creates super admin account or update its password';
 
     /**
      * Admin password holder
@@ -68,11 +70,33 @@ class HCCreateSuperAdminCommand extends Command
      * @var
      */
     private $email;
+    /**
+     * @var HCUserRepository
+     */
+    private $userRepository;
+    /**
+     * @var Connection
+     */
+    private $connection;
+
+    /**
+     * HCCreateSuperAdminCommand constructor.
+     * @param Connection $connection
+     * @param HCUserRepository $userRepository
+     */
+    public function __construct(Connection $connection, HCUserRepository $userRepository)
+    {
+        parent::__construct();
+
+        $this->userRepository = $userRepository;
+        $this->connection = $connection;
+    }
 
     /**
      * Execute the console command.
      *
      * @return mixed
+     * @throws \Exception
      */
     public function handle(): void
     {
@@ -99,6 +123,8 @@ class HCCreateSuperAdminCommand extends Command
         }
 
         $this->email = $email;
+
+        return null;
     }
 
     /**
@@ -144,9 +170,9 @@ class HCCreateSuperAdminCommand extends Command
     /**
      * Validates password
      *
-     * @return mixed
+     * @return null|string
      */
-    private function getPassword()
+    private function getPassword(): ? string
     {
         $password = $this->secret("Enter your password");
         $passwordAgain = $this->secret("Enter your password again");
@@ -167,6 +193,8 @@ class HCCreateSuperAdminCommand extends Command
         }
 
         $this->password = bcrypt($password);
+
+        return null;
     }
 
     /**
@@ -174,19 +202,20 @@ class HCCreateSuperAdminCommand extends Command
      */
     private function createAdmin(): void
     {
-        DB::beginTransaction();
+        $this->connection->beginTransaction();
 
         try {
             // create super-admin user
-            $user = HCUser::create([
+            $user = $this->userRepository->create([
                 'email' => $this->email,
                 'password' => $this->password,
                 'activated_at' => Carbon::now()->toDateTimeString(),
             ]);
-            $user->assignRoleBySlug('super-admin');
+            // add sa role
+            $user->assignRoleBySlug(HCRoleRepository::ROLE_SA);
 
         } catch (\Exception $e) {
-            DB::rollback();
+            $this->connection->rollBack();
 
             $this->error('Super admin role doesn\'t exists!');
             $this->info('error:');
@@ -195,7 +224,7 @@ class HCCreateSuperAdminCommand extends Command
             exit;
         }
 
-        DB::commit();
+        $this->connection->commit();
     }
 
     /**
@@ -203,9 +232,11 @@ class HCCreateSuperAdminCommand extends Command
      */
     private function checkIfAdminExists(): void
     {
-        $adminExists = HCUser::where('email', $this->email)->first();
+        $adminExists = $this->userRepository->findOneBy(['email' => $this->email]);
 
         if (!is_null($adminExists)) {
+
+            $this->checkIfHaveSuperAdminRole($adminExists);
 
             $this->info('Admin account already exists!');
 
@@ -221,22 +252,23 @@ class HCCreateSuperAdminCommand extends Command
      * Function which checks if admin user has super-admin role
      *
      * @param $adminExists
+     * @throws \Exception
      */
     private function checkIfHaveSuperAdminRole($adminExists): void
     {
-        $hasRole = $adminExists->hasRole('super-admin');
+        $hasRole = $adminExists->hasRole(HCRoleRepository::ROLE_SA);
 
         if (!$hasRole) {
             $this->comment("{$this->email} account doesn't have super-admin role!");
 
             if ($this->confirm('Do you want to add super-admin role? [y|N]')) {
 
-                DB::beginTransaction();
+                $this->connection->beginTransaction();
 
                 try {
-                    $adminExists->assignRoleBySlug('super-admin');
+                    $adminExists->assignRoleBySlug(HCRoleRepository::ROLE_SA);
                 } catch (\Exception $e) {
-                    DB::rollback();
+                    $this->connection->rollBack();
 
                     $this->error($e->getMessage());
                     exit;
@@ -244,7 +276,7 @@ class HCCreateSuperAdminCommand extends Command
 
                 $this->info('Super admin role has been added');
 
-                DB::commit();
+                $this->connection->commit();
             }
 
             exit;
