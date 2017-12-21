@@ -1,7 +1,9 @@
 <?php
 
-Route::get(config('hc.admin_url'), [
-    'middleware' => 'auth',
-    'as' => 'admin.index',
-    'uses' => 'Admin\HCAdminController@index',
-]);
+Route::prefix(config('hc.admin_url'))
+    ->namespace('Admin')
+    ->group(function () {
+        Route::get('/', 'HCAdminController@index')
+            ->name('admin.index')
+            ->middleware('auth');
+    });

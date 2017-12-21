@@ -12,7 +12,7 @@ use InteractiveSolutions\HoneycombNewCore\Contracts\HCRepositoryContract;
 
 /**
  * Class Repository
- * @package InteractiveSolutions\HoneycombCore\Repositories
+ * @package InteractiveSolutions\HoneycombNewCore\Repositories
  */
 abstract class HCBaseRepository implements HCRepositoryContract
 {
@@ -242,7 +242,7 @@ abstract class HCBaseRepository implements HCRepositoryContract
 
         if (!$model instanceof Model) {
             throw new \RuntimeException(
-                'Class ' . $this->model() . ' must be instance of InteractiveSolutions\\HoneycombCore\\Models\\HCModel'
+                'Class ' . $this->model() . ' must be instance of InteractiveSolutions\\HoneycombNewCore\\Models\\HCModel'
             );
         }
 

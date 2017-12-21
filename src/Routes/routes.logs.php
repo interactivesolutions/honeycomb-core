@@ -1,5 +1,8 @@
 <?php
 
-Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['auth']], function () {
-    Route::get('logs', ['as' => 'admin.logs', 'uses' => 'HCLogViewerController@index']);
-});
+Route::prefix(config('hc.admin_url'))
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('logs', 'HCLogViewerController@index')
+            ->name('admin.logs');
+    });

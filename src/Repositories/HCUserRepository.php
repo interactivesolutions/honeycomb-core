@@ -39,7 +39,7 @@ use InteractiveSolutions\HoneycombNewCore\Repositories\Traits\HCQueryBuilderTrai
  * Class HCUserRepository
  * @package InteractiveSolutions\HoneycombNewCore\Repositories
  */
-class HCUseRepository extends HCBaseRepository
+class HCUserRepository extends HCBaseRepository
 {
     use HCQueryBuilderTrait;
 
@@ -54,7 +54,6 @@ class HCUseRepository extends HCBaseRepository
     /**
      * @param string $userId
      * @return HCUser|Model|null
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getById(string $userId): ? HCUser
     {
@@ -64,7 +63,6 @@ class HCUseRepository extends HCBaseRepository
     /**
      * @param string $userId
      * @return HCUser|Model|null
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getByIdWithPersonal(string $userId): ? HCUser
     {
@@ -82,7 +80,6 @@ class HCUseRepository extends HCBaseRepository
     /**
      * @param string $userId
      * @return HCUserDTO
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getRecordById(string $userId): HCUserDTO
     {

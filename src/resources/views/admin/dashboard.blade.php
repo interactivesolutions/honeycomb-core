@@ -9,7 +9,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">{{ trans('HCTranslations::core.users') }}</span>
-                    <span class="info-box-number">{{ \InteractiveSolutions\HoneycombAcl\Models\HCUsers::count() }}</span>
+                    <span class="info-box-number">{{ \InteractiveSolutions\HoneycombNewCore\Models\HCUsers::count() }}</span>
                 </div>
             </div>
         </div>

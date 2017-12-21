@@ -31,7 +31,7 @@ namespace InteractiveSolutions\HoneycombNewCore\Repositories;
 
 
 use InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserPersonalInfo;
-use InteractiveSolutions\HoneycombCore\Repositories\Repository;
+use InteractiveSolutions\HoneycombNewCore\Repositories\Repository;
 
 /**
  * Class HCPersonalInfoRepository

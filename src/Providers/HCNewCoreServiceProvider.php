@@ -29,12 +29,28 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombNewCore\Providers;
 
+use InteractiveSolutions\HoneycombNewCore\Repositories\HCBaseRepository;
+use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
+use InteractiveSolutions\HoneycombNewCore\Services\HCUserService;
+use Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider;
+
 /**
  * Class HCNewCoreServiceProvider
  * @package InteractiveSolutions\HoneycombNewCore\Providers
  */
 class HCNewCoreServiceProvider extends HCBaseServiceProvider
 {
+    /**
+     * @var array
+     */
+    protected $commands = [
+        HCPermissions::class,
+        HCAdminMenu::class,
+        HCForms::class,
+        HCAdminURL::class,
+        HCSuperAdmin::class,
+    ];
+
     /**
      * Namespace
      *
@@ -61,6 +77,43 @@ class HCNewCoreServiceProvider extends HCBaseServiceProvider
         'Routes/routes.welcome.php',
 
         'Routes/Admin/routes.index.php',
+
+        'Routes/Admin/routes.acl.permissions.php',
+        'Routes/Admin/routes.acl.roles.php',
+        'Routes/Admin/routes.access.php',
         'Routes/Admin/routes.users.php',
+
+        'Routes/Frontend/routes.auth.php',
+        'Routes/Frontend/routes.password.php',
     ];
+
+    /**
+     *
+     */
+    public function register(): void
+    {
+        // register LogViewer service provider
+        if (class_exists(LaravelLogViewerServiceProvider::class)) {
+            $this->app->register(LaravelLogViewerServiceProvider::class);
+        }
+
+        $this->registerRepositories();
+
+        $this->registerServices();
+    }
+
+    /**
+     *
+     */
+    private function registerRepositories(): void
+    {
+        $this->app->singleton(HCBaseRepository::class);
+
+        $this->app->singleton(HCUserRepository::class);
+    }
+
+    private function registerServices(): void
+    {
+        $this->app->singleton(HCUserService::class);
+    }
 }

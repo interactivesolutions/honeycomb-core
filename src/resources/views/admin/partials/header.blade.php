@@ -25,7 +25,7 @@
 
                 @endif
 
-                @if(isPackageEnabled(\InteractiveSolutions\HoneycombAcl\Providers\HCACLServiceProvider::class))
+                @if(isPackageEnabled(\InteractiveSolutions\HoneycombNewCore\Providers\HCACLServiceProvider::class))
 
                     @include('HCACL::admin.dropdown')
 

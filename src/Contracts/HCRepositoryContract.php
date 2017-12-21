@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Interface RepositoryContract
- * @package InteractiveSolutions\HoneycombCore\Contracts
+ * @package InteractiveSolutions\HoneycombNewCore\Contracts
  */
 interface HCRepositoryContract
 {
