@@ -54,7 +54,7 @@
                         </li>
                     @endif
 
-                    @include('HCNewCore::admin.partials.submenu', ['menuItems' => $item['children']])
+                    @include('HCCore::admin.partials.submenu', ['menuItems' => $item['children']])
                 </ul>
             @else
 

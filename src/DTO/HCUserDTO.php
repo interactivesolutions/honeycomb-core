@@ -1,10 +1,10 @@
 <?php
 
-namespace InteractiveSolutions\HoneycombNewCore\DTO;
+namespace InteractiveSolutions\HoneycombCore\DTO;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
 
 class HCUserDTO extends HCBaseDTO
 {

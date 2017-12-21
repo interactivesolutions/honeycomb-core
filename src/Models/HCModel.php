@@ -2,13 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Models;
+namespace InteractiveSolutions\HoneycombCore\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class HCModel
- * @package InteractiveSolutions\HoneycombNewCore\Models
+ * @package InteractiveSolutions\HoneycombCore\Models
  */
 class HCModel extends Model
 {

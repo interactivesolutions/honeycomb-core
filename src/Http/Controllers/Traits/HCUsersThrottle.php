@@ -27,7 +27,7 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers\Traits;
+namespace InteractiveSolutions\HoneycombCore\Http\Controllers\Traits;
 
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -37,7 +37,7 @@ use HCLog;
 
 /**
  * Trait HCUsersThrottle
- * @package InteractiveSolutions\HoneycombNewCore\Http\Controllers\Traits
+ * @package InteractiveSolutions\HoneycombCore\Http\Controllers\Traits
  */
 trait HCUsersThrottle
 {
@@ -56,7 +56,7 @@ trait HCUsersThrottle
             $this->getThrottleKey($request)
         );
 
-        return HCLog::error('AUTH-003', trans('HCNewCore::users.errors.to_many_attempts', ['seconds' => $seconds]));
+        return HCLog::error('AUTH-003', trans('HCCore::users.errors.to_many_attempts', ['seconds' => $seconds]));
     }
 
     /**

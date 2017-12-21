@@ -1,4 +1,4 @@
-@extends('HCNewCore::admin.layout.master')
+@extends('HCCore::admin.layout.master')
 
 @if ( isset( $config['title'] ) &&  ! empty($config['title']))
     @section('content-header',  $config['title'] )
@@ -16,7 +16,7 @@
             new HCService.List.SimpleList({
                 div: '#here-comes-list',
 
-                @include('HCNewCore::admin.partials.list-settings')
+                @include('HCCore::admin.partials.list-settings')
             });
         });
     </script>

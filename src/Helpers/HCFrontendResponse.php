@@ -2,13 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Helpers;
+namespace InteractiveSolutions\HoneycombCore\Helpers;
 
 use Illuminate\Http\JsonResponse;
 
 /**
  * Class HCFrontendResponse
- * @package InteractiveSolutions\HoneycombNewCore\Helpers
+ * @package InteractiveSolutions\HoneycombCore\Helpers
  */
 class HCFrontendResponse
 {

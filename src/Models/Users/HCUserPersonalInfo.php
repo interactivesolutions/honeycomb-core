@@ -27,16 +27,16 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Models\Users;
+namespace InteractiveSolutions\HoneycombCore\Models\Users;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUuidModel;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
 /**
  * Class HCUserPersonalInfo
  *
- * @package InteractiveSolutions\HoneycombNewCore\Models\Users
+ * @package InteractiveSolutions\HoneycombCore\Models\Users
  */
 class HCUserPersonalInfo extends HCUuidModel
 {

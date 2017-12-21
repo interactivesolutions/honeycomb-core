@@ -25,15 +25,15 @@
  * http://www.interactivesolutions.lt
  */
 
-namespace InteractiveSolutions\HoneycombNewCore\Models\Users;
+namespace InteractiveSolutions\HoneycombCore\Models\Users;
 
 use Illuminate\Database\Eloquent\Builder;
-use InteractiveSolutions\HoneycombNewCore\Models\HCModel;
+use InteractiveSolutions\HoneycombCore\Models\HCModel;
 
 /**
  * Class HCUserActivation
  *
- * @package InteractiveSolutions\HoneycombNewCore\Models\Users
+ * @package InteractiveSolutions\HoneycombCore\Models\Users
  * @property int $count
  * @property string $user_id
  * @property string $token

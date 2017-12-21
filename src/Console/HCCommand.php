@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Console;
+namespace InteractiveSolutions\HoneycombCore\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class HCCommand
- * @package InteractiveSolutions\HoneycombNewCore\commands
+ * @package InteractiveSolutions\HoneycombCore\commands
  */
 class HCCommand extends Command
 {

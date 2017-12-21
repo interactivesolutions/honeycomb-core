@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Enum\Exceptions;
+namespace InteractiveSolutions\HoneycombCore\Enum\Exceptions;
 
 
 use Exception;
 
 /**
  * Class EnumNotFoundException
- * @package InteractiveSolutions\HoneycombNewCore\Enum\Exceptions
+ * @package InteractiveSolutions\HoneycombCore\Enum\Exceptions
  */
 class EnumNotFoundException extends Exception
 {

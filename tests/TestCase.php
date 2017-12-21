@@ -6,7 +6,7 @@ namespace Tests;
 
 
 use Illuminate\Foundation\Application;
-use InteractiveSolutions\HoneycombNewCore\Providers\HCCoreServiceProvider;
+use InteractiveSolutions\HoneycombCore\Providers\HCCoreServiceProvider;
 
 /**
  * Class TestCase

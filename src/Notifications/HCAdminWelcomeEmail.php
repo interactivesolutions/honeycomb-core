@@ -28,14 +28,14 @@
 declare(strict_types = 1);
 
 
-namespace InteractiveSolutions\HoneycombNewCore\Notifications;
+namespace InteractiveSolutions\HoneycombCore\Notifications;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
 /**
  * Class HCAdminWelcomeEmail
- * @package InteractiveSolutions\HoneycombNewCore\Notifications
+ * @package InteractiveSolutions\HoneycombCore\Notifications
  */
 class HCAdminWelcomeEmail extends Notification
 {
@@ -83,20 +83,20 @@ class HCAdminWelcomeEmail extends Notification
     public function toMail($notifiable)
     {
         $message = (new MailMessage)
-            ->view('HCNewCore::emails.template')
-            ->subject(trans('HCNewCore::users.welcome_email.subject'))
-            ->greeting(trans('HCNewCore::users.welcome_email.greeting'))
-            ->line(trans('HCNewCore::users.welcome_email.text'))
-            ->line(trans('HCNewCore::users.welcome_email.show_email', ['email' => $notifiable->email]));
+            ->view('HCCore::emails.template')
+            ->subject(trans('HCCore::users.welcome_email.subject'))
+            ->greeting(trans('HCCore::users.welcome_email.greeting'))
+            ->line(trans('HCCore::users.welcome_email.text'))
+            ->line(trans('HCCore::users.welcome_email.show_email', ['email' => $notifiable->email]));
 
         if ($this->sendPassword) {
-            $message->line(trans('HCNewCore::users.welcome_email.show_password', ['password' => $this->sendPassword]));
+            $message->line(trans('HCCore::users.welcome_email.show_password', ['password' => $this->sendPassword]));
         }
 
-        $message->action(trans('HCNewCore::users.welcome_email.login_link'), route($this->authRoute));
+        $message->action(trans('HCCore::users.welcome_email.login_link'), route($this->authRoute));
 
         if (is_null($notifiable->activated_at)) {
-            $message->line(trans('HCNewCore::users.welcome_email.activation_required'));
+            $message->line(trans('HCCore::users.welcome_email.activation_required'));
         }
 
         return $message;

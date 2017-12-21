@@ -27,17 +27,17 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Console;
+namespace InteractiveSolutions\HoneycombCore\Console;
 
 use Carbon\Carbon;
 use DB;
-use InteractiveSolutions\HoneycombNewCore\Console\HCCommand;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Console\HCCommand;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
 use Validator;
 
 /**
  * Class HCSuperAdmin
- * @package InteractiveSolutions\HoneycombNewCore\Console
+ * @package InteractiveSolutions\HoneycombCore\Console
  */
 class HCSuperAdmin extends HCCommand
 {

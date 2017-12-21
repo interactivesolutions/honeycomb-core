@@ -23,7 +23,7 @@
                     @include('HCLanguages::lang-select')
                 @endif
 
-                @include('HCNewCore::admin.user')
+                @include('HCCore::admin.user')
 
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>

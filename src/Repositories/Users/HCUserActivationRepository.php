@@ -27,12 +27,12 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories\Users;
+namespace InteractiveSolutions\HoneycombCore\Repositories\Users;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserActivation;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCBaseRepository;
+use InteractiveSolutions\HoneycombCore\Models\Users\HCUserActivation;
+use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
 
 class HCUserActivationRepository extends HCBaseRepository
 {

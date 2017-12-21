@@ -27,11 +27,11 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Forms;
+namespace InteractiveSolutions\HoneycombCore\Forms;
 
 /**
  * Class HCUserLoginForm
- * @package InteractiveSolutions\HoneycombNewCore\Forms
+ * @package InteractiveSolutions\HoneycombCore\Forms
  */
 class HCUserLoginForm extends HCBaseForm
 {
@@ -56,16 +56,16 @@ class HCUserLoginForm extends HCBaseForm
                 [
                     "type" => "singleLine",
                     "fieldID" => "email",
-                    "label" => trans("HCNewCore::users.login.email"),
+                    "label" => trans("HCCore::users.login.email"),
                     "required" => 1,
                 ],
                 [
                     "type" => "password",
                     "fieldID" => "password",
-                    "label" => trans("HCNewCore::users.login.password"),
+                    "label" => trans("HCCore::users.login.password"),
                     "required" => 1,
                 ],
-                formManagerCheckBox('remember', trans('HCNewCore::users.login.remember')),
+                formManagerCheckBox('remember', trans('HCCore::users.login.remember')),
             ],
         ];
 

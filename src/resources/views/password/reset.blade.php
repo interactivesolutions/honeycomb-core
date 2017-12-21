@@ -1,4 +1,4 @@
-@extends('HCNewCore::auth.layout')
+@extends('HCCore::auth.layout')
 
 @section('content')
     <div class="login-page" style="position: fixed; top:0; left: 0; bottom: 0; right: 0;">
@@ -10,11 +10,11 @@
 
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">{{ trans('HCNewCore::users.passwords.reset_view') }}</p>
+                <p class="login-box-msg">{{ trans('HCCore::users.passwords.reset_view') }}</p>
 
                 <div id="password-reset-form"></div>
 
-                <a href="{{ route('auth.login')}}">{{ trans('HCNewCore::users.login.title') }}</a><br>
+                <a href="{{ route('auth.login')}}">{{ trans('HCCore::users.login.title') }}</a><br>
             </div>
         </div>
 

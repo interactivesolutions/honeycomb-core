@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Tests\Traits;
+namespace InteractiveSolutions\HoneycombCore\Tests\Traits;
 
 use DB;
 use Illuminate\Contracts\Console\Kernel;
 
 /**
  * Trait MemoryDatabaseMigrations
- * @package InteractiveSolutions\HoneycombNewCore\Tests\Traits
+ * @package InteractiveSolutions\HoneycombCore\Tests\Traits
  */
 trait MemoryDatabaseMigrations
 {

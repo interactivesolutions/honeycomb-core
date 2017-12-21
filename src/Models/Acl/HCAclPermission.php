@@ -27,18 +27,18 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Models\Acl;
+namespace InteractiveSolutions\HoneycombCore\Models\Acl;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUuidModel;
+use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
 /**
  * Class HCAclPermission
  *
- * @package InteractiveSolutions\HoneycombNewCore\Models\Acl
+ * @package InteractiveSolutions\HoneycombCore\Models\Acl
  * @property string $id
  * @property int $count
  * @property Carbon|null $created_at

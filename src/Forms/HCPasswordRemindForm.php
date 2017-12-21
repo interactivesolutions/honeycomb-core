@@ -27,11 +27,11 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Forms;
+namespace InteractiveSolutions\HoneycombCore\Forms;
 
 /**
  * Class HCPasswordRemindForm
- * @package InteractiveSolutions\HoneycombNewCore\Forms
+ * @package InteractiveSolutions\HoneycombCore\Forms
  */
 class HCPasswordRemindForm extends HCBaseForm
 {
@@ -57,7 +57,7 @@ class HCPasswordRemindForm extends HCBaseForm
                 [
                     "type" => "email",
                     "fieldID" => "email",
-                    "label" => trans('HCNewCore::users.login.email'),
+                    "label" => trans('HCCore::users.login.email'),
                     "editType" => 0,
                     "required" => 1,
                     "requiredVisible" => 0,

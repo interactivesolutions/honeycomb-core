@@ -2,13 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Requests;
+namespace InteractiveSolutions\HoneycombCore\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class HCRoleRequest
- * @package InteractiveSolutions\HoneycombNewCore\Http\Requests
+ * @package InteractiveSolutions\HoneycombCore\Http\Requests
  */
 class HCRoleRequest extends FormRequest
 {

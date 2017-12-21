@@ -27,14 +27,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Notifications;
+namespace InteractiveSolutions\HoneycombCore\Notifications;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
 /**
  * Class HCActivationLink
- * @package InteractiveSolutions\HoneycombNewCore\Notifications
+ * @package InteractiveSolutions\HoneycombCore\Notifications
  */
 class HCActivationLink extends Notification
 {
@@ -75,10 +75,10 @@ class HCActivationLink extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->view('HCNewCore::emails.template')
-            ->subject(trans('HCNewCore::users.activation.mail.subject'))
-            ->line(trans('HCNewCore::users.activation.mail.text', ['email' => $notifiable->email]))
-            ->action(trans('HCNewCore::users.activation.activate'), route('auth.activation', $this->token));
+            ->view('HCCore::emails.template')
+            ->subject(trans('HCCore::users.activation.mail.subject'))
+            ->line(trans('HCCore::users.activation.mail.text', ['email' => $notifiable->email]))
+            ->action(trans('HCCore::users.activation.activate'), route('auth.activation', $this->token));
     }
 
     /**

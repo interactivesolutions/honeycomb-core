@@ -1,4 +1,4 @@
-@extends('HCNewCore::admin.layout.master')
+@extends('HCCore::admin.layout.master')
 
 @section('content')
     <div class="row">
@@ -9,7 +9,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">{{ trans('HCTranslations::core.users') }}</span>
-                    <span class="info-box-number">{{ \InteractiveSolutions\HoneycombNewCore\Models\HCUser::count() }}</span>
+                    <span class="info-box-number">{{ \InteractiveSolutions\HoneycombCore\Models\HCUser::count() }}</span>
                 </div>
             </div>
         </div>

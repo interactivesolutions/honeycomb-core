@@ -1,8 +1,8 @@
 {
-  "name": "interactivesolutions/honeycomb-new-core",
+  "name": "interactivesolutions/honeycomb-core",
   "description": "HoneyComb CMS package for backend elements",
   "keywords": ["honeycomb", "honey", "laravel"],
-  "homepage": "https://github.com/interactivesolutions/honeycomb-new-core/",
+  "homepage": "https://github.com/interactivesolutions/honeycomb-core/",
   "license": "MIT",
   "authors": [
     {
@@ -34,7 +34,7 @@
   },
   "autoload": {
     "psr-4": {
-      "InteractiveSolutions\\HoneycombNewCore\\": "src/"
+      "InteractiveSolutions\\HoneycombCore\\": "src/"
     },
     "files": [
       "Helpers/helpers.php"

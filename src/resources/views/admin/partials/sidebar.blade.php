@@ -15,7 +15,7 @@
         <ul class="sidebar-menu">
 
             @if( isset($adminMenu) )
-                @include('HCNewCore::admin.partials.submenu', ['menuItems' => $adminMenu])
+                @include('HCCore::admin.partials.submenu', ['menuItems' => $adminMenu])
             @endif
 
         </ul>

@@ -27,12 +27,12 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Models\Traits;
+namespace InteractiveSolutions\HoneycombCore\Models\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclPermission;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Acl\HCRoleRepository;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclPermission;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
+use InteractiveSolutions\HoneycombCore\Repositories\Acl\HCRoleRepository;
 
 trait HCUserRoles
 {

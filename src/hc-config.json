@@ -3,32 +3,32 @@
         "serviceProviderNameSpace": "HCACL"
     },
     "formData": {
-        "users": "InteractiveSolutions\\HoneycombNewCore\\Forms\\HCUsersForm",
-        "users-login": "InteractiveSolutions\\HoneycombNewCore\\Forms\\HCUsersLoginForm",
-        "users-register": "InteractiveSolutions\\HoneycombNewCore\\Forms\\HCUsersRegisterForm",
-        "password-remind": "InteractiveSolutions\\HoneycombNewCore\\Forms\\HCPasswordRemindForm",
-        "password-reset": "InteractiveSolutions\\HoneycombNewCore\\Forms\\HCPasswordResetForm",
-        "users-groups": "InteractiveSolutions\\HoneycombNewCore\\Forms\\Users\\HCGroupsForm"
+        "users": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUsersForm",
+        "users-login": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUsersLoginForm",
+        "users-register": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUsersRegisterForm",
+        "password-remind": "InteractiveSolutions\\HoneycombCore\\Forms\\HCPasswordRemindForm",
+        "password-reset": "InteractiveSolutions\\HoneycombCore\\Forms\\HCPasswordResetForm",
+        "users-groups": "InteractiveSolutions\\HoneycombCore\\Forms\\Users\\HCGroupsForm"
     },
     "adminMenu": [
         {
             "route": "admin.users.index",
             "parent": "admin.index",
-            "translation": "HCNewCore::users.page_title",
+            "translation": "HCCore::users.page_title",
             "icon": "fa-users",
             "aclPermission": "interactivesolutions_honeycomb_acl_users_list"
         },
         {
             "route": "admin.acl.roles.index",
             "parent": "admin.users.index",
-            "translation": "HCNewCore::acl_roles.page_title",
+            "translation": "HCCore::acl_roles.page_title",
             "icon": "fa-user-md",
             "aclPermission": "interactivesolutions_honeycomb_acl_acl_roles_list"
         },
         {
             "route": "admin.acl.permissions.index",
             "parent": "admin.users.index",
-            "translation": "HCNewCore::acl_permissions.page_title",
+            "translation": "HCCore::acl_permissions.page_title",
             "icon": "fa-server",
             "aclPermission": "interactivesolutions_honeycomb_acl_acl_permissions_list",
             "priority": 1
@@ -36,7 +36,7 @@
         {
             "route": "admin.acl.access.index",
             "parent": "admin.users.index",
-            "translation": "HCNewCore::acl_access.page_title",
+            "translation": "HCCore::acl_access.page_title",
             "icon": "fa-unlock-alt",
             "aclPermission": "interactivesolutions_honeycomb_acl_acl_access_list",
             "priority": 2
@@ -44,7 +44,7 @@
         {
             "route": "admin.routes.users.groups.index",
             "parent": "admin.users.index",
-            "translation": "HCNewCore::users_groups.page_title",
+            "translation": "HCCore::users_groups.page_title",
             "icon": "fa-users",
             "aclPermission": "interactivesolutions_honeycomb_acl_routes_users_groups_list",
             "priority": 10
@@ -54,7 +54,7 @@
         "permissions": [
             {
                 "name": "admin.acl.permissions",
-                "controller": "InteractiveSolutions\\HoneycombNewCore\\Http\\Controllers\\Acl\\PermissionsController",
+                "controller": "InteractiveSolutions\\HoneycombCore\\Http\\Controllers\\Acl\\PermissionsController",
                 "actions": [
                     "interactivesolutions_honeycomb_acl_acl_permissions_list"
                 ],
@@ -64,7 +64,7 @@
             },
             {
                 "name": "admin.acl.roles",
-                "controller": "InteractiveSolutions\\HoneycombNewCore\\Http\\Controllers\\Acl\\RolesController",
+                "controller": "InteractiveSolutions\\HoneycombCore\\Http\\Controllers\\Acl\\RolesController",
                 "actions": [
                     "interactivesolutions_honeycomb_acl_acl_roles_list",
                     "interactivesolutions_honeycomb_acl_acl_roles_create",
@@ -82,7 +82,7 @@
             },
             {
                 "name": "admin.users",
-                "controller": "InteractiveSolutions\\HoneycombNewCore\\Http\\Controllers\\HCUsersController",
+                "controller": "InteractiveSolutions\\HoneycombCore\\Http\\Controllers\\HCUsersController",
                 "actions": [
                     "interactivesolutions_honeycomb_acl_users_list",
                     "interactivesolutions_honeycomb_acl_users_create",
@@ -100,7 +100,7 @@
             },
             {
                 "name": "admin.routes.users.groups",
-                "controller": "InteractiveSolutions\\HoneycombNewCore\\Http\\Controllers\\Users\\HCGroupsController",
+                "controller": "InteractiveSolutions\\HoneycombCore\\Http\\Controllers\\Users\\HCGroupsController",
                 "actions": [
                     "interactivesolutions_honeycomb_acl_routes_users_groups_list",
                     "interactivesolutions_honeycomb_acl_routes_users_groups_create",

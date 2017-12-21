@@ -27,14 +27,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Console;
+namespace InteractiveSolutions\HoneycombCore\Console;
 
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclPermission;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclPermission;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
 
 /**
  * Class HCPermissions
- * @package InteractiveSolutions\HoneycombNewCore\Console
+ * @package InteractiveSolutions\HoneycombCore\Console
  */
 class HCPermissions extends HCCommand
 {

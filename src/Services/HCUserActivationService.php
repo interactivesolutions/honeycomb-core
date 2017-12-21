@@ -27,15 +27,15 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Services;
+namespace InteractiveSolutions\HoneycombCore\Services;
 
-use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Users\HCUserActivationRepository;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Repositories\HCUserRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\Users\HCUserActivationRepository;
 
 /**
  * Class HCUserActivationService
- * @package InteractiveSolutions\HoneycombNewCore\Services
+ * @package InteractiveSolutions\HoneycombCore\Services
  */
 class HCUserActivationService
 {
@@ -68,14 +68,14 @@ class HCUserActivationService
     public function sendActivationMail(HCUser $user, int $resendAfter = 24): string
     {
         if (!$this->shouldSend($user, $resendAfter)) {
-            return trans('HCNewCore::users.activation.check_email');
+            return trans('HCCore::users.activation.check_email');
         }
 
         $token = $this->createActivation($user->id);
 
         $user->sendActivationLinkNotification($token);
 
-        return trans('HCNewCore::users.activation.resent_activation');
+        return trans('HCCore::users.activation.resent_activation');
     }
 
     /**
@@ -87,13 +87,13 @@ class HCUserActivationService
         $activation = $this->hcUserActivationRepository->getActivationByToken($token);
 
         if ($activation === null) {
-            throw new \Exception(trans('HCNewCore::users.activation.bad_token'));
+            throw new \Exception(trans('HCCore::users.activation.bad_token'));
         }
 
         $user = $this->hcUserRepository->getById($activation->user_id);
 
         if (is_null($user)) {
-            throw new \Exception(trans('HCNewCore::users.activation.user_not_found'));
+            throw new \Exception(trans('HCCore::users.activation.user_not_found'));
         }
 
         // activate user

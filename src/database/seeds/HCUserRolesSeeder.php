@@ -27,15 +27,15 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Database\Seeds;
+namespace InteractiveSolutions\HoneycombCore\Database\Seeds;
 
 use Illuminate\Database\Seeder;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Acl\RolesRepository;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
+use InteractiveSolutions\HoneycombCore\Repositories\Acl\RolesRepository;
 
 /**
  * Class HCUserRolesSeeder
- * @package InteractiveSolutions\HoneycombNewCore\Database\Seeds
+ * @package InteractiveSolutions\HoneycombCore\Database\Seeds
  */
 class HCUserRolesSeeder extends Seeder
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Models;
+namespace InteractiveSolutions\HoneycombCore\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;
 
 /**
  * Class HCUuidModel
- * @package InteractiveSolutions\HoneycombNewCore\Models
+ * @package InteractiveSolutions\HoneycombCore\Models
  */
 class HCUuidModel extends HCModel
 {

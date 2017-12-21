@@ -1,4 +1,4 @@
-@extends('HCNewCore::auth.layout')
+@extends('HCCore::auth.layout')
 
 @section('content')
 
@@ -11,7 +11,7 @@
 
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">{{ trans('HCNewCore::users.register.title') }}</p>
+                <p class="login-box-msg">{{ trans('HCCore::users.register.title') }}</p>
 
                 <div id="register-form"></div>
 
@@ -21,7 +21,7 @@
 
                 <hr/>
                 <div class="text-center">
-                    <a href="{{ route('auth.login') }}">{{ trans('HCNewCore::users.login.title') }}</a>
+                    <a href="{{ route('auth.login') }}">{{ trans('HCCore::users.login.title') }}</a>
                 </div>
 
             </div>

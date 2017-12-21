@@ -2,17 +2,17 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories;
+namespace InteractiveSolutions\HoneycombCore\Repositories;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombNewCore\Contracts\HCRepositoryContract;
+use InteractiveSolutions\HoneycombCore\Contracts\HCRepositoryContract;
 
 /**
  * Class Repository
- * @package InteractiveSolutions\HoneycombNewCore\Repositories
+ * @package InteractiveSolutions\HoneycombCore\Repositories
  */
 abstract class HCBaseRepository implements HCRepositoryContract
 {
@@ -242,7 +242,7 @@ abstract class HCBaseRepository implements HCRepositoryContract
 
         if (!$model instanceof Model) {
             throw new \RuntimeException(
-                'Class ' . $this->model() . ' must be instance of InteractiveSolutions\\HoneycombNewCore\\Models\\HCModel'
+                'Class ' . $this->model() . ' must be instance of InteractiveSolutions\\HoneycombCore\\Models\\HCModel'
             );
         }
 

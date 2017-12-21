@@ -27,15 +27,15 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Services;
+namespace InteractiveSolutions\HoneycombCore\Services;
 
-use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Users\HCPersonalInfoRepository;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Repositories\HCUserRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\Users\HCPersonalInfoRepository;
 
 /**
  * Class HCUserService
- * @package InteractiveSolutions\HoneycombNewCore\Services
+ * @package InteractiveSolutions\HoneycombCore\Services
  */
 class HCUserService
 {

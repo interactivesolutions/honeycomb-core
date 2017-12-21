@@ -27,15 +27,15 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers\Admin;
+namespace InteractiveSolutions\HoneycombCore\Http\Controllers\Admin;
 
 use Illuminate\Database\Connection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
-use InteractiveSolutions\HoneycombNewCore\Helpers\HCFrontendResponse;
-use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCBaseController;
-use InteractiveSolutions\HoneycombNewCore\Http\Requests\HCUserRequest;
-use InteractiveSolutions\HoneycombNewCore\Services\HCUserService;
+use InteractiveSolutions\HoneycombCore\Helpers\HCFrontendResponse;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCBaseController;
+use InteractiveSolutions\HoneycombCore\Http\Requests\HCUserRequest;
+use InteractiveSolutions\HoneycombCore\Services\HCUserService;
 
 class HCUserController extends HCBaseController
 {
@@ -76,7 +76,7 @@ class HCUserController extends HCBaseController
     {
         //TODO renew configuration
         $config = [
-            'title' => trans('HCNewCore::users.page_title'),
+            'title' => trans('HCCore::users.page_title'),
             'listURL' => route('admin.api.user'),
             'newFormUrl' => route('admin.api.form-manager', ['users-new']),
             'editFormUrl' => route('admin.api.form-manager', ['users-edit']),
@@ -85,7 +85,7 @@ class HCUserController extends HCBaseController
 
         $config['actions'] = $this->getActions('interactivesolutions_honeycomb_acl_users_');
 
-        return view('HCNewCore::admin.service.index', ['config' => $config]);
+        return view('HCCore::admin.service.index', ['config' => $config]);
     }
 
     /**
@@ -98,19 +98,19 @@ class HCUserController extends HCBaseController
         $columns = [
             'email' => [
                 'type' => 'text',
-                'label' => trans('HCNewCore::users.email'),
+                'label' => trans('HCCore::users.email'),
             ],
             'last_login' => [
                 'type' => 'text',
-                'label' => trans('HCNewCore::users.last_login'),
+                'label' => trans('HCCore::users.last_login'),
             ],
             'last_activity' => [
                 'type' => 'text',
-                'label' => trans('HCNewCore::users.last_activity'),
+                'label' => trans('HCCore::users.last_activity'),
             ],
             'activated_at' => [
                 'type' => 'text',
-                'label' => trans('HCNewCore::users.activation.activated_at'),
+                'label' => trans('HCCore::users.activation.activated_at'),
             ],
         ];
 

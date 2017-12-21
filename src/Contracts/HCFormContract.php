@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Contracts;
+namespace InteractiveSolutions\HoneycombCore\Contracts;
 
 /**
  * Interface HCFormContract
- * @package InteractiveSolutions\HoneycombNewCore\Http\Controllers\Interfaces
+ * @package InteractiveSolutions\HoneycombCore\Http\Controllers\Interfaces
  */
 interface HCFormContract
 {

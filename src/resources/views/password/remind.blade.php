@@ -1,4 +1,4 @@
-@extends('HCNewCore::auth.layout')
+@extends('HCCore::auth.layout')
 
 @section('content')
 
@@ -11,11 +11,11 @@
 
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">{{ trans('HCNewCore::users.passwords.remind') }}</p>
+                <p class="login-box-msg">{{ trans('HCCore::users.passwords.remind') }}</p>
 
                 <div id="password-remind-form"></div>
 
-                <a href="{{ route('auth.login')}}">{{ trans('HCNewCore::users.login.title') }}</a><br>
+                <a href="{{ route('auth.login')}}">{{ trans('HCCore::users.login.title') }}</a><br>
             </div>
         </div>
 

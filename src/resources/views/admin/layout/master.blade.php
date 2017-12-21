@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
-    @include('HCNewCore::admin.assets.css')
+    @include('HCCore::admin.assets.css')
 
     @yield('css')
 </head>
@@ -19,9 +19,9 @@
         </div>
     @endif
 
-    @include('HCNewCore::admin.partials.header')
+    @include('HCCore::admin.partials.header')
 
-    @include('HCNewCore::admin.partials.sidebar')
+    @include('HCCore::admin.partials.sidebar')
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -38,14 +38,14 @@
         </section>
     </div>
 
-    @include('HCNewCore::admin.partials.footer')
+    @include('HCCore::admin.partials.footer')
 
-    @include('HCNewCore::admin.partials.right-sidebar')
+    @include('HCCore::admin.partials.right-sidebar')
 
 </div>
 
 {{-- js include --}}
-@include('HCNewCore::admin.assets.js')
+@include('HCCore::admin.assets.js')
 
 <script>
     {{-- TODO read from cache --}}
@@ -62,6 +62,6 @@
 
 @yield('scripts')
 
-@include('HCNewCore::admin.partials.sidebar-filter-js')
+@include('HCCore::admin.partials.sidebar-filter-js')
 </body>
 </html>

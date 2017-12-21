@@ -27,7 +27,7 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers\Frontend;
+namespace InteractiveSolutions\HoneycombCore\Http\Controllers\Frontend;
 
 use DB;
 use HCLog;
@@ -36,12 +36,12 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use InteractiveSolutions\HoneycombNewCore\Services\HCUserActivationService;
-use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCBaseController;
+use InteractiveSolutions\HoneycombCore\Services\HCUserActivationService;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCBaseController;
 
 /**
  * Class HCAuthController
- * @package InteractiveSolutions\HoneycombNewCore\Http\Controllers
+ * @package InteractiveSolutions\HoneycombCore\Http\Controllers
  */
 class HCAuthController extends HCBaseController
 {
@@ -100,7 +100,7 @@ class HCAuthController extends HCBaseController
     {
         $config = [];
 
-        return view('HCNewCore::auth.login', $config);
+        return view('HCCore::auth.login', $config);
     }
 
     /**
@@ -130,7 +130,7 @@ class HCAuthController extends HCBaseController
         $this->incrementLoginAttempts($request);
 
         if (!$this->attemptLogin($request)) {
-            return HCLog::info('AUTH-002', trans('HCNewCore::users.errors.login'));
+            return HCLog::info('AUTH-002', trans('HCCore::users.errors.login'));
         }
 
         // check if user is not activated
@@ -163,7 +163,7 @@ class HCAuthController extends HCBaseController
             return redirect('/');
         }
 
-        return view('HCNewCore::auth.register');
+        return view('HCCore::auth.register');
     }
 
     /**
@@ -197,7 +197,7 @@ class HCAuthController extends HCBaseController
 
         $this->connection->commit();
 
-        session(['activation_message' => trans('HCNewCore::users.activation.activate_account')]);
+        session(['activation_message' => trans('HCCore::users.activation.activate_account')]);
 
         if ($this->redirectUrl) {
             return response(['success' => true, 'redirectURL' => $this->redirectUrl]);
@@ -241,7 +241,7 @@ class HCAuthController extends HCBaseController
         $request->session()->regenerate();
 
         return redirect('/')
-            ->with('flash_notice', trans('HCNewCore::users.success.logout'));
+            ->with('flash_notice', trans('HCCore::users.success.logout'));
     }
 
     /**
@@ -271,14 +271,14 @@ class HCAuthController extends HCBaseController
         $tokenRecord = DB::table('hc_users_activations')->where('token', $token)->first();
 
         if (is_null($tokenRecord)) {
-            $message = trans('HCNewCore::users.activation.token_not_exists');
+            $message = trans('HCCore::users.activation.token_not_exists');
         } else {
             if (strtotime($tokenRecord->created_at) + 60 * 60 * 24 < time()) {
-                $message = trans('HCNewCore::users.activation.token_expired');
+                $message = trans('HCCore::users.activation.token_expired');
             }
         }
 
-        return view('HCNewCore::auth.activation', ['token' => $token, 'message' => $message]);
+        return view('HCCore::auth.activation', ['token' => $token, 'message' => $message]);
     }
 
     /**

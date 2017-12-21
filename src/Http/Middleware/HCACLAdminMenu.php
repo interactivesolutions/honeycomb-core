@@ -27,7 +27,7 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Middleware;
+namespace InteractiveSolutions\HoneycombCore\Http\Middleware;
 
 use Artisan;
 use Closure;

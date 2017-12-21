@@ -27,24 +27,24 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Providers;
+namespace InteractiveSolutions\HoneycombCore\Providers;
 
-use InteractiveSolutions\HoneycombNewCore\Console\HCAdminMenu;
-use InteractiveSolutions\HoneycombNewCore\Console\HCAdminURL;
-use InteractiveSolutions\HoneycombNewCore\Console\HCForms;
-use InteractiveSolutions\HoneycombNewCore\Console\HCPermissions;
-use InteractiveSolutions\HoneycombNewCore\Console\HCSuperAdmin;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCBaseRepository;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCUserRepository;
-use InteractiveSolutions\HoneycombNewCore\Services\HCUserActivationService;
-use InteractiveSolutions\HoneycombNewCore\Services\HCUserService;
+use InteractiveSolutions\HoneycombCore\Console\HCAdminMenu;
+use InteractiveSolutions\HoneycombCore\Console\HCAdminURL;
+use InteractiveSolutions\HoneycombCore\Console\HCForms;
+use InteractiveSolutions\HoneycombCore\Console\HCPermissions;
+use InteractiveSolutions\HoneycombCore\Console\HCSuperAdmin;
+use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\HCUserRepository;
+use InteractiveSolutions\HoneycombCore\Services\HCUserActivationService;
+use InteractiveSolutions\HoneycombCore\Services\HCUserService;
 use Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider;
 
 /**
- * Class HCNewCoreServiceProvider
- * @package InteractiveSolutions\HoneycombNewCore\Providers
+ * Class HCCoreServiceProvider
+ * @package InteractiveSolutions\HoneycombCore\Providers
  */
-class HCNewCoreServiceProvider extends HCBaseServiceProvider
+class HCCoreServiceProvider extends HCBaseServiceProvider
 {
     /**
      * @var array
@@ -62,14 +62,14 @@ class HCNewCoreServiceProvider extends HCBaseServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'InteractiveSolutions\HoneycombNewCore\Http\Controllers';
+    protected $namespace = 'InteractiveSolutions\HoneycombCore\Http\Controllers';
 
     /**
      * Provider name
      *
      * @var string
      */
-    protected $packageName = 'HCNewCore';
+    protected $packageName = 'HCCore';
 
     /**
      * List of route paths to load
@@ -83,10 +83,7 @@ class HCNewCoreServiceProvider extends HCBaseServiceProvider
         'Routes/routes.welcome.php',
 
         'Routes/Admin/routes.index.php',
-
-        'Routes/Admin/routes.acl.permissions.php',
         'Routes/Admin/routes.roles.php',
-        'Routes/Admin/routes.access.php',
         'Routes/Admin/routes.users.php',
 
         'Routes/Frontend/routes.auth.php',

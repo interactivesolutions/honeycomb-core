@@ -27,15 +27,15 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Middleware;
+namespace InteractiveSolutions\HoneycombCore\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
 
 /**
  * Class HCLogLastActivity
- * @package InteractiveSolutions\HoneycombNewCore\Http\Middleware
+ * @package InteractiveSolutions\HoneycombCore\Http\Middleware
  */
 class HCLogLastActivity
 {

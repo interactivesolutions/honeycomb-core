@@ -27,14 +27,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Notifications;
+namespace InteractiveSolutions\HoneycombCore\Notifications;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
 /**
  * Class HCResetPassword
- * @package InteractiveSolutions\HoneycombNewCore\Notifications
+ * @package InteractiveSolutions\HoneycombCore\Notifications
  */
 class HCResetPassword extends Notification
 {
@@ -75,11 +75,11 @@ class HCResetPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->view('HCNewCore::emails.template')
-            ->subject(trans('HCNewCore::password.subject'))
-            ->line(trans('HCNewCore::password.first_line'))
-            ->action(trans('HCNewCore::password.action'), url('password/reset', $this->token))
-            ->line(trans('HCNewCore::password.second_line'));
+            ->view('HCCore::emails.template')
+            ->subject(trans('HCCore::password.subject'))
+            ->line(trans('HCCore::password.first_line'))
+            ->action(trans('HCCore::password.action'), url('password/reset', $this->token))
+            ->line(trans('HCCore::password.second_line'));
     }
 
     /**

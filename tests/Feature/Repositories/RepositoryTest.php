@@ -7,8 +7,8 @@ namespace Tests\Feature\Repositories;
 
 use Faker\Generator;
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUuidModel;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Repository;
+use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
+use InteractiveSolutions\HoneycombCore\Repositories\Repository;
 use Tests\FeatureTestCase;
 
 /**

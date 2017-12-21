@@ -27,15 +27,15 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Forms;
+namespace InteractiveSolutions\HoneycombCore\Forms;
 
-use InteractiveSolutions\HoneycombNewCore\Contracts\HCFormContract;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Contracts\HCFormContract;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
 
 /**
  * Class HCBaseForm
- * @package InteractiveSolutions\HoneycombNewCore\Forms
+ * @package InteractiveSolutions\HoneycombCore\Forms
  */
 abstract class HCBaseForm implements HCFormContract
 {

@@ -27,14 +27,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Models\Traits;
+namespace InteractiveSolutions\HoneycombCore\Models\Traits;
 
-use InteractiveSolutions\HoneycombNewCore\Notifications\HCActivationLink;
-use InteractiveSolutions\HoneycombNewCore\Services\HCUserActivationService;
+use InteractiveSolutions\HoneycombCore\Notifications\HCActivationLink;
+use InteractiveSolutions\HoneycombCore\Services\HCUserActivationService;
 
 /**
  * Trait ActivateUser
- * @package InteractiveSolutions\HoneycombNewCore\Models\Traits
+ * @package InteractiveSolutions\HoneycombCore\Models\Traits
  */
 trait HCActivateUser
 {

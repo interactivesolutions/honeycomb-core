@@ -5,7 +5,7 @@
     <ul class="dropdown-menu dropdown-user">
         <li>
             <a href="{{ route('auth.logout') }}">
-                <i class="fa fa-sign-out fa-fw"></i> {{ trans('HCNewCore::users.admin.menu.logout') }}
+                <i class="fa fa-sign-out fa-fw"></i> {{ trans('HCCore::users.admin.menu.logout') }}
             </a>
         </li>
     </ul>

@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Enum;
+namespace InteractiveSolutions\HoneycombCore\Enum;
 
 /**
  * Class BoolEnum
- * @package InteractiveSolutions\HoneycombNewCore\Enum
+ * @package InteractiveSolutions\HoneycombCore\Enum
  */
 class BoolEnum extends Enumerable
 {
@@ -15,7 +15,7 @@ class BoolEnum extends Enumerable
      */
     final public static function no(): BoolEnum
     {
-        return self::make(0, trans('HCNewCore::enum.bool.no'));
+        return self::make(0, trans('HCCore::enum.bool.no'));
     }
 
     /**
@@ -23,6 +23,6 @@ class BoolEnum extends Enumerable
      */
     final public static function yes(): BoolEnum
     {
-        return self::make(1, trans('HCNewCore::enum.bool.yes'));
+        return self::make(1, trans('HCCore::enum.bool.yes'));
     }
 }

@@ -27,7 +27,7 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Middleware;
+namespace InteractiveSolutions\HoneycombCore\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +35,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class HCAclAuthenticate
- * @package InteractiveSolutions\HoneycombNewCore\Http\Middleware
+ * @package InteractiveSolutions\HoneycombCore\Http\Middleware
  */
 class HCAclAuthenticate
 {

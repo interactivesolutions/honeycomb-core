@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace Tests\Enum;
 
 
-use InteractiveSolutions\HoneycombNewCore\Enum\Enumerable;
-use InteractiveSolutions\HoneycombNewCore\Enum\Exceptions\EnumNotFoundException;
+use InteractiveSolutions\HoneycombCore\Enum\Enumerable;
+use InteractiveSolutions\HoneycombCore\Enum\Exceptions\EnumNotFoundException;
 use Tests\TestCase;
 
 /**

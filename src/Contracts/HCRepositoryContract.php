@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Contracts;
+namespace InteractiveSolutions\HoneycombCore\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
 
 
 /**
  * Interface RepositoryContract
- * @package InteractiveSolutions\HoneycombNewCore\Contracts
+ * @package InteractiveSolutions\HoneycombCore\Contracts
  */
 interface HCRepositoryContract
 {

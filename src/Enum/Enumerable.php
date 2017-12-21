@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Enum;
+namespace InteractiveSolutions\HoneycombCore\Enum;
 
 
-use InteractiveSolutions\HoneycombNewCore\Enum\Exceptions\EnumNotFoundException;
+use InteractiveSolutions\HoneycombCore\Enum\Exceptions\EnumNotFoundException;
 
 /**
  * Class Enumerable
- * @package InteractiveSolutions\HoneycombNewCore\Enum
+ * @package InteractiveSolutions\HoneycombCore\Enum
  */
 abstract class Enumerable
 {

@@ -27,14 +27,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Validators\Users;
+namespace InteractiveSolutions\HoneycombCore\Validators\Users;
 
-use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCCoreFormValidator;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCCoreFormValidator;
 
 
 /**
  * Class HCGroupsValidator
- * @package InteractiveSolutions\HoneycombNewCore\Validators\Users
+ * @package InteractiveSolutions\HoneycombCore\Validators\Users
  */
 class HCGroupsValidator extends HCCoreFormValidator
 {

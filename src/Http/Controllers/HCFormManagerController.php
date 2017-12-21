@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers;
+namespace InteractiveSolutions\HoneycombCore\Http\Controllers;
 
 use Cache;
 use Illuminate\Http\JsonResponse;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 
 /**
  * Class HCFormManagerController
- * @package InteractiveSolutions\HoneycombNewCore\http\controllers
+ * @package InteractiveSolutions\HoneycombCore\http\controllers
  */
 class HCFormManagerController extends HCBaseController
 {

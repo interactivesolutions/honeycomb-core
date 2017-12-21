@@ -27,14 +27,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories\Users;
+namespace InteractiveSolutions\HoneycombCore\Repositories\Users;
 
-use InteractiveSolutions\HoneycombNewCore\Models\Users\HCUserPersonalInfo;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCBaseRepository;
+use InteractiveSolutions\HoneycombCore\Models\Users\HCUserPersonalInfo;
+use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
 
 /**
  * Class HCPersonalInfoRepository
- * @package InteractiveSolutions\HoneycombNewCore\Repositories\Users
+ * @package InteractiveSolutions\HoneycombCore\Repositories\Users
  */
 class HCPersonalInfoRepository extends HCBaseRepository
 {

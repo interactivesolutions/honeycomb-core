@@ -27,14 +27,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Console;
+namespace InteractiveSolutions\HoneycombCore\Console;
 
 use Cache;
 use Carbon\Carbon;
 
 /**
  * Class HCAdminMenu
- * @package InteractiveSolutions\HoneycombNewCore\Console
+ * @package InteractiveSolutions\HoneycombCore\Console
  */
 class HCAdminMenu extends HCCommand
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\DTO;
+namespace InteractiveSolutions\HoneycombCore\DTO;
 
 /**
  * Class HCBaseDTO
- * @package InteractiveSolutions\HoneycombNewCore\DTO
+ * @package InteractiveSolutions\HoneycombCore\DTO
  */
 abstract class HCBaseDTO implements \JsonSerializable
 {

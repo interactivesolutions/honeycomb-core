@@ -27,11 +27,11 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories\Acl;
+namespace InteractiveSolutions\HoneycombCore\Repositories\Acl;
 
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclPermission;
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCBaseRepository;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Traits\HCQueryBuilderTrait;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclPermission;
+use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\Traits\HCQueryBuilderTrait;
 
 class HCPermissionRepository extends HCBaseRepository
 {

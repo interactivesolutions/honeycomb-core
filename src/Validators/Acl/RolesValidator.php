@@ -27,14 +27,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Validators\Acl;
+namespace InteractiveSolutions\HoneycombCore\Validators\Acl;
 
-use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCCoreFormValidator;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCCoreFormValidator;
 
 
 /**
  * Class RolesValidator
- * @package InteractiveSolutions\HoneycombNewCore\Validators\Acl
+ * @package InteractiveSolutions\HoneycombCore\Validators\Acl
  */
 class RolesValidator extends HCCoreFormValidator
 {

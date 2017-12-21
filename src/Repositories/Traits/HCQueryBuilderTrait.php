@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories\Traits;
+namespace InteractiveSolutions\HoneycombCore\Repositories\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 /**
  * Trait HCQueryBuilderTrait
- * @package InteractiveSolutions\HoneycombNewCore\Repositories\Traits
+ * @package InteractiveSolutions\HoneycombCore\Repositories\Traits
  */
 trait HCQueryBuilderTrait
 {

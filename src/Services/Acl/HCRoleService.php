@@ -27,16 +27,16 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Services\Acl;
+namespace InteractiveSolutions\HoneycombCore\Services\Acl;
 
 use Illuminate\Support\Collection;
-use InteractiveSolutions\HoneycombNewCore\Models\Acl\HCAclRole;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Acl\HCPermissionRepository;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Acl\HCRoleRepository;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
+use InteractiveSolutions\HoneycombCore\Repositories\Acl\HCPermissionRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\Acl\HCRoleRepository;
 
 /**
  * Class HCRoleService
- * @package InteractiveSolutions\HoneycombNewCore\Services\Acl
+ * @package InteractiveSolutions\HoneycombCore\Services\Acl
  */
 class HCRoleService
 {
@@ -118,11 +118,11 @@ class HCRoleService
     public function updateRolePermissions(string $roleId, string $permissionId): string
     {
         if ($roleId == $this->roleRepository->getRoleSuperAdminId()) {
-            throw new \Exception(trans('HCNewCore::validator.roles.cant_update_super'));
+            throw new \Exception(trans('HCCore::validator.roles.cant_update_super'));
         }
 
         if (!auth()->user()->hasRole([$this->roleRepository::ROLE_SA, $this->roleRepository::ROLE_PA])) {
-            throw new \Exception(trans('HCNewCore::validator.roles.cant_update_roles'));
+            throw new \Exception(trans('HCCore::validator.roles.cant_update_roles'));
         }
 
         $message = $this->roleRepository->updateOrCreatePermission($roleId, $permissionId);

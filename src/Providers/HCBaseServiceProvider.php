@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Providers;
+namespace InteractiveSolutions\HoneycombCore\Providers;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
@@ -10,7 +10,7 @@ use Illuminate\Support\ServiceProvider;
 
 /**
  * Class HCBaseServiceProvider
- * @package InteractiveSolutions\HoneycombNewCore\Providers
+ * @package InteractiveSolutions\HoneycombCore\Providers
  */
 class HCBaseServiceProvider extends ServiceProvider
 {

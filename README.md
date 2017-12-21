@@ -1,5 +1,5 @@
-# honeycomb-new-core
-https://github.com/interactivesolutions/honeycomb-new-core
+# honeycomb-core
+https://github.com/interactivesolutions/honeycomb-core
 
 ## Description
 

@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers;
+namespace InteractiveSolutions\HoneycombCore\Http\Controllers;
 
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class HCLogViewerController
- * @package InteractiveSolutions\HoneycombNewCore\http\controllers
+ * @package InteractiveSolutions\HoneycombCore\http\controllers
  */
 class HCLogViewerController extends LogViewerController
 {

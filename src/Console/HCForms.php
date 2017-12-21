@@ -27,15 +27,15 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Console;
+namespace InteractiveSolutions\HoneycombCore\Console;
 
 use Cache;
 use Carbon\Carbon;
-use InteractiveSolutions\HoneycombNewCore\Console\HCCommand;
+use InteractiveSolutions\HoneycombCore\Console\HCCommand;
 
 /**
  * Class HCForms
- * @package InteractiveSolutions\HoneycombNewCore\Console
+ * @package InteractiveSolutions\HoneycombCore\Console
  */
 class HCForms extends HCCommand
 {

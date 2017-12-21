@@ -27,14 +27,14 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Validators;
+namespace InteractiveSolutions\HoneycombCore\Validators;
 
-use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCCoreFormValidator;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCCoreFormValidator;
 
 
 /**
  * Class HCUsersValidator
- * @package InteractiveSolutions\HoneycombNewCore\Validators
+ * @package InteractiveSolutions\HoneycombCore\Validators
  */
 class HCUsersValidator extends HCCoreFormValidator
 {
@@ -94,16 +94,16 @@ class HCUsersValidator extends HCCoreFormValidator
     {
         // field.condition => translation
         return [
-            'nickname.required' => trans('HCNewCore::users.validator.nickname.required'),
-            'nickname.unique' => trans('HCNewCore::users.validator.nickname.unique'),
-            'nickname.min' => trans('HCNewCore::users.validator.nickname.min', ['count' => 3]),
-            'email.required' => trans('HCNewCore::users.validator.email.required'),
-            'email.unique' => trans('HCNewCore::users.validator.email.unique'),
-            'email.min' => trans('HCNewCore::users.validator.email.min', ['count' => 5]),
-            'password.required' => trans('HCNewCore::users.validator.password.required'),
-            'password.min' => trans('HCNewCore::users.validator.password.min', ['count' => 5]),
-            'password.confirmed' => trans('HCNewCore::users.validator.password.confirmed'),
-            'roles.required' => trans('HCNewCore::users.validator.roles.required'),
+            'nickname.required' => trans('HCCore::users.validator.nickname.required'),
+            'nickname.unique' => trans('HCCore::users.validator.nickname.unique'),
+            'nickname.min' => trans('HCCore::users.validator.nickname.min', ['count' => 3]),
+            'email.required' => trans('HCCore::users.validator.email.required'),
+            'email.unique' => trans('HCCore::users.validator.email.unique'),
+            'email.min' => trans('HCCore::users.validator.email.min', ['count' => 5]),
+            'password.required' => trans('HCCore::users.validator.password.required'),
+            'password.min' => trans('HCCore::users.validator.password.min', ['count' => 5]),
+            'password.confirmed' => trans('HCCore::users.validator.password.confirmed'),
+            'roles.required' => trans('HCCore::users.validator.roles.required'),
         ];
     }
 }

@@ -27,9 +27,9 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories\Acl;
+namespace InteractiveSolutions\HoneycombCore\Repositories\Acl;
 
-use InteractiveSolutions\HoneycombNewCore\Repositories\HCBaseRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
 
 class HCAccessRepository extends HCBaseRepository
 {

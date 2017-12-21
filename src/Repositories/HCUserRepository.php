@@ -25,19 +25,19 @@
  * http://www.interactivesolutions.lt
  */
 
-namespace InteractiveSolutions\HoneycombNewCore\Repositories;
+namespace InteractiveSolutions\HoneycombCore\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use InteractiveSolutions\HoneycombNewCore\DTO\HCUserDTO;
-use InteractiveSolutions\HoneycombNewCore\Models\HCUser;
-use InteractiveSolutions\HoneycombNewCore\Repositories\Traits\HCQueryBuilderTrait;
+use InteractiveSolutions\HoneycombCore\DTO\HCUserDTO;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Repositories\Traits\HCQueryBuilderTrait;
 
 /**
  * Class HCUserRepository
- * @package InteractiveSolutions\HoneycombNewCore\Repositories
+ * @package InteractiveSolutions\HoneycombCore\Repositories
  */
 class HCUserRepository extends HCBaseRepository
 {

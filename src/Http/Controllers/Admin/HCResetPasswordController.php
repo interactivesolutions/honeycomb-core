@@ -27,7 +27,7 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers;
+namespace InteractiveSolutions\HoneycombCore\Http\Controllers;
 
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\JsonResponse;
@@ -36,7 +36,7 @@ use Illuminate\View\View;
 
 /**
  * Class ResetPasswordController
- * @package InteractiveSolutions\HoneycombNewCore\Http\Controllers
+ * @package InteractiveSolutions\HoneycombCore\Http\Controllers
  */
 class HCResetPasswordController extends HCBaseController
 {
@@ -79,7 +79,7 @@ class HCResetPasswordController extends HCBaseController
      */
     public function showResetForm(Request $request, $token = null): View
     {
-        return view('HCNewCore::password.reset')->with(
+        return view('HCCore::password.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }

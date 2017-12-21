@@ -27,18 +27,18 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombNewCore\Http\Controllers\Admin\Acl;
+namespace InteractiveSolutions\HoneycombCore\Http\Controllers\Admin\Acl;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
-use InteractiveSolutions\HoneycombNewCore\Helpers\HCFrontendResponse;
-use InteractiveSolutions\HoneycombNewCore\Http\Controllers\HCBaseController;
-use InteractiveSolutions\HoneycombNewCore\Http\Requests\HCRoleRequest;
-use InteractiveSolutions\HoneycombNewCore\Services\Acl\HCRoleService;
+use InteractiveSolutions\HoneycombCore\Helpers\HCFrontendResponse;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCBaseController;
+use InteractiveSolutions\HoneycombCore\Http\Requests\HCRoleRequest;
+use InteractiveSolutions\HoneycombCore\Services\Acl\HCRoleService;
 
 /**
  * Class HCRoleController
- * @package InteractiveSolutions\HoneycombNewCore\Http\Controllers\Admin\Acl
+ * @package InteractiveSolutions\HoneycombCore\Http\Controllers\Admin\Acl
  */
 class HCRoleController extends HCBaseController
 {
@@ -70,13 +70,13 @@ class HCRoleController extends HCBaseController
     public function index(): View
     {
         $config = [
-            'title' => trans('HCNewCore::acl_access.page_title'),
+            'title' => trans('HCCore::acl_access.page_title'),
             'roles' => json_encode($this->service->getRolesWithPermissions()),
             'permissions' => json_encode($this->service->getAllPermissions()),
             'updateUrl' => route('admin.api.acl.access.update'),
         ];
 
-        return view('HCNewCore::admin.roles', ['config' => $config]);
+        return view('HCCore::admin.roles', ['config' => $config]);
     }
 
     /**
