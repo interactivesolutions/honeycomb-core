@@ -29,9 +29,9 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Console;
 
-use Cache;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use InteractiveSolutions\HoneycombCore\Helpers\HCConfigParseHelper;
 
 /**
  * Class HCGenerateAdminMenuCommand
@@ -61,6 +61,22 @@ class HCGenerateAdminMenuCommand extends Command
     private $adminMenuHolder = [];
 
     /**
+     * @var HCConfigParseHelper
+     */
+    private $helper;
+
+    /**
+     * HCGenerateAdminMenuCommand constructor.
+     * @param HCConfigParseHelper $helper
+     */
+    public function __construct(HCConfigParseHelper $helper)
+    {
+        parent::__construct();
+
+        $this->helper = $helper;
+    }
+
+    /**
      * Execute the console command.
      */
     public function handle(): void
@@ -75,19 +91,17 @@ class HCGenerateAdminMenuCommand extends Command
      */
     private function generateMenu(): void
     {
-        $files = $this->getConfigFiles();
+        $filePaths = $this->helper->getConfigFilesSorted();
 
-        if (!empty($files)) {
-            foreach ($files as $file) {
-                $fileContent = validateJSONFromPath($file);
+        foreach ($filePaths as $filePath) {
+            $file = json_decode(file_get_contents($filePath), true);
 
-                if (isset($fileContent['adminMenu'])) {
-                    $this->adminMenuHolder = array_merge($this->adminMenuHolder, $fileContent['adminMenu']);
-                }
+            if (isset($file['adminMenu'])) {
+                $this->adminMenuHolder = array_merge($this->adminMenuHolder, $file['adminMenu']);
             }
         }
 
-        Cache::forget('hc-admin-menu');
-        Cache::put('hc-admin-menu', $this->adminMenuHolder, Carbon::now()->addWeek());
+        cache()->forget('hc-admin-menu');
+        cache()->put('hc-admin-menu', $this->adminMenuHolder, Carbon::now()->addYear(2));
     }
 }

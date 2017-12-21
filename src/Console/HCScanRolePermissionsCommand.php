@@ -30,6 +30,7 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombCore\Console;
 
 use Illuminate\Console\Command;
+use InteractiveSolutions\HoneycombCore\Helpers\HCConfigParseHelper;
 use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclPermission;
 use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
 
@@ -76,6 +77,22 @@ class HCScanRolePermissionsCommand extends Command
     private $rolesList = [];
 
     /**
+     * @var HCConfigParseHelper
+     */
+    private $helper;
+
+    /**
+     * HCScanRolePermissionsCommand constructor.
+     * @param HCConfigParseHelper $helper
+     */
+    public function __construct(HCConfigParseHelper $helper)
+    {
+        parent::__construct();
+
+        $this->helper = $helper;
+    }
+
+    /**
      * Execute the console command.
      */
     public function handle(): void
@@ -93,7 +110,7 @@ class HCScanRolePermissionsCommand extends Command
      */
     private function scanRolesAndPermissions(): void
     {
-        $files = $this->getConfigFiles();
+        $files = $this->helper->getConfigFilesSorted();
 
         if (!empty($files)) {
             foreach ($files as $filePath) {
@@ -102,7 +119,7 @@ class HCScanRolePermissionsCommand extends Command
                 if (is_null($config)) {
                     $this->info('Invalid json file: ' . $filePath);
                 } else {
-                    $packageName = array_get($config, 'general.serviceProviderNameSpace');
+                    $packageName = array_get($config, 'general.packageName');
 
                     if (is_null($packageName) || $packageName == '') {
                         $this->error('SKIPPING! Package must have a name! file: ' . $filePath);

@@ -5,23 +5,23 @@
         "namespace": "InteractiveSolutions\\HoneycombCore"
     },
     "formData": {
-        "users": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUserForm",
-        "users-login": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUserLoginForm",
-        "users-register": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUserRegisterForm",
+        "user": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUserForm",
+        "user-login": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUserLoginForm",
+        "user-register": "InteractiveSolutions\\HoneycombCore\\Forms\\HCUserRegisterForm",
         "password-remind": "InteractiveSolutions\\HoneycombCore\\Forms\\HCPasswordRemindForm",
         "password-reset": "InteractiveSolutions\\HoneycombCore\\Forms\\HCPasswordResetForm"
     },
     "adminMenu": [
         {
-            "route": "admin.users.index",
+            "route": "admin.user.index",
             "parent": "admin.index",
-            "translation": "HCCore::users.page_title",
-            "icon": "fa-users",
+            "translation": "HCCore::user.page_title",
+            "icon": "fa-user",
             "aclPermission": "interactivesolutions_honeycomb_user_list"
         },
         {
-            "route": "admin.acl.roles.index",
-            "parent": "admin.users.index",
+            "route": "admin.acl.role.index",
+            "parent": "admin.user.index",
             "translation": "HCCore::acl_roles.page_title",
             "icon": "fa-user-md",
             "aclPermission": "interactivesolutions_honeycomb_acl_role_list"
@@ -33,7 +33,7 @@
     "acl": {
         "permissions": [
             {
-                "name": "admin.acl.roles",
+                "name": "admin.acl.role",
                 "controller": "InteractiveSolutions\\HoneycombCore\\Http\\Controllers\\Admin\\Acl\\HCRoleController",
                 "actions": [
                     "interactivesolutions_honeycomb_acl_roles_list",
@@ -44,7 +44,7 @@
                 ]
             },
             {
-                "name": "admin.users",
+                "name": "admin.user",
                 "controller": "InteractiveSolutions\\HoneycombCore\\Http\\Controllers\\Admin\\HCUserController",
                 "actions": [
                     "interactivesolutions_honeycomb_user_list",

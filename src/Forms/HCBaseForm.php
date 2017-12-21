@@ -40,6 +40,11 @@ use InteractiveSolutions\HoneycombCore\Models\HCUser;
 abstract class HCBaseForm implements HCFormContract
 {
     /**
+     * @var bool
+     */
+    protected $multiLanguage = false;
+
+    /**
      * Creating form
      *
      * @param bool $edit

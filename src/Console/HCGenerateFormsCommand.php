@@ -29,7 +29,6 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Console;
 
-use Cache;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use InteractiveSolutions\HoneycombCore\Helpers\HCConfigParseHelper;
@@ -91,8 +90,8 @@ class HCGenerateFormsCommand extends Command
             }
         }
 
-        Cache::forget('hc-forms');
-        Cache::put('hc-forms', $formHolder, Carbon::now()->addMonth());
+        cache()->forget('hc-forms');
+        cache()->put('hc-forms', $formHolder, Carbon::now()->addMonth());
 
         $this->info('registered forms: ' . count($formHolder));
         $this->comment('-');

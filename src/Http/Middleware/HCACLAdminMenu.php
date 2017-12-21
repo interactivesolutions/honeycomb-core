@@ -29,7 +29,6 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Http\Middleware;
 
-use Artisan;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -48,13 +47,14 @@ class HCAclAdminMenu
      * @param Closure $next
      * @return mixed
      * @throws \Illuminate\Container\EntryNotFoundException
+     * @throws \Exception
      */
     public function handle(Request $request, Closure $next)
     {
         if (auth()->check()) {
             if ($request->segment(1) == config('hc.admin_url') && $request->segment(2) != 'api') {
                 if (!Cache::has('hc-admin-menu')) {
-                    Artisan::call('hc:admin-menu');
+                    throw new \Exception('Admin menu not generated');
                 }
 
                 // get menu items from cache

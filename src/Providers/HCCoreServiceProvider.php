@@ -29,14 +29,29 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Providers;
 
+use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
+use InteractiveSolutions\HoneycombCore\Console\HCCreateSuperAdminCommand;
 use InteractiveSolutions\HoneycombCore\Console\HCGenerateAdminMenuCommand;
-use InteractiveSolutions\HoneycombCore\Console\HCAdminURL;
 use InteractiveSolutions\HoneycombCore\Console\HCGenerateFormsCommand;
 use InteractiveSolutions\HoneycombCore\Console\HCScanRolePermissionsCommand;
-use InteractiveSolutions\HoneycombCore\Console\HCCreateSuperAdminCommand;
 use InteractiveSolutions\HoneycombCore\Console\HCSeedCommand;
+use InteractiveSolutions\HoneycombCore\Http\Middleware\HCAclAdminMenu;
+use InteractiveSolutions\HoneycombCore\Http\Middleware\HCAclAuthenticate;
+use InteractiveSolutions\HoneycombCore\Http\Middleware\HCAclPermissionsMiddleware;
+use InteractiveSolutions\HoneycombCore\Http\Middleware\HCLogLastActivity;
+use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclPermission;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Repositories\Acl\HCPermissionRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\Acl\HCRoleRepository;
 use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
 use InteractiveSolutions\HoneycombCore\Repositories\HCUserRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\Users\HCPersonalInfoRepository;
+use InteractiveSolutions\HoneycombCore\Repositories\Users\HCUserActivationRepository;
+use InteractiveSolutions\HoneycombCore\Services\Acl\HCRoleService;
 use InteractiveSolutions\HoneycombCore\Services\HCUserActivationService;
 use InteractiveSolutions\HoneycombCore\Services\HCUserService;
 use Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider;
@@ -91,6 +106,15 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
         'Routes/Frontend/routes.password.php',
     ];
 
+    public function boot(Router $router)
+    {
+        parent::boot($router);
+
+        $this->registerGateItems(app()->make(Gate::class));
+
+        $this->registerMiddleware($router);
+    }
+
     /**
      *
      */
@@ -107,6 +131,73 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
     }
 
     /**
+     * Register acl permissions
+     *
+     * @param Gate $gate
+     * @throws \Exception
+     */
+    private function registerGateItems(Gate $gate): void
+    {
+        $gate->before(function (HCUser $user) {
+            if ($user->isSuperAdmin()) {
+                return true;
+            }
+        });
+
+        $permissions = $this->getPermissions();
+
+        if (!is_null($permissions)) {
+            foreach ($permissions as $permission) {
+                $gate->define($permission->action, function (HCUser $user) use ($permission) {
+                    return $user->hasPermission($permission);
+                });
+            }
+        }
+    }
+
+    /**
+     * @param Router $router
+     */
+    private function registerMiddleware(Router $router): void
+    {
+        $router->aliasMiddleware('acl', HCACLPermissionsMiddleware::class);
+        $router->aliasMiddleware('auth', HCACLAuthenticate::class);
+
+        $router->pushMiddleWareToGroup('web', HCACLAdminMenu::class);
+        $router->pushMiddleWareToGroup('web', HCLogLastActivity::class);
+    }
+
+
+    /**
+     * Get permissions
+     *
+     * @return Collection
+     * @throws \Exception
+     */
+    private function getPermissions(): Collection
+    {
+        if (!cache()->has('hc-permissions')) {
+            try {
+                if (class_exists(HCAclPermission::class) && Schema::hasTable(HCAclPermission::getTableName())) {
+                    $expiresAt = Carbon::now()->addHour(12);
+
+                    $permissions = HCAclPermission::with('roles')->get();
+
+                    cache()->put('hc-permissions', $permissions, $expiresAt);
+                }
+            } catch (\Exception $e) {
+                $msg = $e->getMessage();
+
+                if ($e->getCode() != 1045) {
+                    throw new \Exception($msg);
+                }
+            }
+        }
+
+        return cache()->get('hc-permissions');
+    }
+
+    /**
      *
      */
     private function registerRepositories(): void
@@ -114,6 +205,10 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
         $this->app->singleton(HCBaseRepository::class);
 
         $this->app->singleton(HCUserRepository::class);
+        $this->app->singleton(HCRoleRepository::class);
+        $this->app->singleton(HCPermissionRepository::class);
+        $this->app->singleton(HCPersonalInfoRepository::class);
+        $this->app->singleton(HCUserActivationRepository::class);
     }
 
     /**
@@ -123,5 +218,6 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
     {
         $this->app->singleton(HCUserService::class);
         $this->app->singleton(HCUserActivationService::class);
+        $this->app->singleton(HCRoleService::class);
     }
 }

@@ -30,7 +30,7 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombCore\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -44,16 +44,19 @@ class HCAclAuthenticate
      *
      * @param Request $request
      * @param Closure $next
-     * @param string|null $guard
-     * @return mixed
+     * @param null $guard
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|mixed|\Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     public function handle(Request $request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->guest()) {
+        if (auth()->guard($guard)->guest()) {
             if ($request->ajax()) {
-                return response('Unauthorized.', 401);
+                return response()->json('Unauthorized.', JsonResponse::HTTP_UNAUTHORIZED);
             } else {
-                return redirect()->guest(config('hc.auth_redirect'));
+                return redirect()->guest(
+                    config('hc.auth_redirect')
+                );
             }
         }
 

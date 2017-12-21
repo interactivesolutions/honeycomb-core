@@ -32,7 +32,7 @@ Route::prefix(config('hc.admin_url'))
     ->middleware(['web', 'auth'])
     ->group(function () {
 
-        Route::get('userss', 'HCUserController@index')
+        Route::get('users', 'HCUserController@index')
             ->name('admin.user.index')
             ->middleware('acl:interactivesolutions_honeycomb_acl_user_list');
 

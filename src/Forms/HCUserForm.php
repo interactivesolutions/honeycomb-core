@@ -57,7 +57,7 @@ class HCUserForm extends HCBaseForm
         ];
 
         $form = [
-            'storageURL' => route('admin.api.users'),
+            'storageURL' => route('admin.api.user'),
             'buttons' => [
                 [
                     "class" => "col-centered",
@@ -82,12 +82,12 @@ class HCUserForm extends HCBaseForm
                     "required" => 1,
                     "requiredVisible" => 1,
                 ],
-                formManagerYesNo('checkBoxList', 'is_active', trans("HCCore::users.active"), 0, 0,
-                    trans('HCTranslations::core.general'), false),
-                formManagerYesNo('checkBoxList', 'send_welcome_email', trans("HCCore::users.send_welcome_email"), 0, 0,
-                    trans('HCTranslations::core.general'), false),
-                formManagerYesNo('checkBoxList', 'send_password', trans("HCCore::users.send_password"), 0, 0,
-                    trans('HCTranslations::core.general'), false),
+//                formManagerYesNo('checkBoxList', 'is_active', trans("HCCore::users.active"), 0, 0,
+//                    trans('HCTranslations::core.general'), false),
+//                formManagerYesNo('checkBoxList', 'send_welcome_email', trans("HCCore::users.send_welcome_email"), 0, 0,
+//                    trans('HCTranslations::core.general'), false),
+//                formManagerYesNo('checkBoxList', 'send_password', trans("HCCore::users.send_password"), 0, 0,
+//                    trans('HCTranslations::core.general'), false),
                 $rolesStructure,
             ],
         ];
@@ -155,8 +155,8 @@ class HCUserForm extends HCBaseForm
                     "strength" => "1" // case 0: much, case 1: 4 symbols, case 2: 6 symbols
                 ],
             ],
-            formManagerYesNo('checkBoxList', 'is_active', trans("HCCore::users.active"), 0, 0,
-                trans('HCTranslations::core.general'), false),
+//            formManagerYesNo('checkBoxList', 'is_active', trans("HCCore::users.active"), 0, 0,
+//                trans('HCTranslations::core.general'), false),
             $rolesStructure,
             [
                 "type" => "singleLine",

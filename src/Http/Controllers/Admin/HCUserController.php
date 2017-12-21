@@ -78,8 +78,8 @@ class HCUserController extends HCBaseController
         $config = [
             'title' => trans('HCCore::users.page_title'),
             'listURL' => route('admin.api.user'),
-            'newFormUrl' => route('admin.api.form-manager', ['users-new']),
-            'editFormUrl' => route('admin.api.form-manager', ['users-edit']),
+            'newFormUrl' => route('admin.api.form-manager', ['user-new']),
+            'editFormUrl' => route('admin.api.form-manager', ['user-edit']),
             'headers' => $this->getTableColumns(),
         ];
 
@@ -179,7 +179,7 @@ class HCUserController extends HCBaseController
         $this->connection->beginTransaction();
 
         try {
-            $record = $this->service->updateUser($id, $request->getUserData());
+            $record = $this->service->updateUser($request->getInputData(), $id);
 
             $this->connection->commit();
 

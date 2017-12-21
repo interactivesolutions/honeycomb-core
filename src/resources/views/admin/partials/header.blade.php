@@ -18,11 +18,6 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
-                {{-- TODO include existing HoneyComb packages --}}
-                @if(isPackageEnabled(\interactivesolutions\honeycomblanguages\app\providers\HCLanguagesServiceProvider::class))
-                    @include('HCLanguages::lang-select')
-                @endif
-
                 @include('HCCore::admin.user')
 
                 <li>
