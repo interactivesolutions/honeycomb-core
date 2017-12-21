@@ -11,31 +11,31 @@
 <script src='//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
 
 {{-- shared --}}
-<script src='/js/shared/hc-helpers.js'></script>
-<script src='/js/shared/hc-objects.js'></script>
-<script src='/js/shared/hc-functions.js'></script>
-<script src='/js/shared/hc-loader.js'></script>
-<script src='/js/shared/hc-service.js'></script>
+<script src='/honeycomb/js/shared/hc-helpers.js'></script>
+<script src='/honeycomb/js/shared/hc-objects.js'></script>
+<script src='/honeycomb/js/shared/hc-functions.js'></script>
+<script src='/honeycomb/js/shared/hc-loader.js'></script>
+<script src='/honeycomb/js/shared/hc-service.js'></script>
 
 {{--form--}}
-<script src='/js/form/hc-form-manager.js'></script>
-<script src='/js/form/hc-form.js'></script>
-<script src='/js/popup/hc-popup.js'></script>
-<script src='/js/form/hc-form-basic-field.js'></script>
-<script src='/js/form/hc-form-button.js'></script>
-<script src='/js/form/hc-form-single-line.js'></script>
-<script src='/js/form/hc-form-email.js'></script>
-<script src='/js/form/hc-form-password.js'></script>
-<script src='/js/form/hc-form-date-time-picker.js'></script>
-<script src='/js/form/hc-form-text-area.js'></script>
-<script src='/js/form/hc-form-rich-text-area.js'></script>
-<script src='/js/form/hc-form-check-box-list.js'></script>
-<script src='/js/form/hc-form-radio-list.js'></script>
-<script src='/js/form/hc-form-drop-down-list.js'></script>
-<script src='/js/form/hc-form-upload-file.js'></script>
-<script src='/js/form/hc-form-google-map.js'></script>
+<script src='/honeycomb/js/form/hc-form-manager.js'></script>
+<script src='/honeycomb/js/form/hc-form.js'></script>
+<script src='/honeycomb/js/popup/hc-popup.js'></script>
+<script src='/honeycomb/js/form/hc-form-basic-field.js'></script>
+<script src='/honeycomb/js/form/hc-form-button.js'></script>
+<script src='/honeycomb/js/form/hc-form-single-line.js'></script>
+<script src='/honeycomb/js/form/hc-form-email.js'></script>
+<script src='/honeycomb/js/form/hc-form-password.js'></script>
+<script src='/honeycomb/js/form/hc-form-date-time-picker.js'></script>
+<script src='/honeycomb/js/form/hc-form-text-area.js'></script>
+<script src='/honeycomb/js/form/hc-form-rich-text-area.js'></script>
+<script src='/honeycomb/js/form/hc-form-check-box-list.js'></script>
+<script src='/honeycomb/js/form/hc-form-radio-list.js'></script>
+<script src='/honeycomb/js/form/hc-form-drop-down-list.js'></script>
+<script src='/honeycomb/js/form/hc-form-upload-file.js'></script>
+<script src='/honeycomb/js/form/hc-form-google-map.js'></script>
 
 {{-- list --}}
-<script src='/js/list/hc-core-list.js'></script>
-<script src='/js/list/hc-simple-list.js'></script>
-<script src='/js/list/types/hc-endless.js'></script>
+<script src='/honeycomb/js/list/hc-core-list.js'></script>
+<script src='/honeycomb/js/list/hc-simple-list.js'></script>
+<script src='/honeycomb/js/list/types/hc-endless.js'></script>

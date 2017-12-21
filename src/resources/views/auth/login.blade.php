@@ -1,4 +1,4 @@
-@extends('HCCore::auth.layout')
+@extends('HCCore::auth.master')
 
 @section('content')
 
@@ -36,7 +36,7 @@
         $(document).ready(function () {
             HCService.FormManager.initialize();
             var form = HCService.FormManager.createForm({
-                'structureURL': '{{  route('public.api.form-manager', 'users-login-new')}}',
+                'structureURL': '{{  route('frontend.api.form-manager', 'users-login-new')}}',
                 'divID': '#login-form'
             });
         });

@@ -1,4 +1,4 @@
-@extends('HCCore::auth.layout')
+@extends('HCCore::auth.master')
 
 @section('content')
     <div class="login-page" style="position: fixed; top:0; left: 0; bottom: 0; right: 0;">

@@ -10,4 +10,4 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.8/css/skins/_all-skins.min.css">
 
 {{-- honeycomb--}}
-<link rel="stylesheet" href="/css/honeycomb.css">
+<link rel="stylesheet" href="/honeycomb/css/honeycomb.css">

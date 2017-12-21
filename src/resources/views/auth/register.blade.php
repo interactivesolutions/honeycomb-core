@@ -1,4 +1,4 @@
-@extends('HCCore::auth.layout')
+@extends('HCCore::auth.master')
 
 @section('content')
 
