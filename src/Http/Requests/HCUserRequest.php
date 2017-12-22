@@ -31,11 +31,17 @@ class HCUserRequest extends FormRequest
                 break;
 
             case 'PUT':
-                return [
+                $putData = [
                     'record' => [
                         'email' => $this->input('email'),
                     ],
                 ];
+
+                if ($this->input('password')) {
+                    array_set($putData, 'record.password', bcrypt($this->input('password')));
+                }
+
+                return $putData;
                 break;
 
             case 'PATCH':
@@ -46,6 +52,14 @@ class HCUserRequest extends FormRequest
         }
 
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->input('roles', []);
     }
 
     /**

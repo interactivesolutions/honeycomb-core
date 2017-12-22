@@ -129,6 +129,10 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
             $this->app->register(LaravelLogViewerServiceProvider::class);
         }
 
+        $this->mergeConfigFrom(
+            $this->packagePath('config/hc.php'), 'hc'
+        );
+
         $this->registerRepositories();
 
         $this->registerServices();

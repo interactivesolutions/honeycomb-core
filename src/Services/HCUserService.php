@@ -69,17 +69,19 @@ class HCUserService
     }
 
     /**
-     * @param array $userData
      * @param string $userId
+     * @param array $userData
      * @param array $personalData
+     * @param array $roles
      * @return HCUser
      */
-    public function updateUser(array $userData, string $userId, array $personalData = []): HCUser
+    public function updateUser(string $userId, array $userData, array $roles, array $personalData = []): HCUser
     {
-        dd($userData, $personalData);
         /** @var HCUser $record */
         $record = $this->repository->updateOrCreate(['id' => $userId], $userData);
         $this->personalInfoRepository->updateOrCreate(['user_id' => $userId], $personalData);
+
+        $record->assignRoles($roles);
 
         return $record;
     }

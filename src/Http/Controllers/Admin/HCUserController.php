@@ -163,7 +163,7 @@ class HCUserController extends HCBaseController
             return $this->response->error($exception->getMessage());
         }
 
-        return $this->response->success('Created', $this->getById($record->id));
+        return $this->response->success('Created', $record);
     }
 
     /**
@@ -179,7 +179,7 @@ class HCUserController extends HCBaseController
         $this->connection->beginTransaction();
 
         try {
-            $record = $this->service->updateUser($request->getInputData(), $id, $request->getPersonalData());
+            $record = $this->service->updateUser($id, $request->getInputData(), $request->getRoles(), $request->getPersonalData());
 
             $this->connection->commit();
 
