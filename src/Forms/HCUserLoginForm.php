@@ -52,30 +52,52 @@ class HCUserLoginForm extends HCBaseForm
                     "type" => "submit",
                 ],
             ],
-            'structure' => [
-                [
-                    "type" => "singleLine",
-                    "fieldID" => "email",
-                    "label" => trans("HCCore::user.login.email"),
-                    "required" => 1,
-                ],
-                [
-                    "type" => "password",
-                    "fieldID" => "password",
-                    "label" => trans("HCCore::user.login.password"),
-                    "required" => 1,
-                ],
-                [
-                    "type" => "checkBoxList",
-                    "fieldID" => 'remember',
-                    "label" => ' ',
-                    "required" => 0,
-                    "requiredVisible" => 0,
-                    "options" => [['id' => '1', 'label' => trans('HCCore::user.login.remember')]],
-                ],
-            ],
+            'structure' => $this->getStructure($edit),
         ];
 
         return $form;
+    }
+
+    /**
+     * Get Edit structure
+     *
+     * @param string $prefix
+     * @return array
+     */
+    public function getStructureEdit(string $prefix): array
+    {
+        return [];
+    }
+
+    /**
+     * Get new structure
+     *
+     * @param string $prefix
+     * @return array
+     */
+    public function getStructureNew(string $prefix): array
+    {
+        return [
+            [
+                "type" => "singleLine",
+                "fieldID" => "email",
+                "label" => trans("HCCore::user.login.email"),
+                "required" => 1,
+            ],
+            [
+                "type" => "password",
+                "fieldID" => "password",
+                "label" => trans("HCCore::user.login.password"),
+                "required" => 1,
+            ],
+            [
+                "type" => "checkBoxList",
+                "fieldID" => 'remember',
+                "label" => ' ',
+                "required" => 0,
+                "requiredVisible" => 0,
+                "options" => [['id' => '1', 'label' => trans('HCCore::user.login.remember')]],
+            ],
+        ];
     }
 }
