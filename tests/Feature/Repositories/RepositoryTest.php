@@ -8,7 +8,7 @@ namespace Tests\Feature\Repositories;
 use Faker\Generator;
 use Illuminate\Support\Collection;
 use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
-use InteractiveSolutions\HoneycombCore\Repositories\Repository;
+use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
 use Tests\FeatureTestCase;
 
 /**
@@ -126,7 +126,7 @@ class HCUser extends HCUuidModel
  * Class RepositoryFake
  * @package Tests\Feature\Repositories
  */
-class RepositoryFake extends Repository
+class RepositoryFake extends HCBaseRepository
 {
     /**
      * @return string

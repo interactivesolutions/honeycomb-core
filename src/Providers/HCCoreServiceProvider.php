@@ -179,10 +179,10 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
     /**
      * Get permissions
      *
-     * @return Collection
+     * @return null|Collection
      * @throws \Exception
      */
-    private function getPermissions(): Collection
+    private function getPermissions(): ? Collection
     {
         if (!cache()->has('hc-permissions')) {
             try {
