@@ -69,6 +69,50 @@ class HCUserService
     }
 
     /**
+     * @param array $userData
+     * @param array $roles
+     * @param array $personalData
+     * @param $sendWelcomeEmail
+     * @param $sendPassword
+     * @return HCUser
+     */
+    public function createUser(
+        array $userData,
+        array $roles,
+        array $personalData = [],
+        $sendWelcomeEmail,
+        $sendPassword
+    ): HCUser {
+        $password = $userData['password'];
+
+        $userData['password'] = bcrypt($password);
+
+        /** @var HCUser $user */
+        $user = $this->repository->create($userData);
+        $personalData['user_id'] = $user->id;
+
+        $this->personalInfoRepository->updateOrCreate(['user_id' => $user->id], $personalData);
+
+        $user->assignRoles($roles);
+
+        // send welcome email
+        if ($sendWelcomeEmail || $sendPassword) {
+            if ($sendPassword) {
+                $user->sendWelcomeEmailWithPassword($password);
+            } else {
+                $user->sendWelcomeEmail();
+            }
+        }
+
+        // create user activation
+        if (is_null($user->activated_at)) {
+            $user->createTokenAndSendActivationCode();
+        }
+
+        return $user;
+    }
+
+    /**
      * @param string $userId
      * @param array $userData
      * @param array $personalData
@@ -77,28 +121,29 @@ class HCUserService
      */
     public function updateUser(string $userId, array $userData, array $roles, array $personalData = []): HCUser
     {
-        /** @var HCUser $record */
-        $record = $this->repository->updateOrCreate(['id' => $userId], $userData);
+        if (array_has($userData, 'password')) {
+            $userData['password'] = bcrypt($userData['password']);
+        }
+
+        /** @var HCUser $user */
+        $user = $this->repository->updateOrCreate(['id' => $userId], $userData);
         $this->personalInfoRepository->updateOrCreate(['user_id' => $userId], $personalData);
 
-        $record->assignRoles($roles);
+        $user->assignRoles($roles);
 
-        return $record;
+        return $user;
     }
 
     /**
-     * @param array $userData
-     * @param array $personalData
-     * @return HCUser
+     * @param string $userId
      */
-    public function createUser(array $userData, array $personalData = []): HCUser
+    public function activateUser(string $userId): void
     {
-        /** @var HCUser $record */
-        $record = $this->repository->create($userData);
-        $personalData['user_id'] = $record->id;
+        /** @var HCUser $user */
+        $user = $this->repository->find($userId);
 
-        $this->personalInfoRepository->updateOrCreate(['user_id' => $record->id], $personalData);
-
-        return $record;
+        if ($user->isNotActivated()){
+            $user->activate();
+        }
     }
 }

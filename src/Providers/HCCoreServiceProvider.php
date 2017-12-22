@@ -98,7 +98,7 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
         'Routes/routes.logs.php',
         'Routes/routes.welcome.php',
 
-        'Routes/Admin/routes.index.php',
+        'Routes/Admin/routes.admin.php',
         'Routes/Admin/routes.roles.php',
         'Routes/Admin/routes.users.php',
 

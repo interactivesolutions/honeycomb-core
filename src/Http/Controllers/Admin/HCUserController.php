@@ -154,7 +154,13 @@ class HCUserController extends HCBaseController
         $this->connection->beginTransaction();
 
         try {
-            $record = $this->service->createUser($request->getInputData());
+            $record = $this->service->createUser(
+                $request->getUserInput(),
+                $request->getRoles(),
+                $request->getPersonalData(),
+                request()->filled('send_welcome_email'),
+                request()->filled('send_password')
+            );
 
             $this->connection->commit();
         } catch (\Throwable $exception) {
@@ -179,7 +185,16 @@ class HCUserController extends HCBaseController
         $this->connection->beginTransaction();
 
         try {
-            $record = $this->service->updateUser($id, $request->getInputData(), $request->getRoles(), $request->getPersonalData());
+            $record = $this->service->updateUser(
+                $id,
+                $request->getUserInput(),
+                $request->getRoles(),
+                $request->getPersonalData()
+            );
+
+            if ($request->wantToActivate()) {
+                $this->service->activateUser($record->id);
+            }
 
             $this->connection->commit();
 
@@ -259,7 +274,7 @@ class HCUserController extends HCBaseController
         $this->connection->beginTransaction();
 
         try {
-            $list = $this->service->getRepository()->restore($request->getInputData());
+            $list = $this->service->getRepository()->restore($request->getUserInput());
 
             $this->connection->commit();
         } catch (\Exception $exception) {

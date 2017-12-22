@@ -13,51 +13,24 @@ class HCUserRequest extends FormRequest
      *
      * @return array
      */
-    public function getInputData(): array
+    public function getUserInput(): array
     {
-        switch ($this->method()) {
-            case 'DELETE':
-                return [
-                    'list' => $this->input('list'),
-                ];
-                break;
+        $data = [
+            'email' => $this->input('email'),
+//            'is_active' => $this->filled('is_active'),
+        ];
 
-            case 'POST':
-                return [
-                    'record' => [
-                        'email' => $this->input('email'),
-                    ],
-                ];
-                break;
-
-            case 'PUT':
-                $putData = [
-                    'record' => [
-                        'email' => $this->input('email'),
-                    ],
-                ];
-
-                if ($this->input('password')) {
-                    array_set($putData, 'record.password', bcrypt($this->input('password')));
-                }
-
-                return $putData;
-                break;
-
-            case 'PATCH':
-                return [
-                    'list' => $this->input('list'),
-                ];
-                break;
+        if ($this->input('password')) {
+            array_set($data, 'password', $this->input('password'));
         }
 
-        return [];
+        return $data;
     }
 
     /**
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->input('roles', []);
     }
@@ -67,7 +40,7 @@ class HCUserRequest extends FormRequest
      *
      * @return array
      */
-    public function getPersonalData()
+    public function getPersonalData(): array
     {
         return [
             'first_name' => $this->input('first_name'),
@@ -75,9 +48,12 @@ class HCUserRequest extends FormRequest
         ];
     }
 
-    public function getListFields()
+    /**
+     * @return bool
+     */
+    public function wantToActivate(): bool
     {
-        return $this->all();
+        return $this->filled('is_active');
     }
 
     /**
@@ -97,6 +73,7 @@ class HCUserRequest extends FormRequest
      */
     public function rules(): array
     {
+
         switch ($this->method()) {
             case 'POST':
                 return [

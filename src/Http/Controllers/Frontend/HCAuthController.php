@@ -250,7 +250,7 @@ class HCAuthController extends HCBaseController
     {
         $message = null;
 
-        $tokenRecord = DB::table('hc_users_activations')->where('token', $token)->first();
+        $tokenRecord = DB::table('hc_user_activations')->where('token', $token)->first();
 
         if (is_null($tokenRecord)) {
             $message = trans('HCCore::user.activation.token_not_exists');
