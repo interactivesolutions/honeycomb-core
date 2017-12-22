@@ -28,14 +28,14 @@
 declare(strict_types = 1);
 
 Route::prefix(config('hc.admin_url'))
-    ->namespace('Admin')
+    ->namespace('Admin\Acl')
     ->middleware(['web', 'auth'])
     ->group(function () {
-        Route::get('users/access', 'HCRoleController@index')
+        Route::get('users/roles', 'HCRoleController@index')
             ->name('admin.acl.role.index')
             ->middleware('acl:interactivesolutions_honeycomb_new_core_acl_role_list');
 
-        Route::put('api/users/access', 'HCRoleController@updatePermissions')
+        Route::put('api/users/roles/permissions', 'HCRoleController@updatePermissions')
             ->name('admin.acl.role.update.permissions')
             ->middleware('acl:interactivesolutions_honeycomb_new_core_acl_role_update');
     });

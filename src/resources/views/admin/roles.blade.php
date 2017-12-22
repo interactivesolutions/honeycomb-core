@@ -1,4 +1,4 @@
-@extends('HCCore::admin.layout')
+@extends('HCCore::admin.layout.master')
 
 @if(isset( $config['title'] ) &&  ! empty($config['title']))
     @section('content-header',  $config['title'] )

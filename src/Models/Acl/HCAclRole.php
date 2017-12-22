@@ -89,7 +89,7 @@ class HCAclRole extends HCUuidModel
     {
         return $this->belongsToMany(
             HCAclPermission::class,
-            RolesPermissionsConnections::getTableName(),
+            'hc_acl_role_permissions',
             'role_id',
             'permission_id'
         );

@@ -73,7 +73,7 @@ class HCRoleController extends HCBaseController
             'title' => trans('HCCore::acl_access.page_title'),
             'roles' => json_encode($this->service->getRolesWithPermissions()),
             'permissions' => json_encode($this->service->getAllPermissions()),
-            'updateUrl' => route('admin.api.acl.access.update'),
+            'updateUrl' => route('admin.acl.role.update.permissions'),
         ];
 
         return view('HCCore::admin.roles', ['config' => $config]);
