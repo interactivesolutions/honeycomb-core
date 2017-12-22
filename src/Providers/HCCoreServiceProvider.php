@@ -106,7 +106,11 @@ class HCCoreServiceProvider extends HCBaseServiceProvider
         'Routes/Frontend/routes.password.php',
     ];
 
-    public function boot(Router $router)
+    /**
+     * @param Router $router
+     * @throws \Exception
+     */
+    public function boot(Router $router): void
     {
         parent::boot($router);
 
