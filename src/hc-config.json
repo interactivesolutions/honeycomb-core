@@ -30,13 +30,13 @@
     "seeder": "InteractiveSolutions\\HoneycombCore\\Database\\Seeds\\HCCoreSeeder",
     "routes": [
         "Routes/routes.form-manager.php",
-        "Routes/routes.logs.php",
-        "Routes/routes.welcome.php",
 
-        "Routes/Admin/routes.index.php",
+        "Routes/Admin/routes.admin.php",
+        "Routes/Admin/routes.logs.php",
         "Routes/Admin/routes.roles.php",
         "Routes/Admin/routes.users.php",
 
+        "Routes/Frontend/routes.welcome.php",
         "Routes/Frontend/routes.auth.php",
         "Routes/Frontend/routes.password.php"
     ],

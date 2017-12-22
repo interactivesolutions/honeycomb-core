@@ -27,90 +27,79 @@
 
 declare(strict_types = 1);
 
-namespace InteractiveSolutions\HoneycombCore\Http\Controllers;
+namespace InteractiveSolutions\HoneycombCore\Http\Controllers\Frontend;
 
-use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use InteractiveSolutions\HoneycombCore\Helpers\HCFrontendResponse;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCBaseController;
 
 /**
- * Class ResetPasswordController
- * @package InteractiveSolutions\HoneycombCore\Http\Controllers
+ * Class HCForgotPasswordController
+ * @package InteractiveSolutions\HoneycombAcl\Http\Controllers
  */
-class HCResetPasswordController extends HCBaseController
+class HCForgotPasswordController extends HCBaseController
 {
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
     |--------------------------------------------------------------------------
     |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
+    | This controller is responsible for handling password reset emails and
+    | includes a trait which assists in sending these notifications from
+    | your application to your users. Feel free to explore this trait.
     |
     */
 
-    use ResetsPasswords;
+    use SendsPasswordResetEmails;
 
     /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
+     * @var HCFrontendResponse
      */
-    protected $redirectTo = '/';
+    private $response;
 
     /**
      * Create a new controller instance.
+     * @param HCFrontendResponse $response
      */
-    public function __construct()
+    public function __construct(HCFrontendResponse $response)
     {
         $this->middleware('guest');
+
+        $this->response = $response;
     }
 
     /**
-     * Display the password reset view for the given token.
-     *
-     * If no token is present, display the link request form.
-     *
-     * @param Request $request
-     * @param string|null $token
+     * Display the form to request a password reset link.
      * @return View
      */
-    public function showResetForm(Request $request, $token = null): View
+    public function showLinkRequestForm(): View
     {
-        return view('HCCore::password.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+        return view('HCCore::password.remind');
     }
 
-
     /**
-     * Get the response for a successful password reset.
+     * Get the response for a successful password reset link.
      *
-     * @param string $response
-     * @return JsonResponse
-     * @throws \Illuminate\Container\EntryNotFoundException
+     * @param  string $response
+     * @return string
      */
-    protected function sendResetResponse($response): JsonResponse
+    protected function sendResetLinkResponse($response)
     {
-        //redirect to intended url
-        return response()->json([
-            'success' => true,
-            'message' => trans($response),
-            'redirectURL' => session('url.intended', url('/')),
-        ]);
+        return $this->response->success(trans($response));
     }
 
     /**
-     * Get the response for a failed password reset.
+     * Get the response for a failed password reset link.
      *
      * @param Request $request
-     * @param string $response
-     * @return JsonResponse
+     * @param $response
+     * @return string;
      */
-    protected function sendResetFailedResponse(Request $request, $response): JsonResponse
+    protected function sendResetLinkFailedResponse(Request $request, $response)
     {
-        return \HCLog::error('PASSWORD-RESET-2', trans($response), 200);
+        return $this->response->error(trans($response));
     }
+
 }

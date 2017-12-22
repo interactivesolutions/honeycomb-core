@@ -1,7 +1,8 @@
 <?php
 
 Route::prefix(config('hc.admin_url'))
-    ->middleware('auth')
+    ->middleware(['web', 'auth'])
+    ->namespace('Admin')
     ->group(function () {
         Route::get('logs', 'HCLogViewerController@index')
             ->name('admin.logs');

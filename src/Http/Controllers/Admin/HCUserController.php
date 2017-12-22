@@ -158,8 +158,8 @@ class HCUserController extends HCBaseController
                 $request->getUserInput(),
                 $request->getRoles(),
                 $request->getPersonalData(),
-                request()->filled('send_welcome_email'),
-                request()->filled('send_password')
+                $request->filled('send_welcome_email'),
+                $request->filled('send_password')
             );
 
             $this->connection->commit();

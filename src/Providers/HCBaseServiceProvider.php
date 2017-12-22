@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Providers;
 
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
@@ -71,11 +72,12 @@ class HCBaseServiceProvider extends ServiceProvider
      * Load package routes
      *
      * @param Router $router
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function loadRoutes(Router $router): void
     {
         /** @var string $route */
-        foreach ($this->routes as $route) {
+        foreach ($this->getRoutes() as $route) {
             $router->group(['namespace' => $this->namespace], function () use ($route) {
                 require $this->packagePath($route);
             });
@@ -129,5 +131,23 @@ class HCBaseServiceProvider extends ServiceProvider
     protected function packagePath(string $path): string
     {
         return __DIR__ . '/../' . $path;
+    }
+
+    /**
+     * Get routes
+     *
+     * @return array
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    private function getRoutes(): array
+    {
+        $fileSystem = new Filesystem();
+
+        $file = json_decode(
+            $fileSystem->get($this->packagePath('hc-config.json')),
+            true
+        );
+
+        return array_get($file, 'routes', []);
     }
 }

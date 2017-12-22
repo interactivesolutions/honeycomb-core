@@ -27,19 +27,19 @@
 
 declare(strict_types = 1);
 
-Route::prefix('password')
-    ->middleware('web')
-    ->namespace('Frontend')
-    ->group(function () {
-        Route::get('remind', 'HCForgotPasswordController@showLinkRequestForm')
-            ->name('users.password.remind')
-            ->middleware('guest');
+namespace InteractiveSolutions\HoneycombCore\Http\Controllers\Frontend;
 
-        Route::post('remind', 'HCForgotPasswordController@sendResetLinkEmail')->name('users.password.remind.post');
+use Illuminate\View\View;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCBaseController;
 
-        Route::get('reset/{token}', 'HCResetPasswordController@showResetForm')
-            ->name('users.password.reset')
-            ->middleware('guest');
-
-        Route::post('reset', 'HCResetPasswordController@reset')->name('users.password.reset.post');
-    });
+/**
+ * Class HCWelcomeController
+ * @package InteractiveSolutions\HoneycombCore\Http\Controllers\Frontend
+ */
+class HCWelcomeController extends HCBaseController
+{
+    public function index(): View
+    {
+        return view('HCCore::welcome');
+    }
+}
