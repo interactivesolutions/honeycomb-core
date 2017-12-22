@@ -15,4 +15,16 @@ interface HCFormContract
      * @return array
      */
     public function createForm(bool $edit = false): array;
+
+    /**
+     * @param string $prefix
+     * @return array
+     */
+    public function getStructureEdit(string $prefix): array;
+
+    /**
+     * @param string $prefix
+     * @return array
+     */
+    public function getStructureNew(string $prefix): array;
 }

@@ -56,14 +56,14 @@ class HCUserRegisterForm extends HCBaseForm
                 [
                     "type" => "singleLine",
                     "fieldID" => "email",
-                    "label" => trans("HCCore::users.email"),
+                    "label" => trans("HCCore::user.email"),
                     "required" => 1,
                     "requiredVisible" => 1,
                 ],
                 [
                     "type" => "password",
                     "fieldID" => "password",
-                    "label" => trans("HCCore::users.register.password"),
+                    "label" => trans("HCCore::user.register.password"),
                     "required" => 1,
                     "requiredVisible" => 1,
                 ],

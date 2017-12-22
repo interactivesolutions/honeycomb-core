@@ -9,7 +9,7 @@
                 <b>{{ config('app.name') }}</b>
             </div>
 
-            <h3 class="text-center">{{ trans('HCCore::users.activation.title') }}</h3>
+            <h3 class="text-center">{{ trans('HCCore::user.activation.title') }}</h3>
 
             @if(! is_null($message))
 
@@ -20,14 +20,14 @@
                 <div class="form-group text-center">
                     <a href="/">
                         <button class="btn btn-info" type="submit">
-                            {{ trans('HCCore::users.activation.back_to_main') }}
+                            {{ trans('HCCore::user.activation.back_to_main') }}
                         </button>
                     </a>
                 </div>
             @else
 
                 <p class="narrow text-center">
-                    {{ trans('HCCore::users.activation.info') }}
+                    {{ trans('HCCore::user.activation.info') }}
                 </p>
 
                 <form id="form" method="POST" action="{{ route('auth.activation.post') }}">
@@ -44,7 +44,7 @@
                     <div class="form-group">
                         <p class="text-center">
                             <button class="btn btn-success" type="submit">
-                                {{ trans('HCCore::users.activation.activate') }}
+                                {{ trans('HCCore::user.activation.activate') }}
                             </button>
                         </p>
                     </div>

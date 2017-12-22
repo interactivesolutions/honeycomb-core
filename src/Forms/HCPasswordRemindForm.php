@@ -57,7 +57,7 @@ class HCPasswordRemindForm extends HCBaseForm
                 [
                     "type" => "email",
                     "fieldID" => "email",
-                    "label" => trans('HCCore::users.login.email'),
+                    "label" => trans('HCCore::user.login.email'),
                     "editType" => 0,
                     "required" => 1,
                     "requiredVisible" => 0,

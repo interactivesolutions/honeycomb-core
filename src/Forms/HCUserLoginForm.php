@@ -56,13 +56,13 @@ class HCUserLoginForm extends HCBaseForm
                 [
                     "type" => "singleLine",
                     "fieldID" => "email",
-                    "label" => trans("HCCore::users.login.email"),
+                    "label" => trans("HCCore::user.login.email"),
                     "required" => 1,
                 ],
                 [
                     "type" => "password",
                     "fieldID" => "password",
-                    "label" => trans("HCCore::users.login.password"),
+                    "label" => trans("HCCore::user.login.password"),
                     "required" => 1,
                 ],
                 [
@@ -71,7 +71,7 @@ class HCUserLoginForm extends HCBaseForm
                     "label" => ' ',
                     "required" => 0,
                     "requiredVisible" => 0,
-                    "options" => [['id' => '1', 'label' => trans('HCCore::users.login.remember')]],
+                    "options" => [['id' => '1', 'label' => trans('HCCore::user.login.remember')]],
                 ],
             ],
         ];

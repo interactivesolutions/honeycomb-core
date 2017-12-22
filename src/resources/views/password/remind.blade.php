@@ -11,11 +11,11 @@
 
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">{{ trans('HCCore::users.passwords.remind') }}</p>
+                <p class="login-box-msg">{{ trans('HCCore::user.passwords.remind') }}</p>
 
                 <div id="password-remind-form"></div>
 
-                <a href="{{ route('auth.login')}}">{{ trans('HCCore::users.login.title') }}</a><br>
+                <a href="{{ route('auth.login')}}">{{ trans('HCCore::user.login.title') }}</a><br>
             </div>
         </div>
 

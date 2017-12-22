@@ -84,22 +84,33 @@ class HCUserRequest extends FormRequest
     public function rules(): array
     {
         switch ($this->method()) {
-            case 'DELETE':
+            case 'POST':
                 return [
-                    'list' => 'required',
+                    'email' => 'required|email|unique:hc_users,email|min:5',
+                    'password' => 'required|min:5',
                 ];
                 break;
 
-            case 'POST':
-                return [];
-                break;
-
             case 'PUT':
-                return [];
+
+                $userId = $this->segment(4);
+
+                return [
+                    'email' => 'required|email|min:5|unique:hc_users,email,' . $userId,
+                    'roles' => 'required',
+                    'password' => 'nullable|min:5|confirmed',
+                    'password_confirmation' => 'required_with:password|nullable|min:5',
+                ];
                 break;
 
             case 'PATCH':
                 return [];
+                break;
+
+            case 'DELETE':
+                return [
+                    'list' => 'required',
+                ];
                 break;
         }
 

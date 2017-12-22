@@ -11,7 +11,7 @@
 
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">{{ trans('HCCore::users.register.title') }}</p>
+                <p class="login-box-msg">{{ trans('HCCore::user.register.title') }}</p>
 
                 <div id="register-form"></div>
 
@@ -21,7 +21,7 @@
 
                 <hr/>
                 <div class="text-center">
-                    <a href="{{ route('auth.login') }}">{{ trans('HCCore::users.login.title') }}</a>
+                    <a href="{{ route('auth.login') }}">{{ trans('HCCore::user.login.title') }}</a>
                 </div>
 
             </div>

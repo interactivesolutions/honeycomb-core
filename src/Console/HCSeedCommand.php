@@ -53,8 +53,8 @@ class HCSeedCommand extends Command
 
             $file = json_decode(file_get_contents($filePath), true);
 
-            if (isset($file['seeds'])) {
-                $seeds = array_merge($seeds, $file['seeds']);
+            if (isset($file['seeder'])) {
+                $seeds[] = $file['seeder'];
             }
         }
 

@@ -95,7 +95,7 @@ class HCRoleService
         if ($user->hasRole($this->roleRepository::ROLE_PA)) {
             $permissions = $this->permissionRepository->makeQuery()
                 ->select('id', 'name', 'action', 'created_at')
-                ->where('name', '!=', 'admin.acl.roles')
+                ->where('name', '!=', 'admin.acl.role')
                 ->get();
         } elseif ($user->isSuperAdmin()) {
             $permissions = $this->permissionRepository->makeQuery()

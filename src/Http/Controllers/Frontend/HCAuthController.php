@@ -150,7 +150,7 @@ class HCAuthController extends HCBaseController
         $this->incrementLoginAttempts($request);
 
         if (!$this->attemptLogin($request)) {
-            return $this->response->error(trans('HCCore::users.errors.login'));
+            return $this->response->error(trans('HCCore::user.errors.login'));
         }
 
         // check if user is not activated
@@ -214,7 +214,7 @@ class HCAuthController extends HCBaseController
 
         $this->connection->commit();
 
-        session(['activation_message' => trans('HCCore::users.activation.activate_account')]);
+        session(['activation_message' => trans('HCCore::user.activation.activate_account')]);
 
         if ($this->redirectUrl) {
             return response(['success' => true, 'redirectURL' => $this->redirectUrl]);
@@ -237,7 +237,7 @@ class HCAuthController extends HCBaseController
 
         $request->session()->regenerate();
 
-        return redirect('/')->with('flash_notice', trans('HCCore::users.success.logout'));
+        return redirect('/')->with('flash_notice', trans('HCCore::user.success.logout'));
     }
 
     /**
@@ -253,9 +253,9 @@ class HCAuthController extends HCBaseController
         $tokenRecord = DB::table('hc_users_activations')->where('token', $token)->first();
 
         if (is_null($tokenRecord)) {
-            $message = trans('HCCore::users.activation.token_not_exists');
+            $message = trans('HCCore::user.activation.token_not_exists');
         } elseif (strtotime($tokenRecord->created_at) + 60 * 60 * 24 < time()) {
-            $message = trans('HCCore::users.activation.token_expired');
+            $message = trans('HCCore::user.activation.token_expired');
         }
 
         return view('HCCore::auth.activation', ['token' => $token, 'message' => $message]);

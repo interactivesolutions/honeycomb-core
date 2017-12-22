@@ -76,7 +76,7 @@ class HCUserController extends HCBaseController
     {
         //TODO renew configuration
         $config = [
-            'title' => trans('HCCore::users.page_title'),
+            'title' => trans('HCCore::user.page_title'),
             'listURL' => route('admin.api.user'),
             'newFormUrl' => route('admin.api.form-manager', ['user-new']),
             'editFormUrl' => route('admin.api.form-manager', ['user-edit']),
@@ -98,19 +98,19 @@ class HCUserController extends HCBaseController
         $columns = [
             'email' => [
                 'type' => 'text',
-                'label' => trans('HCCore::users.email'),
+                'label' => trans('HCCore::user.email'),
             ],
             'last_login' => [
                 'type' => 'text',
-                'label' => trans('HCCore::users.last_login'),
+                'label' => trans('HCCore::user.last_login'),
             ],
             'last_activity' => [
                 'type' => 'text',
-                'label' => trans('HCCore::users.last_activity'),
+                'label' => trans('HCCore::user.last_activity'),
             ],
             'activated_at' => [
                 'type' => 'text',
-                'label' => trans('HCCore::users.activation.activated_at'),
+                'label' => trans('HCCore::user.activation.activated_at'),
             ],
         ];
 

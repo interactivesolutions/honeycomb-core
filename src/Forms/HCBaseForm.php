@@ -51,4 +51,37 @@ abstract class HCBaseForm implements HCFormContract
      * @return array
      */
     abstract public function createForm(bool $edit = false): array;
+
+    /**
+     * Get Edit structure
+     *
+     * @param string $prefix
+     * @return array
+     */
+    abstract public function getStructureEdit(string $prefix): array;
+
+    /**
+     * Get new structure
+     *
+     * @param string $prefix
+     * @return array
+     */
+    abstract public function getStructureNew(string $prefix): array;
+
+    /**
+     * Getting structure
+     *
+     * @param bool $edit
+     * @param string $prefix
+     * @param array $only
+     * @return array
+     */
+    public function getStructure(bool $edit, string $prefix = '', array $only = [])
+    {
+        //TODO if $prefix not null add . at the end
+        if ($edit)
+            return $this->getStructureEdit($prefix);
+        else
+            return $this->getStructureNew($prefix);
+    }
 }

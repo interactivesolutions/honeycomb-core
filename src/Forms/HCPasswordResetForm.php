@@ -49,7 +49,7 @@ class HCPasswordResetForm extends HCBaseForm
             "buttons" => [
                 [
                     "class" => "col-centered",
-                    "label" => trans('HCCore::users.passwords.reset_button'),
+                    "label" => trans('HCCore::user.passwords.reset_button'),
                     "type" => "submit",
                 ],
             ],
@@ -57,7 +57,7 @@ class HCPasswordResetForm extends HCBaseForm
                 [
                     "type" => "email",
                     "fieldID" => "email",
-                    "label" => trans('HCCore::users.login.email'),
+                    "label" => trans('HCCore::user.login.email'),
                     "required" => 1,
                     "requiredVisible" => 1,
                     "maxLength" => "197",
@@ -65,7 +65,7 @@ class HCPasswordResetForm extends HCBaseForm
                 [
                     "type" => "password",
                     "fieldID" => "password",
-                    "label" => trans('HCCore::users.passwords.new'),
+                    "label" => trans('HCCore::user.passwords.new'),
                     "required" => 1,
                     "requiredVisible" => 1,
                     "maxLength" => "197",
@@ -73,7 +73,7 @@ class HCPasswordResetForm extends HCBaseForm
                 [
                     "type" => "password",
                     "fieldID" => "password_confirmation",
-                    "label" => trans('HCCore::users.passwords.new_again'),
+                    "label" => trans('HCCore::user.passwords.new_again'),
                     "required" => 1,
                     "requiredVisible" => 1,
                     "maxLength" => "197",

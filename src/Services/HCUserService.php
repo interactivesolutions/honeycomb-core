@@ -76,6 +76,7 @@ class HCUserService
      */
     public function updateUser(array $userData, string $userId, array $personalData = []): HCUser
     {
+        dd($userData, $personalData);
         /** @var HCUser $record */
         $record = $this->repository->updateOrCreate(['id' => $userId], $userData);
         $this->personalInfoRepository->updateOrCreate(['user_id' => $userId], $personalData);

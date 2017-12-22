@@ -11,17 +11,17 @@
 
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">{{ trans('HCCore::users.login.title') }}</p>
+                <p class="login-box-msg">{{ trans('HCCore::user.login.title') }}</p>
 
                 <div id="login-form"></div>
 
                 {{--<div class="social-auth-links text-center"></div>--}}
 
-                <a href="{{ route('users.password.remind')}}">{{ trans('HCCore::users.passwords.forgot_password') }}</a><br>
+                <a href="{{ route('users.password.remind')}}">{{ trans('HCCore::user.passwords.forgot_password') }}</a><br>
 
                 @if( isset($config['registration_enabled']))
                     <a href="{{ route('auth.register') }}"
-                       class="text-center">{{ trans('HCCore::users.register.title') }}</a>
+                       class="text-center">{{ trans('HCCore::user.register.title') }}</a>
                 @endif
 
             </div>

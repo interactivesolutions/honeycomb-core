@@ -68,14 +68,14 @@ class HCUserActivationService
     public function sendActivationMail(HCUser $user, int $resendAfter = 24): string
     {
         if (!$this->shouldSend($user, $resendAfter)) {
-            return trans('HCCore::users.activation.check_email');
+            return trans('HCCore::user.activation.check_email');
         }
 
         $token = $this->createActivation($user->id);
 
         $user->sendActivationLinkNotification($token);
 
-        return trans('HCCore::users.activation.resent_activation');
+        return trans('HCCore::user.activation.resent_activation');
     }
 
     /**
@@ -87,13 +87,13 @@ class HCUserActivationService
         $activation = $this->hcUserActivationRepository->getActivationByToken($token);
 
         if ($activation === null) {
-            throw new \Exception(trans('HCCore::users.activation.bad_token'));
+            throw new \Exception(trans('HCCore::user.activation.bad_token'));
         }
 
         $user = $this->hcUserRepository->getById($activation->user_id);
 
         if (is_null($user)) {
-            throw new \Exception(trans('HCCore::users.activation.user_not_found'));
+            throw new \Exception(trans('HCCore::user.activation.user_not_found'));
         }
 
         // activate user
