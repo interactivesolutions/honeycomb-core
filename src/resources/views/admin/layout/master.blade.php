@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{ config('app.name') }} {{ trans('HCTranslations::core.administration') }}</title>
+    <title>{{ config('app.name') }} {{ trans('HCCore::core.administration') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
@@ -15,7 +15,7 @@
 
     @if(app()->environment() == "local")
         <div style="position: absolute">
-            {!! trans('HCTranslations::core.dev_env') !!}
+            {!! trans('HCCore::core.dev_env') !!}
         </div>
     @endif
 

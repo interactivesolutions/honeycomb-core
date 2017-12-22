@@ -52,9 +52,7 @@ class HCBaseServiceProvider extends ServiceProvider
         /** @var Application $app */
         $app = $this->app;
 
-        if ($app->runningInConsole()) {
-            $this->commands($this->commands);
-        }
+        $this->commands($this->commands);
 
         if (!$app->routesAreCached()) {
             $this->loadRoutes($router);

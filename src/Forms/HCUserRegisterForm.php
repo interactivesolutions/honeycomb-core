@@ -48,7 +48,7 @@ class HCUserRegisterForm extends HCBaseForm
             'buttons' => [
                 [
                     "class" => "col-centered",
-                    "label" => trans('HCTranslations::core.buttons.register'),
+                    "label" => trans('HCCore::core.buttons.register'),
                     "type" => "submit",
                 ],
             ],

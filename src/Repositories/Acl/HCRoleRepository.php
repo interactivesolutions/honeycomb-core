@@ -30,6 +30,7 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombCore\Repositories\Acl;
 
 use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
 use InteractiveSolutions\HoneycombCore\Repositories\HCBaseRepository;
 
 class HCRoleRepository extends HCBaseRepository
@@ -115,5 +116,33 @@ class HCRoleRepository extends HCBaseRepository
         return $this->makeQuery()
             ->where('slug', '=', $slug)
             ->value('id');
+    }
+
+    /**
+     * Get roles for user creation. User can give roles that he owns
+     *
+     * @return array
+     */
+    public function getRolesForUserCreation(): array
+    {
+        $roles = [];
+
+        if (auth()->check()) {
+            /** @var HCUser $user */
+            $user = auth()->user();
+
+            if ($user->isSuperAdmin()) {
+                $roles = HCAclRole::select('id', 'name as label')->orderBy('name')->get()->toArray();
+            } else {
+                foreach ($user->roles as $role) {
+                    $roles[] = [
+                        'id' => $role->id,
+                        'label' => $role->name,
+                    ];
+                }
+            }
+        }
+
+        return $roles;
     }
 }

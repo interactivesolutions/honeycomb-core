@@ -179,7 +179,7 @@ class HCUserController extends HCBaseController
         $this->connection->beginTransaction();
 
         try {
-            $record = $this->service->updateUser($request->getInputData(), $id);
+            $record = $this->service->updateUser($request->getInputData(), $id, $request->getPersonalData());
 
             $this->connection->commit();
 
@@ -197,7 +197,6 @@ class HCUserController extends HCBaseController
      *
      * @param string $recordId
      * @return JsonResponse
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getById(string $recordId): JsonResponse
     {

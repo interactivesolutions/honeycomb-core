@@ -26,7 +26,7 @@ if (!function_exists('get_translation_name')) {
 
         if (is_null($name)) {
             if (is_null($customNotFoundText)) {
-                $name = trans('HCTranslations::core.no_translation');
+                $name = trans('HCCore::core.no_translation');
             } else {
                 $name = $customNotFoundText;
             }
@@ -194,7 +194,7 @@ if (!function_exists('addAllOptionToDropDownList')) {
     {
         array_unshift(
             $fieldData['options'],
-            ['id' => '', $fieldData['showNodes'][0] => trans('HCTranslations::core.all')]
+            ['id' => '', $fieldData['showNodes'][0] => trans('HCCore::core.all')]
         );
 
         return $fieldData;
@@ -308,23 +308,23 @@ if (!function_exists('formManagerSeo')) {
                 [
                     'type' => 'singleLine',
                     'fieldID' => 'translations.seo_title',
-                    'label' => trans('HCTranslations::core.seo_title'),
-                    'tabID' => trans('HCTranslations::core.seo'),
+                    'label' => trans('HCCore::core.seo_title'),
+                    'tabID' => trans('HCCore::core.seo'),
                     'multiLanguage' => $multiLanguage,
                 ],
                 [
                     'type' => 'textArea',
                     'fieldID' => 'translations.seo_description',
-                    'label' => trans('HCTranslations::core.seo_description'),
-                    'tabID' => trans('HCTranslations::core.seo'),
+                    'label' => trans('HCCore::core.seo_description'),
+                    'tabID' => trans('HCCore::core.seo'),
                     'multiLanguage' => $multiLanguage,
                     'rows' => 5,
                 ],
                 [
                     'type' => 'singleLine',
                     'fieldID' => 'translations.seo_keywords',
-                    'label' => trans('HCTranslations::core.seo_keywords'),
-                    'tabID' => trans('HCTranslations::core.seo'),
+                    'label' => trans('HCCore::core.seo_keywords'),
+                    'tabID' => trans('HCCore::core.seo'),
                     'multiLanguage' => $multiLanguage,
                 ],
             ]

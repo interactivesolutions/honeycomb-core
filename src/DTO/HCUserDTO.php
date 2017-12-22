@@ -44,6 +44,16 @@ class HCUserDTO extends HCBaseDTO
     private $roles;
 
     /**
+     * @var null|string
+     */
+    private $firstName;
+
+    /**
+     * @var null|string
+     */
+    private $lastName;
+
+    /**
      * HCUserDTO constructor.
      *
      * @param string $userId
@@ -52,6 +62,8 @@ class HCUserDTO extends HCBaseDTO
      * @param Carbon|null $lastLogin
      * @param Carbon|null $lastVisited
      * @param Carbon|null $lastActivity
+     * @param string|null $firstName
+     * @param string|null $lastName
      * @param Collection|null $roles
      */
     public function __construct(
@@ -61,6 +73,8 @@ class HCUserDTO extends HCBaseDTO
         Carbon $lastLogin = null,
         Carbon $lastVisited = null,
         Carbon $lastActivity = null,
+        string $firstName = null,
+        string $lastName = null,
         Collection $roles = null
     ) {
         $this->userId = $userId;
@@ -69,7 +83,25 @@ class HCUserDTO extends HCBaseDTO
         $this->lastLogin = $lastLogin;
         $this->lastVisited = $lastVisited;
         $this->lastActivity = $lastActivity;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
         $this->roles = $roles;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFirstName(): ? string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getLastName(): ? string
+    {
+        return $this->lastName;
     }
 
     /**
@@ -95,12 +127,12 @@ class HCUserDTO extends HCBaseDTO
     {
         if ($this->activatedAt) {
             return [
-                ['id' => true],
+                ['id' => 1],
             ];
         }
 
         return [
-            ['id' => false],
+            ['id' => 0],
         ];
     }
 
@@ -173,6 +205,8 @@ class HCUserDTO extends HCBaseDTO
             'last_activity' => $this->getLastActivity(),
             'email' => $this->getEmail(),
             'is_active' => $this->getActivated(),
+            'first_name' => $this->getFirstName(),
+            'last_name' => $this->getLastName(),
             'roles' => $this->getRoles(),
         ];
 

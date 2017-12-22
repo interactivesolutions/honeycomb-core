@@ -8,7 +8,7 @@
                 <span class="info-box-icon bg-yellow"><i class="fa fa-users" aria-hidden="true"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">{{ trans('HCTranslations::core.users') }}</span>
+                    <span class="info-box-text">{{ trans('HCCore::core.users') }}</span>
                     <span class="info-box-number">{{ \InteractiveSolutions\HoneycombCore\Models\HCUser::count() }}</span>
                 </div>
             </div>

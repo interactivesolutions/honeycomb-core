@@ -48,6 +48,19 @@ class HCUserRequest extends FormRequest
         return [];
     }
 
+    /**
+     * Get personal info
+     *
+     * @return array
+     */
+    public function getPersonalData()
+    {
+        return [
+            'first_name' => $this->input('first_name'),
+            'last_name' => $this->input('last_name'),
+        ];
+    }
+
     public function getListFields()
     {
         return $this->all();

@@ -10,7 +10,7 @@
         <ul class="nav navbar-nav pull-left">
             <li>
                 <a href="{{ url('/')}}" target="_blank">
-                    {{ trans('HCTranslations::core.index') }}
+                    {{ trans('HCCore::core.index') }}
                 </a>
             </li>
         </ul>

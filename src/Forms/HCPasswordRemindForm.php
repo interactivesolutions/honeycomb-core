@@ -49,7 +49,7 @@ class HCPasswordRemindForm extends HCBaseForm
             "buttons" => [
                 [
                     "class" => "col-centered",
-                    "label" => trans('HCTranslations::core.buttons.submit'),
+                    "label" => trans('HCCore::core.buttons.submit'),
                     "type" => "submit",
                 ],
             ],

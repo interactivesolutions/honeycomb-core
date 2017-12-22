@@ -5,7 +5,7 @@
         <div class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control search-menu-box"
-                       placeholder="{{ trans('HCTranslations::core.filter') }}"/>
+                       placeholder="{{ trans('HCCore::core.filter') }}"/>
                 <span class="input-group-btn">
                   <button name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
                 </span>

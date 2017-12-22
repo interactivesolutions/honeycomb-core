@@ -89,6 +89,9 @@ class HCUserRepository extends HCBaseRepository
             'roles' => function ($query) {
                 $query->select('id', 'name as label');
             },
+            'personal' => function ($query) {
+                $query->select('user_id', 'first_name', 'last_name');
+            },
         ]);
 
         return new HCUserDTO(
@@ -98,6 +101,8 @@ class HCUserRepository extends HCBaseRepository
             $record->last_login,
             $record->last_visited,
             $record->last_activity,
+            $record->personal->first_name,
+            $record->personal->last_name,
             $record->roles
         );
     }
