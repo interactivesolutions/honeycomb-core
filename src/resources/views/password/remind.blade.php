@@ -27,7 +27,7 @@
         $(document).ready(function () {
             HCService.FormManager.initialize();
             var form = HCService.FormManager.createForm({
-                'structureURL': '{{  route('public.api.form-manager', 'password-remind-new')}}',
+                'structureURL': '{{  route('frontend.api.form-manager', 'password-remind-new')}}',
                 'divID': '#password-remind-form'
             });
         });

@@ -101,5 +101,4 @@ class HCForgotPasswordController extends HCBaseController
     {
         return $this->response->error(trans($response));
     }
-
 }

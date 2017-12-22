@@ -26,7 +26,7 @@
         $(document).ready(function () {
             HCService.FormManager.initialize();
             var form = HCService.FormManager.createForm({
-                'structureURL': '{{  route('public.api.form-manager', 'password-reset-new')}}?token={{ $token }}',
+                'structureURL': '{{  route('frontend.api.form-manager', 'password-reset-new')}}?token={{ $token }}',
                 'divID': '#password-reset-form'
             });
         });

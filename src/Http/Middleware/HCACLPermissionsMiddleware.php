@@ -30,6 +30,7 @@ declare(strict_types = 1);
 namespace InteractiveSolutions\HoneycombCore\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -56,7 +57,7 @@ class HCAclPermissionsMiddleware
         }
 
         if (!$access) {
-            abort(401);
+            abort(JsonResponse::HTTP_UNAUTHORIZED);
         }
 
         return $next($request);

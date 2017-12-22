@@ -53,20 +53,7 @@ class HCPasswordRemindForm extends HCBaseForm
                     "type" => "submit",
                 ],
             ],
-            "structure" => [
-                [
-                    "type" => "email",
-                    "fieldID" => "email",
-                    "label" => trans('HCCore::user.login.email'),
-                    "editType" => 0,
-                    "required" => 1,
-                    "requiredVisible" => 0,
-                    "properties" => [
-                        "style" => "varchar",
-                        "maxlength" => "197",
-                    ],
-                ],
-            ],
+            "structure" => $this->getStructure($edit),
         ];
 
         if ($this->multiLanguage) {
@@ -78,5 +65,40 @@ class HCPasswordRemindForm extends HCBaseForm
         }
 
         return $form;
+    }
+
+    /**
+     * Get new structure
+     *
+     * @param string $prefix
+     * @return array
+     */
+    public function getStructureNew(string $prefix): array
+    {
+        return [
+            [
+                "type" => "email",
+                "fieldID" => "email",
+                "label" => trans('HCCore::user.login.email'),
+                "editType" => 0,
+                "required" => 1,
+                "requiredVisible" => 0,
+                "properties" => [
+                    "style" => "varchar",
+                    "maxlength" => "197",
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Get Edit structure
+     *
+     * @param string $prefix
+     * @return array
+     */
+    public function getStructureEdit(string $prefix): array
+    {
+        return [];
     }
 }

@@ -40,7 +40,6 @@ class HCPasswordResetForm extends HCBaseForm
      *
      * @param bool $edit
      * @return array
-     * @throws \Illuminate\Container\EntryNotFoundException
      */
     public function createForm(bool $edit = false): array
     {
@@ -53,41 +52,7 @@ class HCPasswordResetForm extends HCBaseForm
                     "type" => "submit",
                 ],
             ],
-            "structure" => [
-                [
-                    "type" => "email",
-                    "fieldID" => "email",
-                    "label" => trans('HCCore::user.login.email'),
-                    "required" => 1,
-                    "requiredVisible" => 1,
-                    "maxLength" => "197",
-                ],
-                [
-                    "type" => "password",
-                    "fieldID" => "password",
-                    "label" => trans('HCCore::user.passwords.new'),
-                    "required" => 1,
-                    "requiredVisible" => 1,
-                    "maxLength" => "197",
-                ],
-                [
-                    "type" => "password",
-                    "fieldID" => "password_confirmation",
-                    "label" => trans('HCCore::user.passwords.new_again'),
-                    "required" => 1,
-                    "requiredVisible" => 1,
-                    "maxLength" => "197",
-                ],
-                [
-                    "type" => "singleLine",
-                    "fieldID" => "token",
-                    "hidden" => 1,
-                    "required" => 1,
-                    "requiredVisible" => 1,
-                    "maxLength" => "255",
-                    "value" => request()->input('token'),
-                ],
-            ],
+            "structure" => $this->getStructure($edit),
         ];
 
         if ($this->multiLanguage) {
@@ -99,5 +64,61 @@ class HCPasswordResetForm extends HCBaseForm
         }
 
         return $form;
+    }
+
+    /**
+     * Get new structure
+     *
+     * @param string $prefix
+     * @return array
+     */
+    public function getStructureNew(string $prefix): array
+    {
+        return [
+            [
+                "type" => "email",
+                "fieldID" => "email",
+                "label" => trans('HCCore::user.login.email'),
+                "required" => 1,
+                "requiredVisible" => 1,
+                "maxLength" => "197",
+            ],
+            [
+                "type" => "password",
+                "fieldID" => "password",
+                "label" => trans('HCCore::user.passwords.new'),
+                "required" => 1,
+                "requiredVisible" => 1,
+                "maxLength" => "197",
+            ],
+            [
+                "type" => "password",
+                "fieldID" => "password_confirmation",
+                "label" => trans('HCCore::user.passwords.new_again'),
+                "required" => 1,
+                "requiredVisible" => 1,
+                "maxLength" => "197",
+            ],
+            [
+                "type" => "singleLine",
+                "fieldID" => "token",
+                "hidden" => 1,
+                "required" => 1,
+                "requiredVisible" => 1,
+                "maxLength" => "255",
+                "value" => request()->input('token'),
+            ],
+        ];
+    }
+
+    /**
+     * Get Edit structure
+     *
+     * @param string $prefix
+     * @return array
+     */
+    public function getStructureEdit(string $prefix): array
+    {
+        return [];
     }
 }

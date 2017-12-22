@@ -46,11 +46,11 @@
                 "name": "admin.acl.role",
                 "controller": "InteractiveSolutions\\HoneycombCore\\Http\\Controllers\\Admin\\Acl\\HCRoleController",
                 "actions": [
-                    "interactivesolutions_honeycomb_acl_roles_list",
-                    "interactivesolutions_honeycomb_acl_roles_create",
-                    "interactivesolutions_honeycomb_acl_roles_update",
-                    "interactivesolutions_honeycomb_acl_roles_delete",
-                    "interactivesolutions_honeycomb_acl_roles_force_delete"
+                    "interactivesolutions_honeycomb_acl_role_list",
+                    "interactivesolutions_honeycomb_acl_role_create",
+                    "interactivesolutions_honeycomb_acl_role_update",
+                    "interactivesolutions_honeycomb_acl_role_delete",
+                    "interactivesolutions_honeycomb_acl_role_force_delete"
                 ]
             },
             {

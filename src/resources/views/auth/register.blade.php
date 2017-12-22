@@ -35,7 +35,7 @@
         $(document).ready(function () {
             HCService.FormManager.initialize();
             var form = HCService.FormManager.createForm({
-                'structureURL': '{{  route('public.api.form-manager', 'users-register-new')}}',
+                'structureURL': '{{  route('frontend.api.form-manager', 'users-register-new')}}',
                 'divID': '#register-form'
             });
         });

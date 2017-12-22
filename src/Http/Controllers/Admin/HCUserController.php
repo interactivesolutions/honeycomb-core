@@ -83,7 +83,7 @@ class HCUserController extends HCBaseController
             'headers' => $this->getTableColumns(),
         ];
 
-        $config['actions'] = $this->getActions('interactivesolutions_honeycomb_acl_users_');
+        $config['actions'] = $this->getActions('interactivesolutions_honeycomb_user');
 
         return view('HCCore::admin.service.index', ['config' => $config]);
     }

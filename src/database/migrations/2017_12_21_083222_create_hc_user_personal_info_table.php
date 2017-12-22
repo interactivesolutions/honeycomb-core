@@ -53,7 +53,6 @@ class CreateHcUserPersonalInfoTable extends Migration
             $table->string('user_id', 36);
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('personal_code', 36)->nullable();
 
             $table->foreign('user_id')->references('id')->on('hc_users')
                 ->onUpdate('CASCADE')->onDelete('CASCADE');

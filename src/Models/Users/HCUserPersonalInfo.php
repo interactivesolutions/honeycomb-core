@@ -53,6 +53,7 @@ class HCUserPersonalInfo extends HCUuidModel
         'user_id',
         'first_name',
         'last_name',
+        'last_name',
     ];
 
     /**

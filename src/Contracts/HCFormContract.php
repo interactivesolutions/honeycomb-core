@@ -20,11 +20,11 @@ interface HCFormContract
      * @param string $prefix
      * @return array
      */
-    public function getStructureEdit(string $prefix): array;
+    public function getStructureNew(string $prefix): array;
 
     /**
      * @param string $prefix
      * @return array
      */
-    public function getStructureNew(string $prefix): array;
+    public function getStructureEdit(string $prefix): array;
 }
