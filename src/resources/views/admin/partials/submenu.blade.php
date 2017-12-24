@@ -5,14 +5,20 @@
         {{-- this submenu creation is depends on honeycomb config.json packages files parameter aclPermission --}}
         {{-- if the given user role has access to this permission than user can see that menu --}}
 
+
         <li
-                @if(isset($item['children']) && is_array($item['children']) && checkActiveMenuItems($item, request()->route()->getName()))
-                class="treeview active"
+                @if(isset($item['children']) && is_array($item['children']))
+                        @if (checkActiveMenuItems($item, request()->route()->getName()))
+                            class="treeview active"
+                        @else
+                            class="treeview"
+                        @endif
                 @elseif(request()->route()->getName() == $item['route'] )
                 class="active"
                 @endif
         >
-            @if(isset($item['children']) && is_array($item['children']))
+
+        @if(isset($item['children']) && is_array($item['children']))
 
                 {{--if it has allowed children to show children than add dropdown --}}
                 <a href="#">

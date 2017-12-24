@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <ul class="sidebar-menu">
+        <ul class="sidebar-menu tree" data-widget="tree">
 
             @if( isset($adminMenu) )
                 @include('HCCore::admin.partials.submenu', ['menuItems' => $adminMenu])
