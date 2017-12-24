@@ -114,7 +114,7 @@ class HCBaseServiceProvider extends ServiceProvider
     protected function registerPublishes(): void
     {
         $this->publishes([
-            $this->packagePath('assets') => public_path('honeycomb'),
+            $this->packagePath('resources/assets') => resource_path('assets/honeycomb'),
         ], 'public');
 
         $this->publishes([
