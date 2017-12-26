@@ -1,11 +1,11 @@
 {{-- global --}}
-<script src="/js/external-all.js"></script>
+<script src="{{mix('/js/external.js')}}"></script>
 
 {{-- shared --}}
-<script src="/js/hc-shared.js"></script>
+<script src="{{mix('js/hc-shared.js')}}"></script>
 
 {{-- form --}}
-<script src="/js/hc-form.js"></script>
+<script src="{{mix('js/hc-form.js')}}"></script>
 
 {{-- admin list --}}
-<script src="/js/hc-admin-list.js"></script>
+<script src="{{mix('js/hc-admin-list.js')}}"></script>

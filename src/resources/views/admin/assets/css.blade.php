@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/css/hc-admin-panel.css">
+<link rel="stylesheet" href="{{mix('/css/hc-admin-panel.css')}}">
 
 
 
