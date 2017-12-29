@@ -7,6 +7,7 @@ namespace Tests;
 
 use Illuminate\Foundation\Application;
 use InteractiveSolutions\HoneycombCore\Providers\HCCoreServiceProvider;
+use InteractiveSolutions\HoneycombCore\Tests\BuildsMocks;
 
 /**
  * Class TestCase
@@ -14,6 +15,8 @@ use InteractiveSolutions\HoneycombCore\Providers\HCCoreServiceProvider;
  */
 abstract class TestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 {
+    use BuildsMocks;
+
     /**
      *
      */
