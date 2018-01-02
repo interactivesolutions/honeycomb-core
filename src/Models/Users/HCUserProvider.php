@@ -51,6 +51,7 @@ class HCUserProvider extends HCUuidModel
         'id',
         'user_id',
         'user_provider_id',
+        'provider',
         'response',
     ];
 

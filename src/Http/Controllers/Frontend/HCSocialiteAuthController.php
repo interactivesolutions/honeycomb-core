@@ -16,7 +16,7 @@ use Laravel\Socialite\Two\User;
  * Class HCFacebookAuthController
  * @package InteractiveSolutions\HoneycombCore\Http\Controllers\Frontend
  */
-class HCFacebookAuthController extends Controller
+class HCSocialiteAuthController extends Controller
 {
     /**
      * @var HCUserService
@@ -35,11 +35,12 @@ class HCFacebookAuthController extends Controller
     /**
      * Redirect the user to the GitHub authentication page.
      *
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function redirectToProvider(): RedirectResponse
+    public function redirectToProvider(Request $request): RedirectResponse
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver($request->segment(3))->redirect();
     }
 
     /**
@@ -58,14 +59,14 @@ class HCFacebookAuthController extends Controller
         }
 
         /** @var User $user */
-        $user = Socialite::driver('facebook')->user();
+        $user = Socialite::driver($request->segment(3))->user();
 
-        if (is_null($user->email)) {
+        if ($request->segment(3) == 'facebook' && is_null($user->email)) {
             return $this->deAuthorize($user);
         }
 
         auth()->login(
-            $this->service->createOrUpdateFacebookUser($user)
+            $this->service->createOrUpdateUserProvider($user, $request->segment(3))
         );
 
         return redirect(session('url.intended', url('/')));

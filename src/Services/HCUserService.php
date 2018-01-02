@@ -31,6 +31,7 @@ namespace InteractiveSolutions\HoneycombCore\Services;
 
 use Carbon\Carbon;
 use InteractiveSolutions\HoneycombCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Models\Users\HCUserProvider;
 use InteractiveSolutions\HoneycombCore\Repositories\Acl\HCRoleRepository;
 use InteractiveSolutions\HoneycombCore\Repositories\HCUserRepository;
 use InteractiveSolutions\HoneycombCore\Repositories\Users\HCPersonalInfoRepository;
@@ -171,21 +172,28 @@ class HCUserService
 
     /**
      * @param User $providerUser
+     * @param $provider
      * @return HCUser
      */
-    public function createOrUpdateFacebookUser(User $providerUser): HCUser
+    public function createOrUpdateUserProvider(User $providerUser, $provider): HCUser
     {
-        $provider = $this->userProviderRepository->findOneBy([
-            'provider' => 'facebook',
-            'user_provider_id' => $providerUser->getId(),
+        info([
+            'provider' => $provider,
+            'user_provider_id' => (string)$providerUser->getId(),
         ]);
 
-        if ($provider) {
+        /** @var HCUserProvider $userProvider */
+        $userProvider = $this->userProviderRepository->findOneBy([
+            'provider' => $provider,
+            'user_provider_id' => (string)$providerUser->getId(),
+        ]);
+
+        if ($userProvider) {
             $this->userProviderRepository->update([
                 'response' => json_encode($providerUser->getRaw()),
-            ], $provider->id);
+            ], $userProvider->id);
 
-            return $provider->user;
+            return $userProvider->user;
         } else {
             $user = $this->repository->findOneBy(['email' => $providerUser->getEmail()]);
 
@@ -199,10 +207,12 @@ class HCUserService
                 $user = $this->createUser($userData, [$this->roleRepository->getRoleUserId()]);
             }
 
+            info($provider);
+
             $this->userProviderRepository->createProvider(
                 $user->id,
-                $providerUser->getId(),
-                'facebook',
+                (string)$providerUser->getId(),
+                $provider,
                 json_encode($providerUser->getRaw())
             );
 

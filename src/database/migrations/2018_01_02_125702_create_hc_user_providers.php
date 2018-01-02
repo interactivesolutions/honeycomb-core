@@ -23,7 +23,7 @@ class CreateHcUserProviders extends Migration
             $table->string('user_id', 36);
             $table->string('user_provider_id')->nullable();
             $table->enum('provider', ['facebook', 'twitter', 'linkedin', 'google', 'github', 'bitbucket']);
-            $table->string('response')->nullable();
+            $table->text('response')->nullable();
 
             $table->foreign('user_id')->references('id')->on('hc_users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });

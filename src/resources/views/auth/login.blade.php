@@ -15,10 +15,39 @@
 
                 <div id="login-form"></div>
 
-                {{--<div class="social-auth-links text-center"></div>--}}
-
                 <a href="{{ route('users.password.remind')}}">{{ trans('HCCore::user.passwords.forgot_password') }}</a><br>
-                <a href="{{ route('login.facebook')}}">{!! __('HCCore::user.connect_with_fb') !!}</a><br>
+
+                <div class="social-auth-links text-center">
+                    @if(config('services.facebook.client_id'))
+                        <a href="{{ route('login.socialite', 'facebook')}}">{!! trans('HCCore::user.socialite.facebook') !!}</a>
+                        <br>
+                    @endif
+
+                    @if(config('services.github.client_id'))
+                        <a href="{{ route('login.socialite', 'github')}}">{!! trans('HCCore::user.socialite.github') !!}</a>
+                        <br>
+                    @endif
+
+                    @if(config('services.bitbucket.client_id'))
+                        <a href="{{ route('login.socialite', 'bitbucket')}}">{!! trans('HCCore::user.socialite.bitbucket') !!}</a>
+                        <br>
+                    @endif
+
+                    @if(config('services.google.client_id'))
+                        <a href="{{ route('login.socialite', 'google')}}">{!! trans('HCCore::user.socialite.google') !!}</a>
+                        <br>
+                    @endif
+
+                    @if(config('services.twitter.client_id'))
+                        <a href="{{ route('login.socialite', 'twitter')}}">{!! trans('HCCore::user.socialite.twitter') !!}</a>
+                        <br>
+                    @endif
+
+                    @if(config('services.linkedin.client_id'))
+                        <a href="{{ route('login.socialite', 'linkedin')}}">{!! trans('HCCore::user.socialite.linkedin') !!}</a>
+                        <br>
+                    @endif
+                </div>
 
                 @if( isset($config['registration_enabled']))
                     <a href="{{ route('auth.register') }}"

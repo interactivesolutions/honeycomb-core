@@ -39,6 +39,10 @@ Route::prefix('auth')->namespace('Frontend')->middleware('web')->group(function 
 
     Route::get('logout', 'HCAuthController@logout')->name('auth.logout')->middleware('auth');
 
-    Route::get('login/facebook', 'HCFacebookAuthController@redirectToProvider')->name('login.facebook');
-    Route::get('login/facebook/callback', 'HCFacebookAuthController@handleProviderCallback');
+    Route::get('login/{provider}', 'HCSocialiteAuthController@redirectToProvider')
+        ->name('login.socialite')
+        ->where('provider', '(facebook|twitter|github|linkedin|bitbucket|google)');
+
+    Route::get('login/{provider}/callback', 'HCSocialiteAuthController@handleProviderCallback')
+        ->where('provider', '(facebook|twitter|github|linkedin|bitbucket|google)');
 });
