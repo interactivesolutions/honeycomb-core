@@ -36,6 +36,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\DatabaseNotification;
@@ -46,6 +47,7 @@ use InteractiveSolutions\HoneycombCore\Models\Acl\HCAclRole;
 use InteractiveSolutions\HoneycombCore\Models\Traits\HCActivateUser;
 use InteractiveSolutions\HoneycombCore\Models\Traits\HCUserRoles;
 use InteractiveSolutions\HoneycombCore\Models\Users\HCUserPersonalInfo;
+use InteractiveSolutions\HoneycombCore\Models\Users\HCUserProvider;
 use InteractiveSolutions\HoneycombCore\Notifications\HCAdminWelcomeEmail;
 use InteractiveSolutions\HoneycombCore\Notifications\HCResetPassword;
 
@@ -200,5 +202,15 @@ class HCUser extends HCUuidModel implements AuthenticatableContract, Authorizabl
     public function personal(): HasOne
     {
         return $this->hasOne(HCUserPersonalInfo::class, 'user_id', 'id');
+    }
+
+    /**
+     * Has many providers
+     *
+     * @return HasMany
+     */
+    public function providers(): HasMany
+    {
+        return $this->hasMany(HCUserProvider::class, 'user_id', 'id');
     }
 }

@@ -27,18 +27,38 @@
 
 declare(strict_types = 1);
 
-Route::prefix('auth')->namespace('Frontend')->middleware('web')->group(function () {
-    Route::get('login', 'HCAuthController@showLoginForm')->name('auth.index')->middleware('guest');
-    Route::post('login', 'HCAuthController@login')->name('auth.login');
+namespace InteractiveSolutions\HoneycombCore\Models\Users;
 
-    Route::get('register', 'HCAuthController@showRegister')->name('auth.register')->middleware('guest');
-    Route::post('register', 'HCAuthController@register');
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use InteractiveSolutions\HoneycombCore\Models\HCUser;
+use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
-    Route::get('activation/{token}', 'HCAuthController@showActivation')->name('auth.activation')->middleware('guest');
-    Route::post('activation', 'HCAuthController@activate')->name('auth.activation.post');
+class HCUserProvider extends HCUuidModel
+{
+    /**
+     * Table name
+     *
+     * @var string
+     */
+    protected $table = 'hc_user_providers';
 
-    Route::get('logout', 'HCAuthController@logout')->name('auth.logout')->middleware('auth');
+    /**
+     * Fillable fields
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'id',
+        'user_id',
+        'user_provider_id',
+        'response',
+    ];
 
-    Route::get('login/facebook', 'HCFacebookAuthController@redirectToProvider')->name('login.facebook');
-    Route::get('login/facebook/callback', 'HCFacebookAuthController@handleProviderCallback');
-});
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(HCUser::class, 'user_id', 'id');
+    }
+}

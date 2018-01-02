@@ -18,6 +18,7 @@
                 {{--<div class="social-auth-links text-center"></div>--}}
 
                 <a href="{{ route('users.password.remind')}}">{{ trans('HCCore::user.passwords.forgot_password') }}</a><br>
+                <a href="{{ route('login.facebook')}}">{!! __('HCCore::user.connect_with_fb') !!}</a><br>
 
                 @if( isset($config['registration_enabled']))
                     <a href="{{ route('auth.register') }}"
