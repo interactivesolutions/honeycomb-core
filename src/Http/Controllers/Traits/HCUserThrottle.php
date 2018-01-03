@@ -36,10 +36,10 @@ use Illuminate\Http\Request;
 use HCLog;
 
 /**
- * Trait HCUsersThrottle
+ * Trait HCUserThrottle
  * @package InteractiveSolutions\HoneycombCore\Http\Controllers\Traits
  */
-trait HCUsersThrottle
+trait HCUserThrottle
 {
 
     use ThrottlesLogins;

@@ -13,7 +13,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User;
 
 /**
- * Class HCFacebookAuthController
+ * Class HCSocialiteAuthController
  * @package InteractiveSolutions\HoneycombCore\Http\Controllers\Frontend
  */
 class HCSocialiteAuthController extends Controller
@@ -44,7 +44,7 @@ class HCSocialiteAuthController extends Controller
     }
 
     /**
-     * Obtain the user information from GitHub.
+     * Obtain the user information from provider.
      *
      * @param Request $request
      * @return RedirectResponse
@@ -80,6 +80,8 @@ class HCSocialiteAuthController extends Controller
      */
     private function deAuthorize(User $user): RedirectResponse
     {
+        // TODO display error for user
+
         $client = new Client;
 
         $client->delete("https://graph.facebook.com/{$user->id}/permissions",

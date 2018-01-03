@@ -177,11 +177,6 @@ class HCUserService
      */
     public function createOrUpdateUserProvider(User $providerUser, $provider): HCUser
     {
-        info([
-            'provider' => $provider,
-            'user_provider_id' => (string)$providerUser->getId(),
-        ]);
-
         /** @var HCUserProvider $userProvider */
         $userProvider = $this->userProviderRepository->findOneBy([
             'provider' => $provider,
@@ -206,8 +201,6 @@ class HCUserService
 
                 $user = $this->createUser($userData, [$this->roleRepository->getRoleUserId()]);
             }
-
-            info($provider);
 
             $this->userProviderRepository->createProvider(
                 $user->id,
