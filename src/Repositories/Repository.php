@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Repositories;
 
-
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,7 +21,6 @@ abstract class Repository implements RepositoryContract
      *
      */
     const DEFAULT_PER_PAGE = 50;
-
     /**
      *
      */
@@ -145,6 +143,16 @@ abstract class Repository implements RepositoryContract
     public function delete(array $criteria = [])
     {
         return $this->makeQuery()->where($criteria)->delete();
+    }
+
+    /**
+     * @param array $criteria
+     * @return mixed
+     * @throws BindingResolutionException
+     */
+    public function forceDelete(array $criteria = [])
+    {
+        return $this->makeQuery()->where($criteria)->forceDelete();
     }
 
     /**
