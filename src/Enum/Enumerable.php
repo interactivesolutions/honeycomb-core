@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\HoneycombCore\Enum;
 
-
 use InteractiveSolutions\HoneycombCore\Enum\Exceptions\EnumNotFoundException;
 
 /**
@@ -25,7 +24,6 @@ abstract class Enumerable
      * @var string
      */
     protected $description;
-
     /**
      * @var array
      */
@@ -119,18 +117,21 @@ abstract class Enumerable
      */
     public static function options(): array
     {
-        return array_values(array_map(function(Enumerable $enumerable) {
-            return ['id' => $enumerable->id(), 'name' => $enumerable->name()];
+        return array_values(array_map(function (Enumerable $enumerable) {
+            return [
+                'id' => $enumerable->id(),
+                'name' => $enumerable->name(),
+                'description' => $enumerable->description(),
+            ];
         }, self::enum()));
     }
-
 
     /**
      * @return string
      */
     public static function json(): string
     {
-        return json_encode(array_map(function(Enumerable $enumerable) {
+        return json_encode(array_map(function (Enumerable $enumerable) {
             return $enumerable->name();
         }, self::enum()));
     }
