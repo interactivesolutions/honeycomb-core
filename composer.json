@@ -19,7 +19,7 @@
     "laravel\/framework": "5.3.*",
     "ramsey\/uuid": "^3.5",
     "jenssegers/rollbar": "*",
-    "rap2hpoutre/laravel-log-viewer": "*",
+    "rap2hpoutre/laravel-log-viewer": "v0.11.2",
     "spatie/laravel-cookie-consent": "1.*"
   },
   "autoload": {
